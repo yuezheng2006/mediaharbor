@@ -46,6 +46,7 @@ import { RadialVisualizer } from './RadialVisualizer';
 import { BarVisualizer } from './BarVisualizer';
 import { useShallow } from 'zustand/react/shallow';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 function queueTrackRef(track: PlayableTrack) {
   return {
@@ -375,7 +376,7 @@ function IconRow<T extends string>({
   return (
     <div className="space-y-1.5">
       <p className="text-[9px] font-bold uppercase tracking-widest text-muted-foreground">
-        {label}
+        {tr(label)}
       </p>
       <div className="flex gap-1">
         {options.map((opt) => {
@@ -385,7 +386,7 @@ function IconRow<T extends string>({
             <button
               key={opt.value}
               onClick={() => onChange(opt.value)}
-              title={opt.label}
+              title={tr(opt.label)}
               className={`flex-1 flex flex-col items-center gap-1 py-2 rounded-lg transition-all ${
                 active
                   ? ''
@@ -396,7 +397,7 @@ function IconRow<T extends string>({
               }
             >
               <Icon className="h-3.5 w-3.5" />
-              <span className="text-[9px] font-semibold leading-none">{opt.label}</span>
+              <span className="text-[9px] font-semibold leading-none">{tr(opt.label)}</span>
             </button>
           );
         })}
@@ -438,7 +439,7 @@ function PersonalisePopover({
     >
       <div className="grid grid-cols-2 gap-3">
         <IconRow
-          label="Disc"
+          label={tr("Disc")}
           options={
             [
               { value: 'vinyl', icon: Disc, label: 'Vinyl' },
@@ -451,7 +452,7 @@ function PersonalisePopover({
           accentColor={accentColor}
         />
         <IconRow
-          label="Background"
+          label={tr("Background")}
           options={
             [
               { value: 'bloom', icon: Sparkles, label: 'Bloom' },
@@ -464,7 +465,7 @@ function PersonalisePopover({
           accentColor={accentColor}
         />
         <IconRow
-          label="Visualizer"
+          label={tr("Visualizer")}
           options={
             [
               { value: 'off', icon: EyeOff, label: 'Off' },
@@ -477,7 +478,7 @@ function PersonalisePopover({
           accentColor={accentColor}
         />
         <IconRow
-          label="Queue"
+          label={tr("Queue")}
           options={
             [
               { value: 'strip', icon: AlignJustify, label: 'Strip' },
@@ -798,10 +799,10 @@ export function NowPlaying() {
                 ) : isSpotify ? (
                   <div className="flex flex-col items-center gap-2 text-center px-6">
                     <Film className="h-10 w-10 text-muted-foreground/30" />
-                    <p className="text-sm text-muted-foreground/60">Music videos coming soon</p>
+                    <p className="text-sm text-muted-foreground/60">{tr("Music videos coming soon")}</p>
                   </div>
                 ) : (
-                  <div className="text-sm text-muted-foreground/50">Loading video…</div>
+                  <div className="text-sm text-muted-foreground/50">{tr("Loading video…")}</div>
                 )}
               </div>
             ) : !showLyrics ? (
@@ -1055,7 +1056,7 @@ export function NowPlaying() {
                     }`}
                     style={isActive ? { backgroundColor: accentColor } : undefined}
                   >
-                    {tab.label}
+                    {tr(tab.label)}
                   </button>
                 );
               })}
@@ -1069,7 +1070,7 @@ export function NowPlaying() {
                 }`}
                 style={lyricsEnabled ? { backgroundColor: accentColor } : undefined}
               >
-                {lyricsEnabled ? 'Synced' : 'Plain'}
+                {lyricsEnabled ? tr('Synced') : tr('Plain')}
               </button>
             )}
           </div>
@@ -1079,7 +1080,7 @@ export function NowPlaying() {
             <div className="w-full shrink-0">
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-                  Up Next
+                  {tr('Up Next')}
                 </span>
                 <div className="flex-1 h-px bg-border" />
                 <span className="text-[10px] text-muted-foreground/50 tabular-nums">
@@ -1109,7 +1110,7 @@ export function NowPlaying() {
               <div className="px-5 pt-5 pb-3 shrink-0 border-b border-border">
                 <div className="flex items-center justify-between">
                   <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-                    Up Next
+                    {tr('Up Next')}
                   </p>
                   <span className="text-xs text-muted-foreground/50 tabular-nums">
                     {queue.length} tracks

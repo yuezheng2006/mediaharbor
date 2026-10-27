@@ -13,6 +13,7 @@ import {
 import { tauriAPI } from '@/tauri-bridge';
 import { useRadioActions } from '@/features/radio/RadioActions';
 import type { RadioStation } from '@/features/radio/api';
+import { tr } from '@/i18n';
 
 interface Props {
   station: RadioStation;
@@ -60,7 +61,7 @@ export function StationMenu({ station, favorite, onRemoveFromList, children }: P
           </ContextMenuSubTrigger>
           <ContextMenuSubContent className="max-h-64 w-52 overflow-y-auto">
             <ContextMenuItem onSelect={() => onCreateListWith(station)}>
-              New playlist…
+              {tr("New playlist…")}
             </ContextMenuItem>
             {lists.length > 0 && <ContextMenuSeparator />}
             {lists.map((list) => (

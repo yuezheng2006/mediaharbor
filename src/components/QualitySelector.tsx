@@ -17,6 +17,7 @@ import type { Platform } from '@/types';
 import { SKIP_AWARE_PLATFORMS } from '@/utils/constants';
 import { ytMusicSliderQuality } from '@/utils/quality';
 import { useQualityOptions } from '@/hooks/useQualityOptions';
+import { tr } from '@/i18n';
 
 interface QualitySelectorProps {
   open: boolean;
@@ -62,7 +63,7 @@ export function QualitySelector({
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Select Quality</DialogTitle>
+          <DialogTitle>{tr("Select Quality")}</DialogTitle>
           <DialogDescription>Choose download quality for &quot;{title}&quot;</DialogDescription>
         </DialogHeader>
 
@@ -85,7 +86,7 @@ export function QualitySelector({
           ) : (
             <Select value={selectedQuality} onValueChange={setUserSelected}>
               <SelectTrigger>
-                <SelectValue placeholder="Select quality" />
+                <SelectValue placeholder={tr("Select quality")} />
               </SelectTrigger>
               <SelectContent>
                 <QualityOptionItems options={options} />
@@ -103,10 +104,12 @@ export function QualitySelector({
               />
               <div>
                 <Label htmlFor="force-redownload" className="font-normal cursor-pointer">
-                  Force re-download
+                  {tr("Force re-download")}
                 </Label>
                 <p className="text-xs text-muted-foreground">
-                  Download even if this track was already downloaded from this service.
+                  {tr(
+                    'Download even if this track was already downloaded from this service.'
+                  )}
                 </p>
               </div>
             </div>
@@ -115,9 +118,9 @@ export function QualitySelector({
 
         <DialogFooter className="flex gap-2">
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {tr('Cancel')}
           </Button>
-          <Button onClick={handleConfirm}>Download</Button>
+          <Button onClick={handleConfirm}>{tr("Download")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { tr } from '@/i18n';
 import { cn } from '@/utils/cn';
 
 const STEP_LABELS = ['Welcome', 'Install', 'Tools', 'Setup', 'Services', 'Tour'];
@@ -29,7 +30,7 @@ export function OnboardingStepIndicator({ currentStep }: OnboardingStepIndicator
                 i === currentStep ? 'text-foreground' : 'text-muted-foreground'
               )}
             >
-              {label}
+              {tr(label)}
             </span>
           </div>
           {i < STEP_LABELS.length - 1 && (

@@ -1,4 +1,5 @@
 import { SelectGroup, SelectItem, SelectLabel } from '@/components/ui/select';
+import { tr } from '@/i18n';
 import type { QualityOption } from '@/types';
 
 export function QualityOptionItems({ options }: { options: QualityOption[] }) {
@@ -9,7 +10,7 @@ export function QualityOptionItems({ options }: { options: QualityOption[] }) {
       <>
         {options.map((o) => (
           <SelectItem key={o.value} value={o.value}>
-            {o.label}
+            {tr(o.label)}
           </SelectItem>
         ))}
       </>
@@ -31,10 +32,10 @@ export function QualityOptionItems({ options }: { options: QualityOption[] }) {
     <>
       {order.map((g) => (
         <SelectGroup key={g || '_ungrouped'}>
-          {g ? <SelectLabel>{g}</SelectLabel> : null}
+          {g ? <SelectLabel>{tr(g)}</SelectLabel> : null}
           {buckets.get(g)!.map((o) => (
             <SelectItem key={o.value} value={o.value}>
-              {o.label}
+              {tr(o.label)}
             </SelectItem>
           ))}
         </SelectGroup>

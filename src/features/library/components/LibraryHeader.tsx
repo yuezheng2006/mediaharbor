@@ -11,6 +11,7 @@ import { useMusicSuggestions } from '@/hooks/useMusicSuggestions';
 import { useSearchStore } from '@/features/search/stores/searchStore';
 import { useEnabledServices } from '@/hooks/useAppSettings';
 import type { LibraryTab } from '@/stores/useLibraryStore';
+import { tr } from '@/i18n';
 import {
   Select,
   SelectContent,
@@ -113,7 +114,7 @@ export function LibraryHeader({
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-4">
-        <h1 className="text-2xl font-bold tracking-tight shrink-0">Library</h1>
+        <h1 className="text-2xl font-bold tracking-tight shrink-0">{tr("Library")}</h1>
 
         <div className="flex-1 relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground/40 pointer-events-none" />
@@ -180,7 +181,7 @@ export function LibraryHeader({
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="local">Local Library</SelectItem>
+            <SelectItem value="local">{tr("Local Library")}</SelectItem>
             {librarySources.map((s) => (
               <SelectItem key={s.value} value={s.value}>
                 <span className="inline-flex items-center gap-2">

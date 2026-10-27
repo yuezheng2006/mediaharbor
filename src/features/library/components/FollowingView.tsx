@@ -10,6 +10,7 @@ import {
 } from '@/features/library/api';
 import { useVisibleCoverUrls } from '@/features/library/useCoverUrls';
 import { renderLibraryQueryState } from '@/features/library/components/LibraryQueryState';
+import { tr } from '@/i18n';
 
 interface FollowingViewProps {
   source: ServicePlatform;
@@ -94,7 +95,7 @@ export function FollowingView({ source }: FollowingViewProps) {
         {followingList.length > 0 ? (
           <UserGrid users={followingList} covers={covers} />
         ) : (
-          <p className="text-sm text-muted-foreground/50">Not following anyone yet.</p>
+          <p className="text-sm text-muted-foreground/50">{tr("Not following anyone yet.")}</p>
         )}
       </section>
 
@@ -105,7 +106,7 @@ export function FollowingView({ source }: FollowingViewProps) {
         {followerList.length > 0 ? (
           <UserGrid users={followerList} covers={covers} />
         ) : (
-          <p className="text-sm text-muted-foreground/50">No followers yet.</p>
+          <p className="text-sm text-muted-foreground/50">{tr("No followers yet.")}</p>
         )}
       </section>
     </div>

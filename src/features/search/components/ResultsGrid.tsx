@@ -2,6 +2,7 @@ import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { ResultCard } from './ResultCard';
 import { Loader2, SearchX, CircleAlert } from 'lucide-react';
 import type { SearchResult } from '@/types';
+import { tr } from '@/i18n';
 
 interface ResultsGridProps {
   results: SearchResult[];
@@ -39,7 +40,7 @@ export function ResultsGrid({
       <div className="flex h-48 items-center justify-center">
         <div className="flex flex-col items-center gap-3 text-muted-foreground">
           <Loader2 className="h-6 w-6 animate-spin" />
-          <p className="text-xs">Searching...</p>
+          <p className="text-xs">{tr("Searching...")}</p>
         </div>
       </div>
     );
@@ -50,7 +51,7 @@ export function ResultsGrid({
       <div className="flex h-48 items-center justify-center">
         <div className="flex flex-col items-center gap-2 text-center">
           <CircleAlert className="h-6 w-6 text-destructive/70" />
-          <p className="text-sm font-medium text-destructive">Search failed</p>
+          <p className="text-sm font-medium text-destructive">{tr("Search failed")}</p>
           <p className="text-xs text-muted-foreground">{error.message}</p>
         </div>
       </div>
@@ -62,7 +63,7 @@ export function ResultsGrid({
       <div className="flex h-48 items-center justify-center">
         <div className="flex flex-col items-center gap-2 text-muted-foreground">
           <SearchX className="h-6 w-6 opacity-40" />
-          <p className="text-sm">No results — try a different query</p>
+          <p className="text-sm">{tr("No results — try a different query")}</p>
         </div>
       </div>
     );
@@ -72,8 +73,8 @@ export function ResultsGrid({
     <div className="space-y-0.5">
       <div className="flex items-center gap-3 px-3 pb-2 text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
         <div className="w-10 shrink-0" />
-        <div className="flex-1">Title</div>
-        <div className="w-10 text-right">Time</div>
+        <div className="flex-1">{tr("Title")}</div>
+        <div className="w-10 text-right">{tr("Time")}</div>
         <div className="w-[4.5rem]" />
       </div>
 

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Trash2, TriangleAlert, CircleX, Info, ChevronDown, ChevronRight } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { motion, AnimatePresence } from 'framer-motion';
+import { tr } from '@/i18n';
 
 const LEVEL_CONFIG = {
   info: { icon: Info, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
@@ -185,7 +186,7 @@ export default function LogsPage() {
   return (
     <div className="p-6 space-y-4 h-full flex flex-col">
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Logs</h1>
+        <h1 className="text-xl font-bold">{tr("Logs")}</h1>
         <Button variant="ghost" size="sm" onClick={clearLogs} disabled={entries.length === 0}>
           <Trash2 className="h-4 w-4 mr-1" /> Clear
         </Button>
@@ -193,7 +194,7 @@ export default function LogsPage() {
 
       <div className="flex gap-2">
         <Input
-          placeholder="Search logs..."
+          placeholder={tr("Search logs...")}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           className="flex-1 h-9"

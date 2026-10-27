@@ -1,5 +1,6 @@
 import { Grid2x2, List, Minus, Plus } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { tr } from '@/i18n';
 import {
   AUTO_COLUMNS,
   MAX_COLUMNS,
@@ -35,7 +36,7 @@ export function ViewControls({ resolvedColumns }: { resolvedColumns: number }) {
       {view === 'grid' && (
         <div className="flex items-center rounded-lg bg-muted/30 p-0.5">
           <StepButton
-            label="Fewer columns"
+            label={tr("Fewer columns")}
             onClick={() => step(-1)}
             disabled={resolvedColumns <= MIN_COLUMNS}
           >
@@ -55,7 +56,7 @@ export function ViewControls({ resolvedColumns }: { resolvedColumns: number }) {
             {columns === AUTO_COLUMNS ? 'auto' : columns}
           </button>
           <StepButton
-            label="More columns"
+            label={tr("More columns")}
             onClick={() => step(1)}
             disabled={resolvedColumns >= MAX_COLUMNS}
           >

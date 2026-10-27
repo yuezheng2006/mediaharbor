@@ -44,6 +44,7 @@ import { qualityLabel, ytMusicSliderQuality } from '@/utils/quality';
 import { useQualityOptions } from '@/hooks/useQualityOptions';
 import { isBackendAvailable, tauriAPI } from '@/tauri-bridge';
 import { copyText } from '@/utils/clipboard';
+import { tr } from '@/i18n';
 
 export default function DownloadPage() {
   const [url, setUrl] = useState('');
@@ -130,7 +131,7 @@ export default function DownloadPage() {
     <div className="p-6 space-y-6">
       <div className="flex gap-3">
         <Input
-          placeholder="Paste URL — YouTube, Spotify, Qobuz, Tidal, Deezer, Apple Music..."
+          placeholder={tr("Paste URL — YouTube, Spotify, Qobuz, Tidal, Deezer, Apple Music...")}
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleDownload()}
@@ -186,7 +187,7 @@ export default function DownloadPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                Audio
+                {tr("Audio")}
               </button>
               <button
                 type="button"
@@ -198,7 +199,7 @@ export default function DownloadPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                Video
+                {tr("Video")}
               </button>
             </div>
           )}
@@ -208,7 +209,7 @@ export default function DownloadPage() {
             </span>
           ) : platform === 'youtubemusic' ? (
             <div className="flex items-center gap-3 min-w-[260px]">
-              <span className="text-xs text-muted-foreground shrink-0">Worst</span>
+              <span className="text-xs text-muted-foreground shrink-0">{tr("Worst")}</span>
               <Slider
                 min={0}
                 max={10}
@@ -217,19 +218,19 @@ export default function DownloadPage() {
                 onValueChange={([v]) => setYtMusicQuality(v)}
                 className="flex-1"
               />
-              <span className="text-xs text-muted-foreground shrink-0">Best</span>
+              <span className="text-xs text-muted-foreground shrink-0">{tr("Best")}</span>
               <span className="text-xs font-medium w-4 text-center">{ytMusicQuality}</span>
             </div>
           ) : (
             options.length > 0 && (
               <Select value={quality} onValueChange={setQuality}>
                 <SelectTrigger className="w-[240px]">
-                  <SelectValue placeholder="Select quality" />
+                  <SelectValue placeholder={tr("Select quality")} />
                 </SelectTrigger>
                 <SelectContent>
                   {options.map((o) => (
                     <SelectItem key={o.value} value={o.value}>
-                      {o.label}
+                      {tr(o.label)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -243,7 +244,7 @@ export default function DownloadPage() {
                 checked={forceReDownload}
                 onCheckedChange={(v) => setForceReDownload(!!v)}
               />
-              <Label htmlFor="force-redownload">Force re-download</Label>
+              <Label htmlFor="force-redownload">{tr("Force re-download")}</Label>
             </div>
           )}
         </div>
@@ -343,14 +344,14 @@ export default function DownloadPage() {
                         {item.status === 'cancelled' && (
                           <div className="flex items-center gap-2 text-muted-foreground">
                             <Square className="h-4 w-4 shrink-0" />
-                            <span className="text-sm font-medium">Cancelled</span>
+                            <span className="text-sm font-medium">{tr("Cancelled")}</span>
                           </div>
                         )}
 
                         {item.status === 'complete' && (
                           <div className="flex items-center gap-2">
                             <CircleCheck className="h-4 w-4 text-green-500" />
-                            <span className="text-sm font-medium text-green-500">Complete</span>
+                            <span className="text-sm font-medium text-green-500">{tr("Complete")}</span>
                             {item.location && (
                               <Button
                                 variant="ghost"
@@ -359,7 +360,7 @@ export default function DownloadPage() {
                                 onClick={() => tauriAPI.downloads.showItemInFolder(item.location!)}
                               >
                                 <FolderOpen className="h-3 w-3 mr-1" />
-                                Show in folder
+                                {tr("Show in folder")}
                               </Button>
                             )}
                           </div>
@@ -394,7 +395,7 @@ export default function DownloadPage() {
                                   }
                                 >
                                   <FolderOpen className="h-3 w-3 mr-1" />
-                                  Show in folder
+                                  {tr("Show in folder")}
                                 </Button>
                               )}
                               <Button
@@ -442,7 +443,7 @@ export default function DownloadPage() {
                           variant="ghost"
                           size="icon"
                           className="shrink-0 text-muted-foreground hover:text-destructive"
-                          title="Cancel download"
+                          title={tr("Cancel download")}
                           onClick={() => cancel(item.order)}
                         >
                           <Square className="h-4 w-4" />

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { tr } from '@/i18n';
 
 interface ShelfSectionProps {
   title: string;
@@ -78,7 +79,7 @@ export function ShelfSection({
             <>
               <button
                 type="button"
-                aria-label="Scroll left"
+                aria-label={tr("Scroll left")}
                 className={ctrl}
                 disabled={atStart}
                 onClick={() => page(-1)}
@@ -87,7 +88,7 @@ export function ShelfSection({
               </button>
               <button
                 type="button"
-                aria-label="Scroll right"
+                aria-label={tr("Scroll right")}
                 className={ctrl}
                 disabled={atEnd}
                 onClick={() => page(1)}

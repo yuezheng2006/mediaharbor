@@ -2,6 +2,7 @@ import { Check, Loader2 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { errorMessage } from '@/utils/errors';
 import type { RadioDirectorySource } from '@/features/radio/api';
+import { tr } from '@/i18n';
 
 /**
  * The directory toggles, inline.
@@ -46,7 +47,7 @@ export function SourceChips({
     return null;
   }
   return (
-    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Station sources">
+    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label={tr("Station sources")}>
       {sources.map((source) =>
         source.toggleable ? (
           <button
@@ -75,7 +76,7 @@ export function SourceChips({
           <span
             key={source.id}
             className="rounded-full border border-border/30 px-2.5 py-1 text-[11px] text-muted-foreground/60"
-            title="Your own stations are always shown"
+            title={tr("Your own stations are always shown")}
           >
             {source.label}
           </span>

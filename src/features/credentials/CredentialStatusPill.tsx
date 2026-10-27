@@ -3,6 +3,7 @@ import { RefreshCw } from 'lucide-react';
 import { useCredentialStatus } from '@/stores/useCredentialHealthStore';
 import { cn } from '@/utils/cn';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface Props {
   platform: string;
@@ -71,7 +72,7 @@ export function CredentialStatusPill({ platform, className }: Props) {
         onClick={onRecheck}
         disabled={busy}
         className="inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] text-muted-foreground hover:text-foreground hover:bg-muted/40 disabled:opacity-50"
-        aria-label="Re-check credentials"
+        aria-label={tr("Re-check credentials")}
       >
         <RefreshCw className={cn('h-3 w-3', busy && 'animate-spin')} />
         Re-check

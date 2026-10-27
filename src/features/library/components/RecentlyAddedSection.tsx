@@ -12,6 +12,7 @@ import {
   ContextMenuItem,
 } from '@/components/ui/context-menu';
 import { AlbumContextMenu } from '@/features/library/actions/RowContextMenu';
+import { tr } from '@/i18n';
 
 interface RecentlyAddedSectionProps {
   kind: 'albums' | 'videos';
@@ -63,7 +64,7 @@ export function RecentlyAddedSection({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold tracking-tight">Recently Added</h3>
+        <h3 className="text-lg font-semibold tracking-tight">{tr("Recently Added")}</h3>
         <div className="flex items-center gap-1">
           <Button
             variant="ghost"
@@ -221,7 +222,7 @@ function CardMenu({
         <ContextMenuItem onSelect={onPlay}>
           <Play className="h-4 w-4 mr-2" /> Play
         </ContextMenuItem>
-        <ContextMenuItem onSelect={onOpen}>Open</ContextMenuItem>
+        <ContextMenuItem onSelect={onOpen}>{tr("Open")}</ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
   );

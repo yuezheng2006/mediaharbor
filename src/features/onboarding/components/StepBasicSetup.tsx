@@ -6,6 +6,7 @@ import { cn } from '@/utils/cn';
 import { useOnboardingStore } from '../stores/useOnboardingStore';
 import { applyThemePreference } from '@/stores/useThemeStore';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 const THEME_OPTIONS = [
   { value: 'dark' as const, label: 'Dark', icon: Moon },
@@ -46,34 +47,35 @@ export function StepBasicSetup() {
       className="space-y-6"
     >
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">Basic Setup</h2>
+        <h2 className="text-lg font-semibold">{tr("Basic Setup")}</h2>
         <p className="text-sm text-muted-foreground">
-          Choose where to save your music and how the app looks.
+          {tr("Choose where to save your music and how the app looks.")}
         </p>
       </div>
       <div className="space-y-2">
-        <p className="text-sm font-medium">Download location</p>
+        <p className="text-sm font-medium">{tr("Download location")}</p>
         <div className="flex items-center gap-2">
           <div className="flex-1 rounded-lg border border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground truncate min-w-0">
-            {downloadLocation || 'Not set'}
+            {downloadLocation || tr('Not set')}
           </div>
           <Button variant="outline" size="sm" className="shrink-0 gap-1.5" onClick={handleBrowse}>
             <FolderOpen className="w-3.5 h-3.5" />
-            Browse
+            {tr("Browse")}
           </Button>
         </div>
         {isSandboxed && !downloadLocation && (
           <div className="flex items-start gap-2 rounded-lg border border-yellow-500/40 bg-yellow-500/10 px-3 py-2 text-xs text-yellow-600 dark:text-yellow-400">
             <TriangleAlert className="w-3.5 h-3.5 mt-0.5 shrink-0" />
             <span>
-              Running in a sandboxed environment. Please choose a download folder — the default
-              location may not be accessible if it is a symlink to an external drive.
+              {tr(
+                'Running in a sandboxed environment. Please choose a download folder — the default location may not be accessible if it is a symlink to an external drive.'
+              )}
             </span>
           </div>
         )}
       </div>
       <div className="space-y-2">
-        <p className="text-sm font-medium">Appearance</p>
+        <p className="text-sm font-medium">{tr("Appearance")}</p>
         <div className="grid grid-cols-3 gap-2">
           {THEME_OPTIONS.map(({ value, label, icon: Icon }) => (
             <button
@@ -87,7 +89,7 @@ export function StepBasicSetup() {
               )}
             >
               <Icon className="w-5 h-5" />
-              <span className="text-xs font-medium">{label}</span>
+              <span className="text-xs font-medium">{tr(label)}</span>
             </button>
           ))}
         </div>

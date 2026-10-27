@@ -36,6 +36,7 @@ import { ListDetailView } from '@/features/radio/components/ListDetailView';
 import { NameDialog } from '@/features/radio/components/NameDialog';
 import { ImportDialog } from '@/features/radio/components/ImportDialog';
 import { StationEditor } from '@/features/radio/components/StationEditor';
+import { tr } from '@/i18n';
 
 /**
  * Internet radio.
@@ -131,7 +132,7 @@ export default function RadioPage() {
       >
         <div className="mx-auto flex min-h-0 w-full max-w-[1600px] flex-1 flex-col p-6">
           <header className="flex flex-wrap items-center gap-x-4 gap-y-2 pb-3">
-            <h1 className="shrink-0 text-2xl font-bold tracking-tight">Radio</h1>
+            <h1 className="shrink-0 text-2xl font-bold tracking-tight">{tr("Radio")}</h1>
             <SearchBox
               className="min-w-[220px] flex-1"
               value={search}
@@ -210,7 +211,7 @@ export default function RadioPage() {
 
         <NameDialog
           open={pendingListStation !== null}
-          title="New playlist"
+          title={tr("New playlist")}
           confirm="Create and add"
           onClose={() => setPendingListStation(null)}
           onSubmit={(name: string) => {

@@ -16,6 +16,7 @@ import type { StationChrome } from '@/features/radio/RadioActions';
 import type { RadioFilters } from '@/features/radio/stores/useRadioStore';
 import { NO_FILTERS } from '@/features/radio/stores/useRadioStore';
 import type { RadioSearchRequest } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 const GENRE_SHELVES = 3;
 
@@ -62,8 +63,8 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
       <div className="h-full overflow-y-auto">
         <RadioEmpty
           icon={Radio}
-          title="No station sources are switched on"
-          hint="Turn one on above, or add a station of your own with the button beside them."
+          title={tr("No station sources are switched on")}
+          hint={tr('Turn one on above, or add a station of your own with the button beside them.')}
         />
       </div>
     );
@@ -72,15 +73,15 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
   return (
     <div className="h-full space-y-8 overflow-y-auto pb-10">
       {(recent.data?.length ?? 0) > 0 && (
-        <ShelfSection title="Continue listening" rowClassName="gap-3">
+        <ShelfSection title={tr("Continue listening")} rowClassName="gap-3">
           <ShelfCards stations={recent.data ?? []} chrome={chrome} />
         </ShelfSection>
       )}
 
       {(mine.data?.length ?? 0) > 0 && (
         <ShelfSection
-          title="Your stations"
-          subtitle="Everything you added yourself"
+          title={tr("Your stations")}
+          subtitle={tr('Everything you added yourself')}
           rowClassName="gap-3"
           onShowAll={() => onShowAll({ source: 'custom' })}
         >
@@ -89,14 +90,14 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
       )}
 
       {(favorites.data?.length ?? 0) > 0 && (
-        <ShelfSection title="Favourites" rowClassName="gap-3">
+        <ShelfSection title={tr("Favourites")} rowClassName="gap-3">
           <ShelfCards stations={favorites.data ?? []} chrome={chrome} />
         </ShelfSection>
       )}
 
       <StationShelf
-        title="Trending now"
-        subtitle="Gaining listeners this week"
+        title={tr("Trending now")}
+        subtitle={tr('Gaining listeners this week')}
         request={TRENDING_REQUEST}
         filters={TRENDING_FILTERS}
         onShowAll={onShowAll}
@@ -104,7 +105,7 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
       />
 
       {genres.isPending && (
-        <ShelfSection title="Loading genres…" rowClassName="gap-3">
+        <ShelfSection title={tr("Loading genres…")} rowClassName="gap-3">
           {SKELETONS}
         </ShelfSection>
       )}
@@ -112,7 +113,7 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
         <StationShelf
           key={genre.name}
           title={capitalise(genre.label)}
-          subtitle={`${genre.stationCount.toLocaleString()} stations`}
+          subtitle={tr('{count} stations', { count: genre.stationCount.toLocaleString() })}
           request={{ tag: genre.name, order: 'clickcount' }}
           filters={{ tag: genre.name }}
           onShowAll={onShowAll}
@@ -122,7 +123,7 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
 
       {dailyCountry && (
         <StationShelf
-          title={`Around ${dailyCountry.label}`}
+          title={tr('Around {place}', { place: dailyCountry.label })}
           request={{ countryCode: dailyCountry.name, order: 'clickcount' }}
           filters={{ countryCode: dailyCountry.name }}
           onShowAll={onShowAll}
@@ -131,8 +132,8 @@ export function HomeView({ sourceCount, onShowAll, ...chrome }: Props) {
       )}
 
       <StationShelf
-        title="Something else entirely"
-        subtitle="A different handful every day"
+        title={tr("Something else entirely")}
+        subtitle={tr('A different handful every day')}
         request={RANDOM_REQUEST}
         filters={RANDOM_FILTERS}
         onShowAll={onShowAll}

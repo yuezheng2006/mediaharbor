@@ -8,6 +8,7 @@ import { useElementWidth } from '@/features/library/hooks/useElementWidth';
 import { renderLibraryQueryState } from '@/features/library/components/LibraryQueryState';
 import { ArtistContextMenu, ArtistKebab } from '@/features/library/actions/RowContextMenu';
 import { normalizePlatform } from '@/utils/platform-data';
+import { tr } from '@/i18n';
 
 export interface LibraryArtist {
   key: string;
@@ -176,7 +177,7 @@ export function ArtistsView({ search, sort, source = 'local', onSelectArtist }: 
         })}
       </div>
       {query.isFetchingNextPage && (
-        <div className="py-6 text-center text-xs text-muted-foreground/40">Loading more…</div>
+        <div className="py-6 text-center text-xs text-muted-foreground/40">{tr("Loading more…")}</div>
       )}
     </div>
   );

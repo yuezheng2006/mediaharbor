@@ -28,6 +28,7 @@ import type { ActionItem } from '@/features/library/actions/types';
 import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from '@/components/ui/context-menu';
 import { contextUriFor, normalizePlatform } from '@/utils/platform-data';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface ArtistAlbum {
   album_key: string;
@@ -155,7 +156,7 @@ export function ArtistDetailView({
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground/50">Artist</p>
+          <p className="text-xs uppercase tracking-wide text-muted-foreground/50">{tr("Artist")}</p>
           <h1 className="text-3xl font-bold truncate">{display}</h1>
           <p className="text-sm text-muted-foreground/60 mt-1">
             {albums.length} album{albums.length !== 1 ? 's' : ''} · {tracks.length} track
@@ -164,7 +165,7 @@ export function ArtistDetailView({
           <div className="mt-4 flex items-center gap-3">
             <Button onClick={playAll} className="gap-2">
               <Play className="h-4 w-4" />
-              Play
+              {tr("Play")}
             </Button>
             {!isLocal && (
               <SaveToggleHeart
@@ -173,7 +174,7 @@ export function ArtistDetailView({
                 id={artistKey}
                 size="md"
                 visibility="always"
-                label="Follow artist"
+                label={tr("Follow artist")}
               />
             )}
           </div>
@@ -181,7 +182,7 @@ export function ArtistDetailView({
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold mb-3">Albums</h2>
+        <h2 className="text-lg font-semibold mb-3">{tr("Albums")}</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
           {albums.map((a) => {
             const url = a.cover_id ? coverMap[a.cover_id] : null;
@@ -245,7 +246,7 @@ export function ArtistDetailView({
       </div>
 
       <div>
-        <h2 className="text-lg font-semibold mb-3">Tracks</h2>
+        <h2 className="text-lg font-semibold mb-3">{tr("Tracks")}</h2>
         <div className="flex flex-col gap-0.5">
           {tracks.map((t, i) => {
             const serviceTrack = !isLocal

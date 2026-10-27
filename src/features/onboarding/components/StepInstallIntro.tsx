@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { PackageOpen } from 'lucide-react';
+import { tr } from '@/i18n';
 
 export function StepInstallIntro() {
   return (
@@ -13,7 +14,7 @@ export function StepInstallIntro() {
         <PackageOpen className="w-7 h-7 text-primary" />
       </div>
       <div className="space-y-2 max-w-sm">
-        <h2 className="text-lg font-semibold">Install the tools we need</h2>
+        <h2 className="text-lg font-semibold">{tr("Install the tools we need")}</h2>
         <p className="text-sm text-muted-foreground">
           MediaHarbor relies on a handful of small command-line tools to download and convert music.
           We&apos;ll go through them one by one — I&apos;ll explain what each does before installing

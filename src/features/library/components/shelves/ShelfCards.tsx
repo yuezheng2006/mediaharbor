@@ -1,6 +1,7 @@
 import { Disc3, ListMusic, User, ListChecks, Mic, Radio, Compass, Play } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { gradientFor, pickReleaseLabel, pickSubtitle, pickTitle, type ShelfItem } from './layouts';
+import { tr } from '@/i18n';
 
 const KIND_ICONS: Record<string, React.ReactNode> = {
   album: <Disc3 className="h-5 w-5 text-muted-foreground/50" />,
@@ -41,7 +42,7 @@ function PlayBadge({ round = false, onPlay }: { round?: boolean; onPlay?: () => 
   return (
     <button
       type="button"
-      aria-label="Play"
+      aria-label={tr("Play")}
       className={cn(cls, 'hover:scale-105 focus-visible:opacity-100')}
       onClick={(e) => {
         e.stopPropagation();
@@ -128,7 +129,7 @@ export function ShortcutTile({ item, coverUrl, onOpen, onPlay }: CardProps) {
       </span>
       <button
         type="button"
-        aria-label="Play"
+        aria-label={tr("Play")}
         disabled={!onPlay}
         className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[color:var(--service-accent)] text-black opacity-0 shadow-lg transition-opacity group-hover:opacity-100"
         onClick={(e) => {
@@ -227,7 +228,7 @@ export function RankedRow({
         {onPlay ? (
           <button
             type="button"
-            aria-label="Play"
+            aria-label={tr("Play")}
             className={cn(OVERLAY, 'group-hover:grid')}
             onClick={(e) => {
               e.stopPropagation();

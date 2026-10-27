@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { logError, logWarning, logInfo } from '@/utils/logger';
 import { tauriAPI, type UpdateChannel, type UpdateStatus } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 function SectionTitle({ children }: { children: React.ReactNode }) {
   return (
@@ -112,14 +113,14 @@ function AppUpdateSection() {
 
   return (
     <div className="p-6 space-y-3">
-      <SectionTitle>MediaHarbor</SectionTitle>
+      <SectionTitle>{tr("MediaHarbor")}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted shrink-0">
           <PackageCheck className="h-4 w-4 text-muted-foreground" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium">MediaHarbor</p>
+          <p className="text-sm font-medium">{tr("MediaHarbor")}</p>
           <p className="text-xs text-muted-foreground">
             Version: <span className="font-mono">{currentVersion || '…'}</span>
           </p>
@@ -144,7 +145,7 @@ function AppUpdateSection() {
         <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3">
           <CircleCheckBig className="h-4 w-4 text-emerald-500 shrink-0" />
           <div>
-            <p className="text-sm font-medium">You&apos;re up to date</p>
+            <p className="text-sm font-medium">{tr("You&apos;re up to date")}</p>
             <p className="text-xs text-muted-foreground">{currentVersion} is the latest release.</p>
           </div>
         </div>
@@ -422,17 +423,17 @@ function SystemDepsSection() {
     const ver = versions[dep.id];
 
     let btnLabel: React.ReactNode;
-    if (!dep.installable) btnLabel = 'Built-in';
+    if (!dep.installable) btnLabel = tr('Built-in');
     else if (installing === dep.id)
       btnLabel = (
         <>
           <Loader2 className="h-3 w-3 animate-spin mr-1" />
-          Installing…
+          {tr('Installing…')}
         </>
       );
-    else if (dep.id === 'python') btnLabel = installed ? 'Recreate' : 'Setup';
-    else if (installed) btnLabel = 'pinned' in dep && dep.pinned === true ? 'Reinstall' : 'Update';
-    else btnLabel = 'Install';
+    else if (dep.id === 'python') btnLabel = installed ? tr('Recreate') : tr('Setup');
+    else if (installed) btnLabel = 'pinned' in dep && dep.pinned === true ? tr('Reinstall') : tr('Update');
+    else btnLabel = tr('Install');
 
     return (
       <div key={dep.id} className="flex items-center gap-3 py-3 px-4">
@@ -473,7 +474,7 @@ function SystemDepsSection() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <SectionTitle>Dependencies</SectionTitle>
+        <SectionTitle>{tr("Dependencies")}</SectionTitle>
         <button
           onClick={fetchStatus}
           disabled={checking || !!installing}
@@ -629,7 +630,7 @@ function OrpheusDLSection() {
 
   return (
     <div className="space-y-3">
-      <SectionTitle>OrpheusDL</SectionTitle>
+      <SectionTitle>{tr("OrpheusDL")}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="flex items-center gap-3 px-4 py-3">
@@ -639,9 +640,9 @@ function OrpheusDLSection() {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium">OrpheusDL</p>
+            <p className="text-sm font-medium">{tr("OrpheusDL")}</p>
             <p className="text-xs text-muted-foreground">
-              Alternative download backend supporting multiple services
+              {tr('Alternative download backend supporting multiple services')}
             </p>
             {installing === 'core' && (
               <InstallProgress percent={installProgress} text={installStatusText} />
@@ -660,15 +661,15 @@ function OrpheusDLSection() {
                 Installing…
               </>
             ) : orpheusInstalled ? (
-              'Reinstall'
+              tr('Reinstall')
             ) : (
-              'Install'
+              tr('Install')
             )}
           </Button>
         </div>
       </div>
 
-      <SectionTitle>Modules</SectionTitle>
+      <SectionTitle>{tr("Modules")}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="divide-y divide-border">
@@ -703,9 +704,9 @@ function OrpheusDLSection() {
                       Installing…
                     </>
                   ) : mod.installed ? (
-                    'Update'
+                    tr('Update')
                   ) : (
-                    'Install'
+                    tr('Install')
                   )}
                 </Button>
               </div>
@@ -715,7 +716,7 @@ function OrpheusDLSection() {
 
         <div className="px-4 py-3 border-t border-border bg-muted/20">
           <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-2">
-            Custom Module
+            {tr('Custom Module')}
           </p>
           <div className="flex flex-col gap-2">
             <Input
@@ -728,7 +729,7 @@ function OrpheusDLSection() {
               <Input
                 value={customLabel}
                 onChange={(e) => setCustomLabel(e.target.value)}
-                placeholder="Service name (e.g. Napster)"
+                placeholder={tr("Service name (e.g. Napster)")}
                 className="flex-1 text-sm"
               />
               <Button
@@ -750,7 +751,7 @@ function OrpheusDLSection() {
                     Installing…
                   </>
                 ) : (
-                  'Install'
+                  tr('Install')
                 )}
               </Button>
             </div>
@@ -765,7 +766,7 @@ export default function UpdatesPage() {
   return (
     <div className="flex flex-col h-full">
       <div className="px-8 pt-8 pb-6 border-b border-border shrink-0">
-        <h1 className="text-lg font-semibold">Updates & Dependencies</h1>
+        <h1 className="text-lg font-semibold">{tr("Updates & Dependencies")}</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
           Install and update all MediaHarbor components
         </p>

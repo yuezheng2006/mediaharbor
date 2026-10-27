@@ -32,6 +32,7 @@ import { ServiceHomeView } from '@/features/library/components/ServiceHomeView';
 import { TrackInfoPanel } from '@/features/library/components/TrackInfoPanel';
 import { formatDurationShort as formatDuration, formatTotalDuration } from '@/utils/formatters';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 function randomIndex(length: number): number {
   return Math.floor(Math.random() * length);
@@ -153,11 +154,11 @@ export function AlbumDetailView({
     });
 
   if (query.isPending) {
-    return <div className="py-16 text-center text-sm text-muted-foreground/50">Loading…</div>;
+    return <div className="py-16 text-center text-sm text-muted-foreground/50">{tr("Loading…")}</div>;
   }
   if (!album) {
     return (
-      <div className="py-16 text-center text-sm text-muted-foreground/50">Album not found.</div>
+      <div className="py-16 text-center text-sm text-muted-foreground/50">{tr("Album not found.")}</div>
     );
   }
 
@@ -174,7 +175,7 @@ export function AlbumDetailView({
         className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
       >
         <ArrowLeft className="h-4 w-4" />
-        Library
+        {tr("Library")}
       </button>
 
       <div className="flex gap-6 items-end">
@@ -239,7 +240,7 @@ export function AlbumDetailView({
               disabled={tracks.length === 0}
             >
               <Play className="h-4 w-4 ml-0.5" />
-              Play
+              {tr("Play")}
             </Button>
             <Button
               variant="outline"
@@ -249,7 +250,7 @@ export function AlbumDetailView({
               disabled={tracks.length === 0}
             >
               <Shuffle className="h-3.5 w-3.5" />
-              Shuffle
+              {tr("Shuffle")}
             </Button>
             {!isLocal && (
               <SaveToggleHeart
@@ -258,7 +259,7 @@ export function AlbumDetailView({
                 id={albumKey}
                 size="md"
                 visibility="always"
-                label="Save album"
+                label={tr("Save album")}
               />
             )}
             {isLocal && (
@@ -267,7 +268,7 @@ export function AlbumDetailView({
                 size="icon"
                 className="h-8 w-8 rounded-full"
                 onClick={() => onOpen(tracks[0]?.path ?? '')}
-                title="Show in folder"
+                title={tr("Show in folder")}
               >
                 <FolderOpen className="h-4 w-4" />
               </Button>
@@ -279,7 +280,7 @@ export function AlbumDetailView({
       <div className="rounded-lg overflow-hidden">
         <div className="flex items-center gap-3 px-4 py-2 text-[11px] uppercase tracking-wider text-muted-foreground/40 border-b border-border/20">
           <span className="w-8 text-right">#</span>
-          <span className="flex-1">Title</span>
+          <span className="flex-1">{tr("Title")}</span>
           <Clock className="h-3 w-3 mr-1" />
         </div>
 

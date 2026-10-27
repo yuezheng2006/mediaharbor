@@ -5,6 +5,7 @@ import { RadioEmpty } from '@/features/radio/components/RadioStates';
 import { useStationSearch } from '@/features/radio/hooks/useRadioQueries';
 import { useDebounced } from '@/features/radio/hooks/useDebounced';
 import type { StationChrome } from '@/features/radio/RadioActions';
+import { tr } from '@/i18n';
 
 const DEBOUNCE_MS = 200;
 
@@ -49,7 +50,7 @@ export function SearchResults({ text, onClear, ...chrome }: Props) {
       empty={
         <RadioEmpty
           icon={Radio}
-          title="Nothing matched"
+          title={tr("Nothing matched")}
           hint="Try fewer words, or pick a genre from the suggestions as you type."
           action={
             <button

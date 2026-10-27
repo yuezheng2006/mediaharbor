@@ -13,6 +13,7 @@ import { renderLibraryQueryState } from '@/features/library/components/LibraryQu
 import { usePlayerStore } from '@/stores/usePlayerStore';
 import type { PlayableTrack } from '@/stores/usePlayerStore';
 import { formatDurationShort } from '@/utils/formatters';
+import { tr } from '@/i18n';
 
 interface EpisodeBookmarksViewProps {
   source: ServicePlatform;
@@ -52,7 +53,7 @@ export function EpisodeBookmarksView({ source }: EpisodeBookmarksViewProps) {
   return (
     <div className="h-full overflow-y-auto flex flex-col gap-3">
       <h2 className="text-[12px] font-semibold tracking-wide uppercase text-muted-foreground/60">
-        Continue listening
+        {tr("Continue listening")}
       </h2>
       <div className="flex flex-col">
         {items.map((t, i) => {

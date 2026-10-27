@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/cn';
 import { useInstallProgress } from '../hooks/useInstallProgress';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface DepDef {
   id: string;
@@ -170,7 +171,7 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
           <CircleCheckBig className="w-8 h-8 text-green-500" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-lg font-semibold">All set</h2>
+          <h2 className="text-lg font-semibold">{tr("All set")}</h2>
           <p className="text-sm text-muted-foreground max-w-xs">
             Your tools are ready. We can move on to a couple of basic preferences.
           </p>
@@ -191,7 +192,8 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
       <div className="flex items-center justify-between">
         <div className="space-y-0.5">
           <p className="text-[10px] uppercase tracking-wider font-medium text-muted-foreground">
-            {isOptional ? 'Optional tools' : 'Required tools'} · {activeIndex + 1} of {totalInPhase}
+            {tr(isOptional ? 'Optional tools' : 'Required tools')} ·{' '}
+            {tr('{current} of {total}', { current: activeIndex + 1, total: totalInPhase })}
           </p>
           <h2 className="text-base font-semibold">{current.label}</h2>
         </div>
@@ -272,13 +274,13 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
                   {status === 'installing' ? (
                     <>
                       <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                      Installing…
+                      {tr('Installing…')}
                     </>
                   ) : status === 'error' ? (
-                    'Retry'
+                    tr('Retry')
                   ) : (
                     <>
-                      Install {current.label}
+                      {tr('Install {label}', { label: tr(current.label) })}
                       <ArrowRight className="w-3.5 h-3.5" />
                     </>
                   )}
@@ -286,7 +288,7 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
               )}
               {(status === 'done' || status === 'skipped') && (
                 <Button size="sm" className="h-7 gap-1" onClick={advance}>
-                  Continue
+                  {tr('Continue')}
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Button>
               )}

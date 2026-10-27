@@ -3,6 +3,7 @@ import { usePlayerStore, type SyncedLine, type WordSyncedLine } from '@/stores/u
 import { Loader2 } from 'lucide-react';
 import { useMediaSyncLoop } from '@/hooks/useMediaSyncLoop';
 import { useShallow } from 'zustand/react/shallow';
+import { tr } from '@/i18n';
 
 const seekTo = (time: number) => usePlayerStore.getState().seekTo(time);
 
@@ -31,7 +32,7 @@ function farFromEnd(): boolean {
 function NoLyrics() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground/40">
-      <p className="text-sm">No lyrics available</p>
+      <p className="text-sm">{tr("No lyrics available")}</p>
     </div>
   );
 }

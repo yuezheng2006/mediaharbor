@@ -7,6 +7,7 @@ import {
 import { cn } from '@/utils/cn';
 import { ActionItems } from './ActionItems';
 import type { ActionItem } from './types';
+import { tr } from '@/i18n';
 
 interface ActionsKebabProps {
   items: ActionItem[];
@@ -27,8 +28,8 @@ export function ActionsKebab({ items, className, size = 'md', align = 'end' }: A
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          aria-label="More actions"
-          title="More"
+          aria-label={tr("More actions")}
+          title={tr("More")}
           onClick={(e) => e.stopPropagation()}
           className={cn(
             'flex items-center justify-center rounded-md text-muted-foreground',

@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useRenameServicePlaylist } from '@/features/library/hooks/useLibraryMutations';
+import { tr } from '@/i18n';
 
 interface Props {
   open: boolean;
@@ -66,7 +67,7 @@ export function RenamePlaylistDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edit playlist</DialogTitle>
+          <DialogTitle>{tr("Edit playlist")}</DialogTitle>
         </DialogHeader>
         <div className="space-y-3">
           <Input
@@ -78,7 +79,7 @@ export function RenamePlaylistDialog({
             }}
           />
           <Input
-            placeholder="Description (optional)"
+            placeholder={tr("Description (optional)")}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
@@ -86,14 +87,14 @@ export function RenamePlaylistDialog({
             <>
               <label className="flex items-center gap-2 text-sm">
                 <Checkbox checked={isPublic} onCheckedChange={(v) => setIsPublic(v === true)} />
-                <span>Public</span>
+                <span>{tr("Public")}</span>
               </label>
               <label className="flex items-center gap-2 text-sm">
                 <Checkbox
                   checked={isCollaborative}
                   onCheckedChange={(v) => setIsCollaborative(v === true)}
                 />
-                <span>Collaborative (others can add tracks)</span>
+                <span>{tr("Collaborative (others can add tracks)")}</span>
               </label>
             </>
           )}

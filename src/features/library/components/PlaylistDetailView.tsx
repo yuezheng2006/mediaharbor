@@ -32,6 +32,7 @@ import { EntityLink } from '@/features/library/components/EntityLink';
 import { CoverCropDialog } from '@/features/library/components/CoverCropDialog';
 import { formatDurationShort as fmt } from '@/utils/formatters';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface PlaylistDto {
   id: number;
@@ -389,7 +390,7 @@ export function PlaylistDetailView({
         </Button>
         <div className="py-16 text-center text-sm whitespace-pre-wrap">
           {loading ? (
-            <span className="text-muted-foreground/50">Loading playlist…</span>
+            <span className="text-muted-foreground/50">{tr("Loading playlist…")}</span>
           ) : (
             <span className="text-red-400/80">{loadError ?? 'Playlist unavailable.'}</span>
           )}
@@ -505,7 +506,7 @@ export function PlaylistDetailView({
             <div className="flex items-center gap-2">
               <Button onClick={() => playAll(0)} className="gap-2" disabled={tracks.length === 0}>
                 <Play className="h-4 w-4" />
-                Play
+                {tr("Play")}
               </Button>
               {isLocal && (
                 <Button
@@ -536,7 +537,7 @@ export function PlaylistDetailView({
                   id={serviceId}
                   size="md"
                   visibility="always"
-                  label="Follow playlist"
+                  label={tr("Follow playlist")}
                 />
               )}
             </div>

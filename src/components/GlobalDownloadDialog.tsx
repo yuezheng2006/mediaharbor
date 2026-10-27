@@ -1,3 +1,4 @@
+import { tr } from '@/i18n';
 import { QualitySelector } from '@/components/QualitySelector';
 import { errorMessage } from '@/utils/errors';
 import { useDownloadDialogStore } from '@/stores/useDownloadDialogStore';
@@ -11,7 +12,7 @@ export function GlobalDownloadDialog() {
   const addNotification = useNotificationStore((s) => s.addNotification);
 
   if (!request) return null;
-  const label = request.title ?? request.album ?? 'this item';
+  const label = request.title ?? request.album ?? tr('this item');
 
   return (
     <QualitySelector
@@ -33,12 +34,12 @@ export function GlobalDownloadDialog() {
             forceRedownload,
           })
           .then(() => {
-            addNotification({ type: 'success', title: 'Download started', message: label });
+            addNotification({ type: 'success', title: tr('Download started'), message: label });
           })
           .catch((err) => {
             addNotification({
               type: 'error',
-              title: 'Download failed',
+              title: tr('Download failed'),
               message: errorMessage(err),
             });
           });

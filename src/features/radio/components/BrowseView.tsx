@@ -13,6 +13,7 @@ import {
   type RadioFilters,
 } from '@/features/radio/stores/useRadioStore';
 import type { RadioSearchRequest } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface Props extends StationChrome {
   sources: RadioDirectorySource[];
@@ -88,7 +89,7 @@ export function BrowseView({ sources, ...chrome }: Props) {
   );
 
   const orderChips = (
-    <div className="flex items-center gap-1" role="group" aria-label="Sort stations">
+    <div className="flex items-center gap-1" role="group" aria-label={tr("Sort stations")}>
       {RADIO_ORDERS.map((option) => (
         <button
           key={option.value}

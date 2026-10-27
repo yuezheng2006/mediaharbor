@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useCreateServicePlaylist } from '@/features/library/hooks/useLibraryMutations';
+import { tr } from '@/i18n';
 
 interface Props {
   open: boolean;
@@ -54,11 +55,11 @@ export function CreatePlaylistDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>New playlist</DialogTitle>
+          <DialogTitle>{tr("New playlist")}</DialogTitle>
         </DialogHeader>
         <div className="space-y-3">
           <Input
-            placeholder="Playlist name"
+            placeholder={tr("Playlist name")}
             value={name}
             onChange={(e) => setName(e.target.value)}
             autoFocus
@@ -67,20 +68,20 @@ export function CreatePlaylistDialog({
             }}
           />
           <Input
-            placeholder="Description (optional)"
+            placeholder={tr("Description (optional)")}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <label className="flex items-center gap-2 text-sm">
             <Checkbox checked={isPublic} onCheckedChange={(v) => setIsPublic(v === true)} />
-            <span>Make playlist public</span>
+            <span>{tr("Make playlist public")}</span>
           </label>
           <label className="flex items-center gap-2 text-sm">
             <Checkbox
               checked={isCollaborative}
               onCheckedChange={(v) => setIsCollaborative(v === true)}
             />
-            <span>Collaborative (others can add tracks)</span>
+            <span>{tr("Collaborative (others can add tracks)")}</span>
           </label>
         </div>
         <DialogFooter>

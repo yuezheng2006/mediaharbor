@@ -3,6 +3,7 @@ import { Search, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/utils/cn';
 import { useTagSuggestions } from '@/features/radio/hooks/useRadioSuggest';
+import { tr } from '@/i18n';
 
 /** Long enough for a click on a suggestion to land before the list unmounts. */
 const BLUR_GRACE_MS = 120;
@@ -86,9 +87,9 @@ export function SearchBox({
         aria-controls={open ? listId : undefined}
         aria-activedescendant={open && highlight >= 0 ? `${listId}-${highlight}` : undefined}
         aria-autocomplete="list"
-        aria-label="Search stations and genres"
+        aria-label={tr("Search stations and genres")}
         className="h-9 rounded-lg border-0 bg-muted/30 pl-9 pr-8 text-sm placeholder:text-muted-foreground/40"
-        placeholder="Search stations and genres…"
+        placeholder={tr("Search stations and genres…")}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onFocus={() => setFocused(true)}
@@ -99,7 +100,7 @@ export function SearchBox({
         <button
           type="button"
           onClick={() => onChange('')}
-          aria-label="Clear search"
+          aria-label={tr("Clear search")}
           className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground/50 transition-colors hover:text-foreground"
         >
           <X className="h-3.5 w-3.5" />

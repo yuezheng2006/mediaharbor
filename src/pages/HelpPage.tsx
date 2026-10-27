@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 function FaqItem({ question, children }: { question: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -124,34 +125,34 @@ export default function HelpPage() {
       </aside>
 
       <main className="flex-1 overflow-y-auto px-8 py-8 max-w-3xl">
-        <h1 className="text-2xl font-bold text-foreground mb-1">MediaHarbor Help</h1>
+        <h1 className="text-2xl font-bold text-foreground mb-1">{tr("MediaHarbor Help")}</h1>
         <p className="text-muted-foreground text-sm mb-2">
           Everything you need to search, stream, and download music from 7 platforms.
         </p>
 
         <SectionAnchor id="faq" />
-        <H2 icon={CircleHelp}>FAQ</H2>
+        <H2 icon={CircleHelp}>{tr("FAQ")}</H2>
         <div className="space-y-3">
-          <FaqGroup title="Credentials & Sign-in" icon={Settings}>
+          <FaqGroup title={tr("Credentials & Sign-in")} icon={Settings}>
             <FaqItem question="Unable to Download: Invalid Credentials">
               <p>
                 MediaHarbor requires you to sign in with your own account to download from platforms
                 other than YouTube.
               </p>
-              <p className="font-medium text-foreground mt-2">Apple Music &amp; Spotify</p>
+              <p className="font-medium text-foreground mt-2">{tr("Apple Music &amp; Spotify")}</p>
               <p>
                 Install the <strong className="text-foreground">cookies.txt</strong> extension in
                 your browser. Navigate to the Apple Music or Spotify page, export your cookies, then
                 paste the file path (or contents) into{' '}
-                <strong className="text-foreground">Settings → Credentials</strong>.
+                <strong className="text-foreground">{tr("Settings → Credentials")}</strong>.
               </p>
-              <p className="font-medium text-foreground mt-2">Deezer</p>
+              <p className="font-medium text-foreground mt-2">{tr("Deezer")}</p>
               <p>
                 Open the Deezer player in your browser, open DevTools → Application → Cookies, find
                 the <code className="font-mono bg-muted px-1 rounded text-xs">arl</code> cookie,
                 copy its value, and paste it into Settings.
               </p>
-              <p className="font-medium text-foreground mt-2">Qobuz</p>
+              <p className="font-medium text-foreground mt-2">{tr("Qobuz")}</p>
               <p>
                 Sign in with your email and password, <em>or</em> provide your User ID and app token
                 in Settings.
@@ -167,12 +168,12 @@ export default function HelpPage() {
             </FaqItem>
           </FaqGroup>
 
-          <FaqGroup title="Downloads" icon={Download}>
+          <FaqGroup title={tr("Downloads")} icon={Download}>
             <FaqItem question="Downloads get stuck, what do I do?">
               <p>
                 Open your task manager to check if your download process is still running. If it is
                 not using the network, kill the process, then go to logs to copy the error output
-                and open a new issue on <strong className="text-foreground">GitHub Issues</strong>{' '}
+                and open a new issue on <strong className="text-foreground">{tr("GitHub Issues")}</strong>{' '}
                 with your logs attached.
               </p>
             </FaqItem>
@@ -187,7 +188,7 @@ export default function HelpPage() {
 
             <FaqItem question="Which video sites can I download from?">
               <p>
-                MediaHarbor uses <strong className="text-foreground">yt-dlp</strong> for generic
+                MediaHarbor uses <strong className="text-foreground">{tr("yt-dlp")}</strong> for generic
                 video downloads. yt-dlp supports over 1,000 sites including YouTube, Vimeo, Twitch
                 clips, Twitter/X, Instagram, and many more. Check the full list at{' '}
                 <strong className="text-foreground">
@@ -198,7 +199,7 @@ export default function HelpPage() {
             </FaqItem>
           </FaqGroup>
 
-          <FaqGroup title="Project" icon={Heart}>
+          <FaqGroup title={tr("Project")} icon={Heart}>
             <FaqItem question="How do I report a bug or request a feature?">
               <p>
                 Visit{' '}
@@ -212,7 +213,7 @@ export default function HelpPage() {
 
             <FaqItem question="How can I support the project?">
               <p>
-                Use the <strong className="text-foreground">Sponsor</strong> button on the GitHub
+                Use the <strong className="text-foreground">{tr("Sponsor")}</strong> button on the GitHub
                 project page. All contributions are appreciated and help keep the project active!
               </p>
             </FaqItem>
@@ -221,7 +222,7 @@ export default function HelpPage() {
               <p>
                 Fork the repository, make your changes on a new branch, and open a Pull Request.
                 Check existing issues labeled{' '}
-                <code className="font-mono bg-muted px-1 rounded text-xs">good first issue</code> if
+                <code className="font-mono bg-muted px-1 rounded text-xs">{tr("good first issue")}</code> if
                 you&apos;re looking for somewhere to start.
               </p>
             </FaqItem>
@@ -229,29 +230,29 @@ export default function HelpPage() {
         </div>
 
         <SectionAnchor id="search" />
-        <H2 icon={Search}>Search</H2>
+        <H2 icon={Search}>{tr("Search")}</H2>
         <div className="space-y-4 text-sm text-muted-foreground">
           <div>
-            <p className="font-medium text-foreground mb-1">Typing hints</p>
+            <p className="font-medium text-foreground mb-1">{tr("Typing hints")}</p>
             <p>
               As you type, MediaHarbor fetches music-aware suggestions from the iTunes catalog.
-              Suggestions are grouped by <em>Artist</em>, <em>Track</em>, and <em>Album</em>. Use{' '}
-              <Kbd>↑</Kbd> <Kbd>↓</Kbd> to navigate and <Kbd>Enter</Kbd> to pick one, or press{' '}
-              <Kbd>Esc</Kbd> to dismiss.
+              Suggestions are grouped by <em>{tr("Artist")}</em>, <em>{tr("Track")}</em>, and <em>{tr("Album")}</em>. Use{' '}
+              <Kbd>↑</Kbd> <Kbd>↓</Kbd> to navigate and <Kbd>{tr("Enter")}</Kbd> to pick one, or press{' '}
+              <Kbd>{tr("Esc")}</Kbd> to dismiss.
             </p>
           </div>
           <div>
-            <p className="font-medium text-foreground mb-1">Content types</p>
+            <p className="font-medium text-foreground mb-1">{tr("Content types")}</p>
             <p>
-              Switch between <strong className="text-foreground">Tracks</strong>,{' '}
-              <strong className="text-foreground">Albums</strong>,{' '}
-              <strong className="text-foreground">Playlists</strong>, and{' '}
-              <strong className="text-foreground">Artists</strong> using the type chips next to the
+              Switch between <strong className="text-foreground">{tr("Tracks")}</strong>,{' '}
+              <strong className="text-foreground">{tr("Albums")}</strong>,{' '}
+              <strong className="text-foreground">{tr("Playlists")}</strong>, and{' '}
+              <strong className="text-foreground">{tr("Artists")}</strong> using the type chips next to the
               platform chips. Not all platforms support all types.
             </p>
           </div>
           <div>
-            <p className="font-medium text-foreground mb-1">Opening albums &amp; playlists</p>
+            <p className="font-medium text-foreground mb-1">{tr("Opening albums &amp; playlists")}</p>
             <p>
               When searching for Albums or Playlists, click any result card to open its track
               listing. From there you can play individual tracks, play all tracks as a queue, or
@@ -268,11 +269,11 @@ export default function HelpPage() {
         </div>
 
         <SectionAnchor id="downloads" />
-        <H2 icon={Download}>Downloads</H2>
+        <H2 icon={Download}>{tr("Downloads")}</H2>
         <div className="space-y-3 text-sm text-muted-foreground">
           <p>
-            Click the <strong className="text-foreground">Download</strong> icon on any result card,
-            or paste a URL directly in the <strong className="text-foreground">Downloads</strong>{' '}
+            Click the <strong className="text-foreground">{tr("Download")}</strong> icon on any result card,
+            or paste a URL directly in the <strong className="text-foreground">{tr("Downloads")}</strong>{' '}
             page. A quality selector will appear before the download begins.
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -298,35 +299,35 @@ export default function HelpPage() {
         </div>
 
         <SectionAnchor id="library" />
-        <H2 icon={Library}>Library</H2>
+        <H2 icon={Library}>{tr("Library")}</H2>
         <div className="space-y-3 text-sm text-muted-foreground">
           <p>
             The Library page scans a folder on your disk and displays all audio files it finds.
-            Click <strong className="text-foreground">Rescan</strong> to force refresh after new
+            Click <strong className="text-foreground">{tr("Rescan")}</strong> to force refresh after new
             downloads. Library watches for new files everytime you download something.
           </p>
           <Tip>
             Set your download output folder in Settings → Downloads so that newly downloaded files
             appear in your library after the next scan.
           </Tip>
-          <p>Supported formats include FLAC, MP3, AAC, OGG, WAV, AIFF, and M4A.</p>
+          <p>{tr("Supported formats include FLAC, MP3, AAC, OGG, WAV, AIFF, and M4A.")}</p>
         </div>
 
         <SectionAnchor id="shortcuts" />
-        <H2 icon={Keyboard}>Keyboard Shortcuts</H2>
+        <H2 icon={Keyboard}>{tr("Keyboard Shortcuts")}</H2>
         <div className="rounded-lg border border-border bg-card divide-y divide-border text-sm">
           {(
             [
               [
-                [<Kbd key="sp">Space</Kbd>],
+                [<Kbd key="sp">{tr("Space")}</Kbd>],
                 'Toggle play / pause (only when not focused on a text input)',
               ],
               [
                 [<Kbd key="u">↑</Kbd>, ' ', <Kbd key="d">↓</Kbd>],
                 'Navigate autocomplete suggestions in the search bar',
               ],
-              [[<Kbd key="en">Enter</Kbd>], 'Accept highlighted suggestion or submit search'],
-              [[<Kbd key="es">Esc</Kbd>], 'Dismiss autocomplete suggestion dropdown'],
+              [[<Kbd key="en">{tr("Enter")}</Kbd>], 'Accept highlighted suggestion or submit search'],
+              [[<Kbd key="es">{tr("Esc")}</Kbd>], 'Dismiss autocomplete suggestion dropdown'],
             ] as const
           ).map(([key, desc], i) => (
             <div key={i} className="flex items-center gap-4 px-3 py-2.5">
@@ -334,7 +335,7 @@ export default function HelpPage() {
               <span className="text-muted-foreground">{desc}</span>
             </div>
           ))}
-          <Tip>More customizable shortcuts will be added on next updates</Tip>
+          <Tip>{tr("More customizable shortcuts will be added on next updates")}</Tip>
         </div>
 
         <div className="mt-10 mb-4 flex items-center justify-center gap-4 text-xs text-muted-foreground">
@@ -357,7 +358,7 @@ export default function HelpPage() {
             className="flex items-center gap-1.5 hover:text-foreground transition-colors"
           >
             <Heart className="h-3.5 w-3.5" />
-            Sponsor
+            {tr("Sponsor")}
           </button>
         </div>
       </main>
