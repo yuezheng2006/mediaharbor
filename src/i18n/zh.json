@@ -829,5 +829,18 @@
   "Recreate": "重新创建",
   "Alternative download backend supporting multiple services": "支持多个服务的备用下载后端",
   "Custom Module": "自定义模块",
-  "Close": "关闭"
+  "Close": "关闭",
+  "Home": "首页",
+  "Following": "关注",
+  "Activity": "动态",
+  "Bookmarks": "书签",
+  "Search {service}…": "搜索 {service}…",
+  "Search {stats}…": "搜索 {stats}…",
+  "Search your library…": "搜索你的资料库…",
+  "Syncing": "同步中",
+  "Scanning…": "扫描中…",
+  "Indexing files…": "正在建立文件索引…",
+  "Scanning library…": "正在扫描资料库…",
+  "This account has no active subscription, so its cloud library is unavailable. You can still search and download from this service.": "此账号没有有效订阅，云端资料库不可用。你仍然可以从此服务搜索和下载。",
+  "Your session has expired or the subscription is inactive. Reconnect the service in Settings → Credentials.": "会话已过期或订阅已失效，请前往「设置 → 凭据」重新连接服务。"
 }

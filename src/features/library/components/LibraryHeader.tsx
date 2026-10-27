@@ -106,10 +106,12 @@ export function LibraryHeader({
     .filter(Boolean)
     .join(', ');
   const placeholder = serviceMode
-    ? `Search ${labelFor(activeSource as Parameters<typeof labelFor>[0])}…`
+    ? tr('Search {service}…', {
+        service: tr(labelFor(activeSource as Parameters<typeof labelFor>[0])),
+      })
     : statsText
-      ? `Search ${statsText}…`
-      : 'Search your library…';
+      ? tr('Search {stats}…', { stats: statsText })
+      : tr('Search your library…');
 
   return (
     <div className="space-y-3">
@@ -154,7 +156,7 @@ export function LibraryHeader({
           {isRefreshing && !isScanning && (
             <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground/50">
               <RefreshCw className="h-3 w-3 animate-spin" />
-              Syncing
+              {tr('Syncing')}
             </span>
           )}
           <Button
@@ -169,7 +171,7 @@ export function LibraryHeader({
             ) : (
               <ScanLine className="h-3.5 w-3.5" />
             )}
-            {isScanning ? 'Scanning…' : 'Rescan'}
+            {isScanning ? tr('Scanning…') : tr('Rescan')}
           </Button>
         </div>
       </div>
