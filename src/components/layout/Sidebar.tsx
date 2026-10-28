@@ -13,7 +13,6 @@ import {
   PanelLeft,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { DiscordIcon } from '@/components/icons/DiscordIcon';
 import { cn } from '@/utils/cn';
 import logoUrl from '@/assets/MediaHarbor_Logo.svg';
 import { setLocale, tr, useLocale } from '@/i18n';
@@ -34,7 +33,6 @@ const TOP_NAV: NavItemConfig[] = [
 ];
 
 const BOTTOM_NAV: NavItemConfig[] = [
-  { href: 'http://discord.gg/Kc97D86TeZ', icon: DiscordIcon, label: 'Discord' },
   { path: '/updates', icon: SwatchBook, label: 'Dependencies', tourId: 'nav-updates' },
   { path: '/logs', icon: ScrollText, label: 'Logs', tourId: 'nav-logs' },
   { path: '/help', icon: CircleHelp, label: 'Help' },
