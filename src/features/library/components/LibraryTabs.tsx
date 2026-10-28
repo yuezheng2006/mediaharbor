@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { LIBRARY_TABS, SERVICE_LIBRARY_TABS, type LibraryTab } from '@/stores/useLibraryStore';
 import { cn } from '@/utils/cn';
+import { tr } from '@/i18n';
 
 const ICONS: Record<LibraryTab, ReactNode> = {
   home: <Home className="h-3.5 w-3.5" />,
@@ -70,7 +71,7 @@ export function LibraryTabs({
               style={active ? { color: 'var(--service-accent)' } : undefined}
             >
               {ICONS[t]}
-              <span>{LABELS[t]}</span>
+              <span>{tr(LABELS[t])}</span>
               <span
                 aria-hidden
                 className={cn(

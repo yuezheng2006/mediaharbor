@@ -7,6 +7,7 @@ import { useCreateList } from '@/features/radio/hooks/useRadioMutations';
 import { useRadioLists } from '@/features/radio/hooks/useRadioQueries';
 import { useRadioStore } from '@/features/radio/stores/useRadioStore';
 import type { RadioList } from '@/features/radio/api';
+import { tr } from '@/i18n';
 
 /** The playlist shelf. Opening one is a store change, not a screen this owns. */
 export function ListsView() {
@@ -30,7 +31,7 @@ export function ListsView() {
           className="flex min-h-[124px] flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border/60 bg-transparent text-sm text-muted-foreground transition-colors hover:border-[var(--service-accent)] hover:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           <Plus className="h-5 w-5" />
-          New playlist
+          {tr("New playlist")}
         </button>
         {lists.isPending
           ? Array.from({ length: 3 }, (_, i) => (
@@ -44,14 +45,14 @@ export function ListsView() {
       {!lists.isPending && rows.length === 0 && (
         <RadioEmpty
           icon={ListMusic}
-          title="No playlists yet"
+          title={tr("No playlists yet")}
           hint="A playlist keeps stations in the order you choose — a morning set, a work set. Right-click any station to add it to one."
         />
       )}
 
       <NameDialog
         open={creating}
-        title="New playlist"
+        title={tr("New playlist")}
         confirm="Create"
         onClose={() => setCreating(false)}
         onSubmit={(name) => {

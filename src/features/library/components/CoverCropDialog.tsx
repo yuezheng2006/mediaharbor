@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Slider } from '@/components/ui/slider';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface Props {
   open: boolean;
@@ -139,7 +140,7 @@ export function CoverCropDialog({ open, onOpenChange, file, onConfirm }: Props) 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Choose cover image</DialogTitle>
+          <DialogTitle>{tr("Choose cover image")}</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col items-center gap-4">
           {error && <p className="text-sm text-destructive">{error}</p>}
@@ -154,12 +155,12 @@ export function CoverCropDialog({ open, onOpenChange, file, onConfirm }: Props) 
             <canvas ref={canvasRef} width={BOX} height={BOX} />
             {!img && !error && (
               <div className="absolute inset-0 grid place-items-center text-sm text-muted-foreground/50">
-                Loading…
+                {tr("Loading…")}
               </div>
             )}
           </div>
           <div className="w-full max-w-[320px] flex items-center gap-3">
-            <span className="text-xs text-muted-foreground/60">Zoom</span>
+            <span className="text-xs text-muted-foreground/60">{tr("Zoom")}</span>
             <Slider
               value={[zoom]}
               min={1}

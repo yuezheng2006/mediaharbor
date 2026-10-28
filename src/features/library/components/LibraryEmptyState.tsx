@@ -1,5 +1,6 @@
 import { Music2, Search, FolderOpen, KeyRound, BadgeX } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { tr } from '@/i18n';
 
 interface LibraryEmptyStateProps {
   variant: 'no-folder' | 'empty' | 'no-results' | 'auth' | 'subscription';
@@ -11,40 +12,40 @@ export function LibraryEmptyState({ variant, detail }: LibraryEmptyStateProps) {
   const config = {
     subscription: {
       icon: BadgeX,
-      title: 'No active subscription',
+      title: tr('No active subscription'),
       description:
         detail ??
-        'This account has no active subscription, so its cloud library is unavailable. You can still search and download from this service.',
+        tr('This account has no active subscription, so its cloud library is unavailable. You can still search and download from this service.'),
       color: 'text-amber-500/40',
       bg: 'from-amber-500/5 to-transparent',
     },
     auth: {
       icon: KeyRound,
-      title: 'Session expired',
+      title: tr('Session expired'),
       description:
         detail ??
-        'Your session has expired or the subscription is inactive. Reconnect the service in Settings → Credentials.',
+        tr('Your session has expired or the subscription is inactive. Reconnect the service in Settings → Credentials.'),
       color: 'text-amber-500/40',
       bg: 'from-amber-500/5 to-transparent',
     },
     'no-folder': {
       icon: FolderOpen,
-      title: 'No download folder set',
-      description: 'Go to Settings → General and set your download location to get started.',
+      title: tr('No download folder set'),
+      description: tr('Go to Settings → General and set your download location to get started.'),
       color: 'text-amber-500/40',
       bg: 'from-amber-500/5 to-transparent',
     },
     empty: {
       icon: Music2,
-      title: 'Your library is empty',
-      description: "Download some music or videos first — they'll appear here automatically.",
+      title: tr('Your library is empty'),
+      description: tr("Download some music or videos first — they'll appear here automatically."),
       color: 'text-primary/30',
       bg: 'from-primary/5 to-transparent',
     },
     'no-results': {
       icon: Search,
-      title: 'No results found',
-      description: 'Try a different search term or adjust your filters.',
+      title: tr('No results found'),
+      description: tr('Try a different search term or adjust your filters.'),
       color: 'text-muted-foreground/30',
       bg: 'from-muted/30 to-transparent',
     },

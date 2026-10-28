@@ -6,6 +6,7 @@ import { errorMessage } from '@/utils/errors';
 import { type RadioDirectorySource, type RadioFacetKind } from '@/features/radio/api';
 import { facetLabel } from '@/features/radio/format';
 import { useRadioFacets } from '@/features/radio/hooks/useRadioQueries';
+import { tr } from '@/i18n';
 import {
   activeFilterCount,
   useRadioStore,
@@ -65,10 +66,10 @@ export function FilterRail({ sources }: { sources: RadioDirectorySource[] }) {
         )}
       </div>
 
-      <Section title="Source" defaultOpen>
+      <Section title={tr("Source")} defaultOpen>
         <div className="space-y-0.5">
           <Option
-            label="All sources"
+            label={tr("All sources")}
             selected={filters.source === null}
             onSelect={() => setFilter('source', null)}
           />
@@ -97,7 +98,7 @@ export function FilterRail({ sources }: { sources: RadioDirectorySource[] }) {
         />
       ))}
 
-      <Section title="Minimum bitrate" defaultOpen>
+      <Section title={tr("Minimum bitrate")} defaultOpen>
         <div className="flex flex-wrap gap-1">
           {BITRATES.map((rate) => (
             <button
@@ -190,7 +191,9 @@ function FacetSection({
               onClick={() => setExpanded((e) => !e)}
               className="text-[11px] text-muted-foreground hover:text-foreground"
             >
-              {expanded ? 'Show fewer' : `Show all ${matching.length.toLocaleString()}`}
+              {expanded
+                ? tr('Show fewer')
+                : tr('Show all {count}', { count: matching.length.toLocaleString() })}
             </button>
           )}
         </div>

@@ -1,5 +1,6 @@
 import { ScanLine } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { tr } from '@/i18n';
 
 interface ScanProgressBarProps {
   progress: number;
@@ -21,7 +22,7 @@ export function ScanProgressBar({ progress, currentFile }: ScanProgressBarProps)
       <div className="flex items-center justify-between text-sm">
         <span className="font-medium flex items-center gap-2 text-primary">
           <ScanLine className="h-4 w-4 animate-pulse" />
-          {indexing ? 'Indexing files…' : 'Scanning library…'}
+          {indexing ? tr('Indexing files…') : tr('Scanning library…')}
         </span>
         {!indexing && (
           <span className="text-muted-foreground font-mono text-xs">{Math.round(progress)}%</span>

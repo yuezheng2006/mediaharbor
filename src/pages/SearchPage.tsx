@@ -28,6 +28,7 @@ import { useEnabledServices } from '@/hooks/useAppSettings';
 import { SEARCH_TYPE_LABELS } from '@/utils/constants';
 import type { Platform, SearchType, SearchResult } from '@/types';
 import { isBackendAvailable } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface PlayableSource {
   url?: string;
@@ -397,7 +398,7 @@ export default function SearchPage() {
           <form onSubmit={handleSearch} className="flex gap-2">
             <Input
               type="text"
-              placeholder="Search for music, videos, albums, playlists..."
+              placeholder={tr("Search for music, videos, albums, playlists...")}
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -425,7 +426,7 @@ export default function SearchPage() {
                   : undefined
               }
             >
-              Search
+              {tr("Search")}
             </Button>
           </form>
 
@@ -452,7 +453,7 @@ export default function SearchPage() {
                     <Icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                     <span className="truncate">{s.text}</span>
                     <span className="ml-auto text-[10px] text-muted-foreground capitalize shrink-0">
-                      {s.type}
+                      {tr(s.type)}
                     </span>
                   </button>
                 );
@@ -506,7 +507,7 @@ export default function SearchPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                {SEARCH_TYPE_LABELS[t]}
+                {tr(SEARCH_TYPE_LABELS[t])}
               </button>
             ))}
           </div>
@@ -525,7 +526,7 @@ export default function SearchPage() {
                     type="button"
                     onClick={handleAddAllToQueue}
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors duration-100"
-                    title="Append all results to the end of the current queue"
+                    title={tr("Append all results to the end of the current queue")}
                   >
                     <ListEnd className="h-3.5 w-3.5" />
                     Add all to queue
@@ -561,7 +562,7 @@ export default function SearchPage() {
                   disabled={isFetchingNextPage}
                   className="px-4 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors duration-100 disabled:opacity-50"
                 >
-                  {isFetchingNextPage ? 'Loading…' : 'Load more'}
+                  {isFetchingNextPage ? tr('Loading…') : tr('Load more')}
                 </button>
               </div>
             )}
@@ -575,7 +576,7 @@ export default function SearchPage() {
                 className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Browse
+                {tr("Browse")}
               </button>
               <span className="text-sm font-semibold tracking-tight">{browseCategory.title}</span>
             </div>
@@ -604,7 +605,7 @@ export default function SearchPage() {
             fallback={
               <div className="flex flex-col items-center justify-center h-full gap-3 text-muted-foreground select-none">
                 <Search className="h-10 w-10 opacity-20" />
-                <p className="text-sm">Search across 7 platforms</p>
+                <p className="text-sm">{tr("Search across 7 platforms")}</p>
               </div>
             }
           />

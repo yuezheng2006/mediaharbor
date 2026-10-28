@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Compass, Heart, House, ListMusic } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import type { RadioTab } from '@/features/radio/stores/useRadioStore';
+import { tr } from '@/i18n';
 
 const RADIO_TABS: RadioTab[] = ['home', 'browse', 'favorites', 'playlists'];
 
@@ -50,7 +51,7 @@ export function RadioTabs({
               style={active ? { color: 'var(--service-accent)' } : undefined}
             >
               {ICONS[tab]}
-              <span>{LABELS[tab]}</span>
+              <span>{tr(LABELS[tab])}</span>
               <span
                 aria-hidden
                 className={cn(

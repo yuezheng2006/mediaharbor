@@ -24,6 +24,7 @@ import { ContextMenu, ContextMenuTrigger, ContextMenuContent } from '@/component
 import { normalizePlatform } from '@/utils/platform-data';
 import { formatDurationShort as fmt } from '@/utils/formatters';
 import { TrackInfoPanel } from '@/features/library/components/TrackInfoPanel';
+import { tr } from '@/i18n';
 
 function LocalTrackMenu({ items, children }: { items: ActionItem[]; children: ReactNode }) {
   return (
@@ -363,11 +364,11 @@ export function TracksView({ search, sort, source = 'local' }: TracksViewProps) 
       >
         <div>#</div>
         <div></div>
-        <div>Title</div>
-        <div>Artist</div>
-        <div>Album</div>
+        <div>{tr("Title")}</div>
+        <div>{tr("Artist")}</div>
+        <div>{tr("Album")}</div>
         {showHeart && <div></div>}
-        <div className="text-right">Time</div>
+        <div className="text-right">{tr("Time")}</div>
       </div>
       <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
         {virtualizer.getVirtualItems().map((vi) => {

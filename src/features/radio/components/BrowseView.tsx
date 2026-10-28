@@ -13,6 +13,7 @@ import {
   type RadioFilters,
 } from '@/features/radio/stores/useRadioStore';
 import type { RadioSearchRequest } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 interface Props extends StationChrome {
   sources: RadioDirectorySource[];
@@ -83,12 +84,13 @@ export function BrowseView({ sources, ...chrome }: Props) {
       )}
     >
       <SlidersHorizontal className="h-3.5 w-3.5" />
-      Filters{active > 0 ? ` (${active})` : ''}
+      {tr('Filters')}
+      {active > 0 ? ` (${active})` : ''}
     </button>
   );
 
   const orderChips = (
-    <div className="flex items-center gap-1" role="group" aria-label="Sort stations">
+    <div className="flex items-center gap-1" role="group" aria-label={tr('Sort stations')}>
       {RADIO_ORDERS.map((option) => (
         <button
           key={option.value}
@@ -102,7 +104,7 @@ export function BrowseView({ sources, ...chrome }: Props) {
               : 'text-muted-foreground/60 hover:text-foreground'
           )}
         >
-          {option.label}
+          {tr(option.label)}
         </button>
       ))}
     </div>
@@ -136,7 +138,7 @@ export function BrowseView({ sources, ...chrome }: Props) {
             onClick={clearFilters}
             className="px-1 text-[11px] text-muted-foreground hover:text-foreground"
           >
-            Clear all
+            {tr('Clear all')}
           </button>
         </div>
       )}
@@ -161,11 +163,11 @@ export function BrowseView({ sources, ...chrome }: Props) {
           empty={
             <RadioEmpty
               icon={Radio}
-              title={active > 0 ? 'Nothing matches those filters' : 'No stations here'}
+              title={tr(active > 0 ? 'Nothing matches those filters' : 'No stations here')}
               hint={
                 active > 0
-                  ? 'Loosen one of them — a genre and a country together often leave nothing.'
-                  : 'The directories have nothing to show right now.'
+                  ? tr('Loosen one of them — a genre and a country together often leave nothing.')
+                  : tr('The directories have nothing to show right now.')
               }
               action={
                 active > 0 ? (
@@ -174,7 +176,7 @@ export function BrowseView({ sources, ...chrome }: Props) {
                     onClick={clearFilters}
                     className="text-xs text-[var(--service-accent)] hover:underline"
                   >
-                    Clear the filters
+                    {tr('Clear the filters')}
                   </button>
                 ) : undefined
               }

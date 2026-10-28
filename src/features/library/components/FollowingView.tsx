@@ -10,6 +10,7 @@ import {
 } from '@/features/library/api';
 import { useVisibleCoverUrls } from '@/features/library/useCoverUrls';
 import { renderLibraryQueryState } from '@/features/library/components/LibraryQueryState';
+import { tr } from '@/i18n';
 
 interface FollowingViewProps {
   source: ServicePlatform;
@@ -89,23 +90,23 @@ export function FollowingView({ source }: FollowingViewProps) {
     <div className="h-full overflow-y-auto flex flex-col gap-8">
       <section className="flex flex-col gap-3">
         <h2 className="text-[12px] font-semibold tracking-wide uppercase text-muted-foreground/60">
-          Following · {followingList.length}
+          {tr('Following · {count}', { count: followingList.length })}
         </h2>
         {followingList.length > 0 ? (
           <UserGrid users={followingList} covers={covers} />
         ) : (
-          <p className="text-sm text-muted-foreground/50">Not following anyone yet.</p>
+          <p className="text-sm text-muted-foreground/50">{tr("Not following anyone yet.")}</p>
         )}
       </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="text-[12px] font-semibold tracking-wide uppercase text-muted-foreground/60">
-          Followers · {followerList.length}
+          {tr('Followers · {count}', { count: followerList.length })}
         </h2>
         {followerList.length > 0 ? (
           <UserGrid users={followerList} covers={covers} />
         ) : (
-          <p className="text-sm text-muted-foreground/50">No followers yet.</p>
+          <p className="text-sm text-muted-foreground/50">{tr("No followers yet.")}</p>
         )}
       </section>
     </div>

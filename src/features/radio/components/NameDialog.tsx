@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { tr } from '@/i18n';
 import {
   Dialog,
   DialogContent,
@@ -51,7 +52,7 @@ export function NameDialog({
         <Input
           autoFocus
           value={name}
-          placeholder="List name"
+          placeholder={tr("List name")}
           onChange={(e) => setName(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {

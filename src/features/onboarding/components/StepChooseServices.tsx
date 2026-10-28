@@ -4,6 +4,7 @@ import { cn } from '@/utils/cn';
 import { PlatformIcon } from '@/utils/platforms';
 import { useOnboardingStore } from '../stores/useOnboardingStore';
 import { GATED_SERVICES } from '@/utils/platform-data';
+import { tr } from '@/i18n';
 
 /// What each service actually gives you, for the onboarding card. Only the copy lives
 /// here — the roster and the labels come from the descriptor table, so a new gated
@@ -32,10 +33,11 @@ export function StepChooseServices() {
       className="space-y-6"
     >
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">How will you use MediaHarbor?</h2>
+        <h2 className="text-lg font-semibold">{tr('How will you use MediaHarbor?')}</h2>
         <p className="text-sm text-muted-foreground">
-          You can start with no setup at all — just paste a URL and download. Add streaming services
-          only if you want to browse and download from your accounts.
+          {tr(
+            'You can start with no setup at all — just paste a URL and download. Add streaming services only if you want to browse and download from your accounts.'
+          )}
         </p>
       </div>
 
@@ -45,10 +47,11 @@ export function StepChooseServices() {
             <Download className="w-5 h-5" />
           </div>
           <div className="space-y-0.5">
-            <p className="text-sm font-semibold">Just paste URLs</p>
+            <p className="text-sm font-semibold">{tr('Just paste URLs')}</p>
             <p className="text-xs text-muted-foreground">
-              Works out of the box with yt-dlp — YouTube, SoundCloud and hundreds of sites. No
-              accounts needed. This is always available.
+              {tr(
+                'Works out of the box with yt-dlp — YouTube, SoundCloud and hundreds of sites. No accounts needed. This is always available.'
+              )}
             </p>
           </div>
         </div>
@@ -56,8 +59,8 @@ export function StepChooseServices() {
 
       <div className="space-y-2">
         <p className="text-sm font-medium">
-          Add streaming services{' '}
-          <span className="text-muted-foreground font-normal">(optional)</span>
+          {tr('Add streaming services')}{' '}
+          <span className="text-muted-foreground font-normal">({tr('optional')})</span>
         </p>
         <div className="grid grid-cols-2 gap-2">
           {SERVICES.map(({ platform, label, description }) => {
@@ -75,9 +78,9 @@ export function StepChooseServices() {
               >
                 <PlatformIcon platform={platform} size={18} />
                 <span className="flex-1 min-w-0">
-                  <span className="block font-medium">{label}</span>
+                  <span className="block font-medium">{tr(label)}</span>
                   <span className="block text-[11px] text-muted-foreground/70 truncate">
-                    {description}
+                    {tr(description)}
                   </span>
                 </span>
                 {selected && <Check className="w-4 h-4 text-primary shrink-0" />}
@@ -86,7 +89,7 @@ export function StepChooseServices() {
           })}
         </div>
         <p className="text-xs text-muted-foreground">
-          You can add or remove services any time in Settings.
+          {tr('You can add or remove services any time in Settings.')}
         </p>
       </div>
     </motion.div>

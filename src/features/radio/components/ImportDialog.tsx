@@ -18,6 +18,7 @@ import { stationSubtitle } from '@/features/radio/format';
 import { useSaveStations } from '@/features/radio/hooks/useRadioMutations';
 import { StationIcon } from '@/features/radio/components/StationIcon';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 type Mode = 'url' | 'file' | 'icecast';
 
@@ -141,13 +142,13 @@ export function ImportDialog({
     >
       <DialogContent className="sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>Add a station</DialogTitle>
+          <DialogTitle>{tr("Add a station")}</DialogTitle>
           <DialogDescription>
             Nothing is saved until you confirm, so a mistyped address costs nothing.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex gap-1" role="tablist" aria-label="Import method">
+        <div className="flex gap-1" role="tablist" aria-label={tr("Import method")}>
           {MODES.map((m) => {
             const Icon = m.icon;
             return (
@@ -182,7 +183,7 @@ export function ImportDialog({
             <Input
               readOnly
               value={text}
-              placeholder="No file chosen"
+              placeholder={tr("No file chosen")}
               className="flex-1 bg-muted/30"
             />
             <Button variant="outline" onClick={pickFile} disabled={busy}>

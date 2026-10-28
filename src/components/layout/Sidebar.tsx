@@ -13,9 +13,9 @@ import {
   PanelLeft,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { DiscordIcon } from '@/components/icons/DiscordIcon';
 import { cn } from '@/utils/cn';
 import logoUrl from '@/assets/MediaHarbor_Logo.svg';
+import { setLocale, tr, useLocale } from '@/i18n';
 
 type NavItemConfig = {
   path?: string;
@@ -33,7 +33,6 @@ const TOP_NAV: NavItemConfig[] = [
 ];
 
 const BOTTOM_NAV: NavItemConfig[] = [
-  { href: 'http://discord.gg/Kc97D86TeZ', icon: DiscordIcon, label: 'Discord' },
   { path: '/updates', icon: SwatchBook, label: 'Dependencies', tourId: 'nav-updates' },
   { path: '/logs', icon: ScrollText, label: 'Logs', tourId: 'nav-logs' },
   { path: '/help', icon: CircleHelp, label: 'Help' },
@@ -69,13 +68,13 @@ function NavItem({
     return (
       <a
         href={href}
-        title={collapsed ? label : undefined}
+        title={collapsed ? tr(label) : undefined}
         className={classes}
         target="_blank"
         rel="noreferrer"
       >
         <Icon className="relative z-10 h-4 w-4 shrink-0" />
-        {!collapsed && <span className="relative z-10">{label}</span>}
+        {!collapsed && <span className="relative z-10">{tr(label)}</span>}
       </a>
     );
   }
@@ -83,7 +82,7 @@ function NavItem({
   return (
     <Link
       to={path!}
-      title={collapsed ? label : undefined}
+      title={collapsed ? tr(label) : undefined}
       className={classes}
       data-tour-id={tourId}
     >
@@ -95,13 +94,14 @@ function NavItem({
         />
       )}
       <Icon className="relative z-10 h-4 w-4 shrink-0" />
-      {!collapsed && <span className="relative z-10">{label}</span>}
+      {!collapsed && <span className="relative z-10">{tr(label)}</span>}
     </Link>
   );
 }
 
 export function Sidebar() {
   const location = useLocation();
+  const locale = useLocale();
   const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (path: string) =>
@@ -124,7 +124,7 @@ export function Sidebar() {
         {!collapsed && (
           <>
             <img src={logoUrl} alt="MediaHarbor" className="h-7 w-7 rounded-lg shrink-0" />
-            <span className="font-semibold text-sm tracking-tight flex-1">MediaHarbor</span>
+            <span className="font-semibold text-sm tracking-tight flex-1">{tr("MediaHarbor")}</span>
           </>
         )}
         <button
@@ -133,7 +133,7 @@ export function Sidebar() {
             'rounded-md text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors shrink-0',
             collapsed ? 'p-2' : 'p-1'
           )}
-          title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+          title={collapsed ? tr('Expand sidebar') : tr('Collapse sidebar')}
         >
           {collapsed ? <PanelLeft className="h-4 w-4" /> : <PanelLeftClose className="h-4 w-4" />}
         </button>
@@ -152,6 +152,19 @@ export function Sidebar() {
 
       <div className="flex-1" />
 
+      <div className={cn('border-t border-border/40 pt-2', collapsed ? 'px-1.5' : 'px-2')}>
+        <button
+          type="button"
+          onClick={() => setLocale(locale === 'zh' ? 'en' : 'zh')}
+          title={tr('Language')}
+          className={cn(
+            'flex w-full items-center rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted/60 hover:text-foreground',
+            collapsed && 'justify-center px-0'
+          )}
+        >
+          {collapsed ? (locale === 'zh' ? 'EN' : '中') : locale === 'zh' ? 'English' : '中文'}
+        </button>
+      </div>
       <nav
         className={cn('border-t border-border/40 py-3 space-y-0.5', collapsed ? 'px-1.5' : 'px-2')}
       >

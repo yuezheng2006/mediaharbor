@@ -35,6 +35,7 @@ import { useOnboardingStore } from '@/features/onboarding/stores/useOnboardingSt
 
 import SearchPage from '@/pages/SearchPage';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 const DownloadPage = lazy(() => import('@/pages/DownloadPage'));
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -148,7 +149,7 @@ function AppInner() {
 
   useEffect(() => {
     const cleanup = tauriAPI.app?.onError?.((data) => {
-      const msg = data.message ?? 'An unexpected error occurred.';
+      const msg = data.message ?? tr('An unexpected error occurred.');
       const isNotInstalled =
         msg.includes('not installed') || msg.includes('not in PATH') || msg.includes('ENOENT');
       if (data.context === 'playback') setPlaying(false);
@@ -164,14 +165,16 @@ function AppInner() {
         navigate(`/settings?tab=${needsAuth}`);
         logError(
           source,
-          'Login required',
-          `You need to log in to ${needsAuth.charAt(0).toUpperCase() + needsAuth.slice(1)} first. Opening settings…`,
+          tr('Login required'),
+          tr('You need to log in to {service} first. Opening settings…', {
+            service: needsAuth.charAt(0).toUpperCase() + needsAuth.slice(1),
+          }),
           { duration: 6000 }
         );
         return;
       }
 
-      logError(source, isNotInstalled ? 'Dependency not found' : 'Error', detail, {
+      logError(source, tr(isNotInstalled ? 'Dependency not found' : 'Error'), detail, {
         duration: isNotInstalled ? 10000 : 6000,
       });
     });
@@ -212,7 +215,7 @@ function AppInner() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Input Required</DialogTitle>
+            <DialogTitle>{tr("Input Required")}</DialogTitle>
           </DialogHeader>
           <div className="space-y-3">
             {stdinPrompt?.promptLines.map((line, i) => (
@@ -225,11 +228,11 @@ function AppInner() {
               value={stdinInput}
               onChange={(e) => setStdinInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleStdinSubmit()}
-              placeholder="Type your response..."
+              placeholder={tr("Type your response...")}
             />
           </div>
           <DialogFooter>
-            <Button onClick={handleStdinSubmit}>Send</Button>
+            <Button onClick={handleStdinSubmit}>{tr("Send")}</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

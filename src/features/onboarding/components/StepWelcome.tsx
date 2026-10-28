@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Music2, Library, Settings } from 'lucide-react';
 import logo from '@/assets/MediaHarbor_Logo.svg';
+import { tr } from '@/i18n';
 
 const HIGHLIGHTS = [
   {
@@ -30,9 +31,11 @@ export function StepWelcome() {
     >
       <img src={logo} alt="MediaHarbor" className="w-16 h-16" />
       <div className="space-y-2">
-        <h1 className="text-2xl font-bold tracking-tight">Welcome to MediaHarbor</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{tr("Welcome to MediaHarbor")}</h1>
         <p className="text-sm text-muted-foreground max-w-xs">
-          Your all-in-one desktop music downloader. Let&apos;s get you set up in a few quick steps.
+          {tr(
+            "Your all-in-one desktop music downloader. Let's get you set up in a few quick steps."
+          )}
         </p>
       </div>
       <div className="w-full space-y-2 text-left">
@@ -45,8 +48,8 @@ export function StepWelcome() {
               <Icon className="w-4 h-4 text-foreground" />
             </div>
             <div>
-              <p className="text-sm font-medium">{title}</p>
-              <p className="text-xs text-muted-foreground">{description}</p>
+              <p className="text-sm font-medium">{tr(title)}</p>
+              <p className="text-xs text-muted-foreground">{tr(description)}</p>
             </div>
           </div>
         ))}

@@ -13,6 +13,7 @@ import { useOwnedPlaylists } from '@/features/library/hooks/useLibraryMutations'
 import { useVisibleCoverUrls } from '@/features/library/useCoverUrls';
 import { normalizePlatform } from '@/utils/platform-data';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 export interface LibraryPlaylist {
   id: number;
@@ -159,7 +160,7 @@ export function PlaylistsView({ search, source = 'local', onSelectPlaylist }: Pl
                   if (e.key === 'Enter') onCreateLocal();
                   if (e.key === 'Escape') setCreating(false);
                 }}
-                placeholder="Playlist name"
+                placeholder={tr("Playlist name")}
                 className="max-w-xs h-8"
               />
               <Button size="sm" onClick={onCreateLocal}>
@@ -172,7 +173,7 @@ export function PlaylistsView({ search, source = 'local', onSelectPlaylist }: Pl
           ) : (
             <Button size="sm" onClick={() => setCreating(true)} className="gap-2">
               <Plus className="h-4 w-4" />
-              New playlist
+              {tr("New playlist")}
             </Button>
           )
         ) : (
@@ -212,7 +213,7 @@ export function PlaylistsView({ search, source = 'local', onSelectPlaylist }: Pl
                       onDeleteLocal(p.id, p.name);
                     }}
                     className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-destructive/20 text-muted-foreground/60 hover:text-destructive z-10"
-                    title="Delete playlist"
+                    title={tr("Delete playlist")}
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
@@ -345,7 +346,7 @@ export function PlaylistsView({ search, source = 'local', onSelectPlaylist }: Pl
 
       <div ref={sentinelRef} aria-hidden className="h-px w-full" />
       {query.isFetchingNextPage && (
-        <div className="py-6 text-center text-xs text-muted-foreground/40">Loading more…</div>
+        <div className="py-6 text-center text-xs text-muted-foreground/40">{tr("Loading more…")}</div>
       )}
 
       {!isLocal && (

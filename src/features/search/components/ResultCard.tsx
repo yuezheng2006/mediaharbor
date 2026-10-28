@@ -19,6 +19,7 @@ import { SaveToggleHeart } from '@/features/library/components/SaveToggleHeart';
 import type { SaveKindStr } from '@/tauri-bridge';
 import { copyText } from '@/utils/clipboard';
 import { isKnownPlatform, normalizePlatform } from '@/utils/platform-data';
+import { tr } from '@/i18n';
 import {
   TrackContextMenu,
   AlbumContextMenu,
@@ -213,28 +214,28 @@ export function ResultCard({ result, onPlay, onPlayNext, onDownload, onClick }: 
       return str(r.artist) || str(r.channel) || '';
     }
     if (isEpisode) {
-      return str(r.artist) || str(r.owner) || 'Episode';
+      return str(r.artist) || str(r.owner) || tr('Episode');
     }
     if (isShow) {
-      return [str(r.owner), r.trackCount ? `${r.trackCount} episodes` : undefined]
+      return [str(r.owner), r.trackCount ? tr('{count} episodes', { count: r.trackCount }) : undefined]
         .filter(Boolean)
         .join(' · ');
     }
     if (isAudiobook) {
-      return [str(r.owner), r.trackCount ? `${r.trackCount} chapters` : undefined]
+      return [str(r.owner), r.trackCount ? tr('{count} chapters', { count: r.trackCount }) : undefined]
         .filter(Boolean)
         .join(' · ');
     }
     if (isChannel) {
-      return 'YouTube Channel';
+      return tr('YouTube Channel');
     }
     if (isPodcast) {
-      return str(r.artist) || 'Podcast';
+      return str(r.artist) || tr('Podcast');
     }
     if (isAlbum) {
       const a = result as Album;
       const parts: string[] = [str(a.artist)].filter(Boolean) as string[];
-      if (a.trackCount) parts.push(`${a.trackCount} tracks`);
+      if (a.trackCount) parts.push(tr('{count} tracks', { count: a.trackCount }));
       const year = extractYear(str(a.releaseDate));
       if (year) parts.push(year);
       const genre = str(a.genre);
@@ -243,14 +244,15 @@ export function ResultCard({ result, onPlay, onPlayNext, onDownload, onClick }: 
     }
     if (isPlaylist) {
       const p = result as Playlist;
-      return [str(p.owner), p.trackCount ? `${p.trackCount} tracks` : undefined]
+      return [str(p.owner), p.trackCount ? tr('{count} tracks', { count: p.trackCount }) : undefined]
         .filter(Boolean)
         .join(' · ');
     }
     if (isArtist) {
       const a = result as Artist;
       const parts: string[] = [];
-      if (a.followerCount) parts.push(`${a.followerCount.toLocaleString()} followers`);
+      if (a.followerCount)
+        parts.push(tr('{count} followers', { count: a.followerCount.toLocaleString() }));
       const genre = str(a.genre);
       if (genre) parts.push(genre);
       return parts.join(' · ');
@@ -448,13 +450,13 @@ export function ResultCard({ result, onPlay, onPlayNext, onDownload, onClick }: 
 
       <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
         {onPlay && isPlayable && (
-          <IconBtn icon={<Play className={btnIcon} />} title="Play" onClick={onPlay} />
+          <IconBtn icon={<Play className={btnIcon} />} title={tr("Play")} onClick={onPlay} />
         )}
         {onPlayNext && isPlayable && (
-          <IconBtn icon={<ListEnd className={btnIcon} />} title="Play next" onClick={onPlayNext} />
+          <IconBtn icon={<ListEnd className={btnIcon} />} title={tr("Play next")} onClick={onPlayNext} />
         )}
         {onDownload && (
-          <IconBtn icon={<Download className={btnIcon} />} title="Download" onClick={onDownload} />
+          <IconBtn icon={<Download className={btnIcon} />} title={tr("Download")} onClick={onDownload} />
         )}
         {url && (
           <IconBtn
@@ -465,7 +467,7 @@ export function ResultCard({ result, onPlay, onPlayNext, onDownload, onClick }: 
                 <Copy className={btnIcon} />
               )
             }
-            title="Copy URL"
+            title={tr("Copy URL")}
             onClick={copyUrl}
           />
         )}

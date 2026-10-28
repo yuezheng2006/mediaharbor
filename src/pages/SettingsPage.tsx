@@ -70,6 +70,7 @@ import {
 import type { Settings, SettingsSetter } from '@/types/settings';
 import { DEEZER_TIER_TO_FORMAT, QUALITY_OPTIONS, deezerTierOf } from '@/utils/constants';
 import { tauriAPI } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 function useServiceLoginWindow(
   channel: LogSource,
@@ -224,8 +225,8 @@ function DefaultQualityRow({
 }) {
   return (
     <Row
-      label="Default download quality"
-      help="Starting tier for this service. The quality dialog overrides it per download."
+      label={tr("Default download quality")}
+      help={tr("Starting tier for this service. The quality dialog overrides it per download.")}
     >
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="w-64">
@@ -234,7 +235,7 @@ function DefaultQualityRow({
         <SelectContent>
           {(QUALITY_OPTIONS[platform] ?? []).map((o) => (
             <SelectItem key={o.value} value={o.value}>
-              {o.label}
+              {tr(o.label)}
             </SelectItem>
           ))}
         </SelectContent>
@@ -363,7 +364,7 @@ function Pth({
           onChange={(e) => set(k, e.target.value.replace(/^["']|["']$/g, ''))}
         />
         <Button variant="outline" size="sm" onClick={() => on(k)}>
-          Browse
+          {tr("Browse")}
         </Button>
       </div>
     </Row>
@@ -434,7 +435,7 @@ function Sel({
         <SelectContent>
           {options.map(([value, text]) => (
             <SelectItem key={value} value={value}>
-              {text}
+              {tr(text)}
             </SelectItem>
           ))}
         </SelectContent>
@@ -667,7 +668,7 @@ export default function SettingsPage() {
             <div key={gi} className={gi > 0 ? 'pt-2' : ''}>
               {group.label && (
                 <p className="px-3 pb-1.5 pt-0.5 text-[10px] font-semibold text-muted-foreground/50 uppercase tracking-widest">
-                  {group.label}
+                  {tr(group.label)}
                 </p>
               )}
               {group.tabs.map((t) => {
@@ -688,7 +689,7 @@ export default function SettingsPage() {
                     ) : (
                       Icon && <Icon className="h-3.5 w-3.5 shrink-0" />
                     )}
-                    {t.label}
+                    {tr(t.label)}
                   </button>
                 );
               })}
@@ -701,7 +702,7 @@ export default function SettingsPage() {
                 <SelectTrigger className="w-full h-9 text-sm text-muted-foreground border-dashed">
                   <span className="flex items-center gap-2">
                     <Plus className="h-3.5 w-3.5 shrink-0" />
-                    Add a service
+                    {tr("Add a service")}
                   </span>
                 </SelectTrigger>
                 <SelectContent>
@@ -709,7 +710,7 @@ export default function SettingsPage() {
                     <SelectItem key={t.id} value={t.platform as string}>
                       <span className="flex items-center gap-2">
                         <PlatformIcon platform={t.platform as string} size={14} />
-                        {t.label}
+                        {tr(t.label)}
                       </span>
                     </SelectItem>
                   ))}
@@ -733,13 +734,13 @@ export default function SettingsPage() {
                 {saveState === 'saving' && (
                   <>
                     <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-                    <span className="text-muted-foreground">Saving…</span>
+                    <span className="text-muted-foreground">{tr("Saving…")}</span>
                   </>
                 )}
                 {saveState === 'saved' && (
                   <>
                     <Check className="h-3 w-3 text-emerald-500" />
-                    <span className="text-emerald-500 font-medium">Saved</span>
+                    <span className="text-emerald-500 font-medium">{tr("Saved")}</span>
                   </>
                 )}
               </motion.div>
@@ -755,7 +756,7 @@ export default function SettingsPage() {
           ) : (
             TabIcon && <TabIcon className="h-4 w-4 text-muted-foreground" />
           )}
-          <h1 className="text-sm font-semibold tracking-tight">{currentTab.label}</h1>
+          <h1 className="text-sm font-semibold tracking-tight">{tr(currentTab.label)}</h1>
           {tabPlatform && (
             <div className="ml-auto flex items-center gap-2">
               <CredentialStatusPill
@@ -769,7 +770,7 @@ export default function SettingsPage() {
                   onClick={() => disableService(tabPlatform)}
                 >
                   <X className="h-3.5 w-3.5 mr-1" />
-                  Remove
+                  {tr("Remove")}
                 </Button>
               )}
             </div>
@@ -827,7 +828,7 @@ function FormatGuide() {
         className="w-full flex items-center justify-between px-3 py-2 bg-muted/40 hover:bg-muted/60 transition-colors text-left"
         onClick={() => setOpen((o) => !o)}
       >
-        <span className="font-medium text-foreground/80">Format variable reference</span>
+        <span className="font-medium text-foreground/80">{tr("Format variable reference")}</span>
         <ChevronDown
           className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${open ? 'rotate-180' : ''}`}
         />
@@ -836,13 +837,13 @@ function FormatGuide() {
       {open && (
         <div className="p-3 space-y-4 bg-muted/20">
           <div>
-            <p className="font-semibold text-foreground mb-1.5">Track filename variables</p>
+            <p className="font-semibold text-foreground mb-1.5">{tr("Track filename variables")}</p>
             <table className="w-full border-collapse">
               <thead>
                 <tr className="text-muted-foreground border-b border-border">
-                  <th className="text-left pb-1 pr-4 font-medium w-44">Variable</th>
-                  <th className="text-left pb-1 pr-4 font-medium">Description</th>
-                  <th className="text-left pb-1 font-medium">Example output</th>
+                  <th className="text-left pb-1 pr-4 font-medium w-44">{tr("Variable")}</th>
+                  <th className="text-left pb-1 pr-4 font-medium">{tr("Description")}</th>
+                  <th className="text-left pb-1 font-medium">{tr("Example output")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -860,7 +861,7 @@ function FormatGuide() {
           </div>
 
           <div>
-            <p className="font-semibold text-foreground mb-1.5">Album folder variables</p>
+            <p className="font-semibold text-foreground mb-1.5">{tr("Album folder variables")}</p>
             <p className="text-muted-foreground mb-1.5">
               Folder names accept album-level variables only — these eight. A bracketed segment
               whose variables are all empty is dropped, so{' '}
@@ -873,9 +874,9 @@ function FormatGuide() {
             <table className="w-full border-collapse">
               <thead>
                 <tr className="text-muted-foreground border-b border-border">
-                  <th className="text-left pb-1 pr-4 font-medium w-44">Variable</th>
-                  <th className="text-left pb-1 pr-4 font-medium">Tip</th>
-                  <th className="text-left pb-1 font-medium">Example</th>
+                  <th className="text-left pb-1 pr-4 font-medium w-44">{tr("Variable")}</th>
+                  <th className="text-left pb-1 pr-4 font-medium">{tr("Tip")}</th>
+                  <th className="text-left pb-1 font-medium">{tr("Example")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -893,7 +894,7 @@ function FormatGuide() {
           </div>
 
           <div>
-            <p className="font-semibold text-foreground mb-1">Zero-padding syntax</p>
+            <p className="font-semibold text-foreground mb-1">{tr("Zero-padding syntax")}</p>
             <p className="text-muted-foreground">
               Append <code className="text-foreground bg-muted px-1 rounded">:N</code> to any
               numeric variable to zero-pad it to N digits.{' '}
@@ -905,7 +906,7 @@ function FormatGuide() {
           </div>
 
           <div>
-            <p className="font-semibold text-foreground mb-1.5">Preset examples</p>
+            <p className="font-semibold text-foreground mb-1.5">{tr("Preset examples")}</p>
             <div className="space-y-1">
               {[
                 [
@@ -933,11 +934,11 @@ function FormatGuide() {
                 <div key={name} className="rounded bg-muted/50 px-2 py-1.5">
                   <span className="font-medium text-foreground">{name}</span>
                   <div className="text-muted-foreground mt-0.5">
-                    <span className="text-foreground/50">Folder: </span>
+                    <span className="text-foreground/50">{tr("Folder:")} </span>
                     <code>{folder}</code>
                   </div>
                   <div className="text-muted-foreground">
-                    <span className="text-foreground/50">Track: </span>
+                    <span className="text-foreground/50">{tr("Track:")} </span>
                     <code>{track}</code>
                   </div>
                 </div>
@@ -963,11 +964,11 @@ function RadioDirectories({ s, set }: { s: Partial<Settings>; set: SettingsSette
   const toggleable = sources.filter((d) => d.toggleable);
 
   if (isPending) {
-    return <p className="py-1 text-xs text-muted-foreground">Loading directories…</p>;
+    return <p className="py-1 text-xs text-muted-foreground">{tr("Loading directories…")}</p>;
   }
   if (isError || toggleable.length === 0) {
     return (
-      <p className="py-1 text-xs text-muted-foreground">No station directories are available.</p>
+      <p className="py-1 text-xs text-muted-foreground">{tr("No station directories are available.")}</p>
     );
   }
   return (
@@ -1001,14 +1002,14 @@ function GeneralTab({
 }) {
   return (
     <>
-      <Section title="Appearance">
-        <Sel k="theme" label="Theme" options={THEME_OPTS} fallback="auto" w="w-40" />
+      <Section title={tr("Appearance")}>
+        <Sel k="theme" label={tr("Theme")} options={THEME_OPTS} fallback="auto" w="w-40" />
       </Section>
 
-      <Section title="Playback">
+      <Section title={tr("Playback")}>
         <Row
-          label="Volume levelling"
-          help="Use the ReplayGain values in your files so tracks play at a consistent loudness"
+          label={tr("Volume levelling")}
+          help={tr("Use the ReplayGain values in your files so tracks play at a consistent loudness")}
         >
           <Select
             value={s.replaygain_mode ?? 'off'}
@@ -1018,19 +1019,19 @@ function GeneralTab({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="off">Off</SelectItem>
-              <SelectItem value="track">Per track</SelectItem>
-              <SelectItem value="album">Per album</SelectItem>
+              <SelectItem value="off">{tr("Off")}</SelectItem>
+              <SelectItem value="track">{tr("Per track")}</SelectItem>
+              <SelectItem value="album">{tr("Per album")}</SelectItem>
             </SelectContent>
           </Select>
         </Row>
         <Chk
           k="crossfade_enabled"
-          label="Crossfade between tracks"
-          help="Smoothly blend the end of one track into the beginning of the next"
+          label={tr("Crossfade between tracks")}
+          help={tr("Smoothly blend the end of one track into the beginning of the next")}
         />
         {s.crossfade_enabled && (
-          <Row label="Crossfade duration" help="Seconds of overlap between tracks">
+          <Row label={tr("Crossfade duration")} help={tr("Seconds of overlap between tracks")}>
             <Select
               value={String(s.crossfade_duration ?? 6)}
               onValueChange={(v) => set('crossfade_duration', Number(v))}
@@ -1051,58 +1052,58 @@ function GeneralTab({
         )}
       </Section>
 
-      <Section title="Radio">
+      <Section title={tr("Radio")}>
         <RadioDirectories s={s} set={set} />
       </Section>
 
-      <Section title="Downloads">
-        <Pth k="downloadLocation" label="Download Location" on={browse} />
+      <Section title={tr("Downloads")}>
+        <Pth k="downloadLocation" label={tr("Download Location")} on={browse} />
         <Chk
           k="createPlatformSubfolders"
-          label="Create platform subfolders"
-          help="Organise downloads into per-platform folders (Spotify/, Tidal/, etc.)"
+          label={tr("Create platform subfolders")}
+          help={tr("Organise downloads into per-platform folders (Spotify/, Tidal/, etc.)")}
         />
         <Chk
           k="pipeline_overwrite"
-          label="Overwrite files already on disk"
-          help="Off: a track whose file is already in the destination folder is kept and skipped."
+          label={tr("Overwrite files already on disk")}
+          help={tr("Off: a track whose file is already in the destination folder is kept and skipped.")}
         />
         <Chk
           k="native_skip_existing"
-          label="Skip tracks already downloaded"
-          help="Skips a track this service already fetched. Use “Force re-download” in the quality dialog to override once."
+          label={tr("Skip tracks already downloaded")}
+          help={tr("Skips a track this service already fetched. Use “Force re-download” in the quality dialog to override once.")}
           dflt
         />
       </Section>
 
-      <Section title="Tools">
-        <Chk k="orpheusDL" label="Prioritize OrpheusDL" />
-        <Chk k="autoUpdate" label="Check for updates automatically" />
-        <Chk k="autoDownloadUpdates" label="Download updates in the background" />
+      <Section title={tr("Tools")}>
+        <Chk k="orpheusDL" label={tr("Prioritize OrpheusDL")} />
+        <Chk k="autoUpdate" label={tr("Check for updates automatically")} />
+        <Chk k="autoDownloadUpdates" label={tr("Download updates in the background")} />
       </Section>
 
-      <Section title="File Naming (Native downloads)">
+      <Section title={tr("File Naming (Native downloads)")}>
         <Txt
           k="filepaths_folder_format"
-          label="Album folder"
+          label={tr("Album folder")}
           fallback="{albumartist} - {album} ({year})"
         />
         <Txt
           k="filepaths_track_format"
-          label="Track filename"
+          label={tr("Track filename")}
           fallback="{tracknumber:02}. {artist} - {title}{explicit}"
         />
         <FormatGuide />
         <Num
           k="filepaths_truncate_to"
-          label="Max filename length"
-          help="0 = unlimited"
+          label={tr("Max filename length")}
+          help={tr("0 = unlimited")}
           fallback={120}
           w="w-28"
         />
         <Chk
           k="filepaths_restrict_characters"
-          label="Restrict special characters in filenames"
+          label={tr("Restrict special characters in filenames")}
           help={
             'Replaces < > : " \\ | ? * with lookalike characters. / and control characters are always replaced so a track title can never create a folder.'
           }
@@ -1110,33 +1111,33 @@ function GeneralTab({
         />
         <Chk
           k="disc_subdirectories"
-          label="Create disc subdirectories for multi-disc albums"
-          help="Creates Disc 1/, Disc 2/, etc. subfolders when an album spans multiple discs"
+          label={tr("Create disc subdirectories for multi-disc albums")}
+          help={tr("Creates Disc 1/, Disc 2/, etc. subfolders when an album spans multiple discs")}
           dflt
         />
         <Chk
           k="save_playlist_file"
-          label="Save an .m3u8 next to downloaded albums and playlists"
-          help="Lists the tracks that actually landed, with paths relative to the folder so it stays portable."
+          label={tr("Save an .m3u8 next to downloaded albums and playlists")}
+          help={tr("Lists the tracks that actually landed, with paths relative to the folder so it stays portable.")}
           dflt
         />
       </Section>
 
-      <Section title="Artwork & Metadata (Native downloads)">
-        <Chk k="embed_cover" label="Embed cover art in audio file" dflt />
+      <Section title={tr("Artwork & Metadata (Native downloads)")}>
+        <Chk k="embed_cover" label={tr("Embed cover art in audio file")} dflt />
         <Chk
           k="save_cover"
-          label="Save a cover file next to each track"
-          help="Writes <track name>.cover.jpg beside every track. Useful for playlist folders, which hold unrelated albums."
+          label={tr("Save a cover file next to each track")}
+          help={tr("Writes <track name>.cover.jpg beside every track. Useful for playlist folders, which hold unrelated albums.")}
         />
         <Chk
           k="save_album_cover"
-          label="Save cover.jpg per album folder"
-          help="What most players and library scanners look for. Independent of the per-track file above."
+          label={tr("Save cover.jpg per album folder")}
+          help={tr("What most players and library scanners look for. Independent of the per-track file above.")}
         />
         <Row
-          label="Cover art size"
-          help="Longest edge in pixels; the nearest size the service publishes is used."
+          label={tr("Cover art size")}
+          help={tr("Longest edge in pixels; the nearest size the service publishes is used.")}
         >
           <Select
             value={String(s.pipeline_cover_size ?? 1280)}
@@ -1155,36 +1156,36 @@ function GeneralTab({
         </Row>
         <Chk
           k="meta_exclude_tags_check"
-          label="Leave some tags out of downloaded files"
-          help="Everything else is still written. Useful when a tag your player derives itself keeps getting overwritten."
+          label={tr("Leave some tags out of downloaded files")}
+          help={tr("Everything else is still written. Useful when a tag your player derives itself keeps getting overwritten.")}
         />
         {s.meta_exclude_tags_check && (
           <Txt
             k="excluded_tags"
-            label="Tags to skip"
-            help="Comma separated. Accepted names: title, artist, album, album_artist, genre, comment, lyrics, isrc, upc, copyright, label, composer, conductor, performer, lyricist, producer, engineer, mixer, description, grouping, date, tracknumber, discnumber."
-            placeholder="comment, composer"
+            label={tr("Tags to skip")}
+            help={tr("Comma separated. Accepted names: title, artist, album, album_artist, genre, comment, lyrics, isrc, upc, copyright, label, composer, conductor, performer, lyricist, producer, engineer, mixer, description, grouping, date, tracknumber, discnumber.")}
+            placeholder={tr("comment, composer")}
           />
         )}
       </Section>
 
-      <Section title="Lyrics (native downloaders)">
+      <Section title={tr("Lyrics (native downloaders)")}>
         <Chk
           k="embed_lyrics"
-          label="Embed lyrics in the audio file"
-          help="Writes plain lyrics into the track's own tag. YouTube and YT Music use yt-dlp's subtitle options instead."
+          label={tr("Embed lyrics in the audio file")}
+          help={tr("Writes plain lyrics into the track's own tag. YouTube and YT Music use yt-dlp's subtitle options instead.")}
           dflt
         />
         <Chk
           k="save_lrc_files"
-          label="Save synced lyrics alongside each track"
-          help="Writes a .lrc/.ttml file next to the audio, so lyrics work offline. The source service is tried first."
+          label={tr("Save synced lyrics alongside each track")}
+          help={tr("Writes a .lrc/.ttml file next to the audio, so lyrics work offline. The source service is tried first.")}
         />
         {s.save_lrc_files && (
           <Check2
             id="native_synced_lyrics_format"
-            label="Use TTML when the service gives word-by-word timings"
-            help="LRC is written otherwise, and almost every player reads it. One file per track either way."
+            label={tr("Use TTML when the service gives word-by-word timings")}
+            help={tr("LRC is written otherwise, and almost every player reads it. One file per track either way.")}
             checked={s.native_synced_lyrics_format === 'ttml'}
             onChange={(v) => set('native_synced_lyrics_format', v ? 'ttml' : 'lrc')}
           />
@@ -1197,30 +1198,30 @@ function GeneralTab({
         </p>
         <Chk
           k="deezer_lrc_public_fallback"
-          label="Deezer public lyrics"
-          help="Word-synced, needs no ARL; a saved ARL widens the results."
+          label={tr("Deezer public lyrics")}
+          help={tr("Word-synced, needs no ARL; a saved ARL widens the results.")}
           dflt
         />
         <Chk
           k="lyrics_fallback_lrclib"
-          label="LRCLIB (community lyrics)"
-          help="Community line-synced lyrics, matched by title, artist and duration."
+          label={tr("LRCLIB (community lyrics)")}
+          help={tr("Community line-synced lyrics, matched by title, artist and duration.")}
           dflt
         />
       </Section>
 
-      <Section title="Conversion (native downloaders)">
+      <Section title={tr("Conversion (native downloaders)")}>
         <Chk
           k="conversion_check"
-          label="Convert after download"
-          help="Re-encodes finished downloads to change format, downsample hi-res, or hit a target bitrate."
+          label={tr("Convert after download")}
+          help={tr("Re-encodes finished downloads to change format, downsample hi-res, or hit a target bitrate.")}
         />
         {s.conversion_check && (
           <>
             <Sel
               k="conversion_codec"
-              label="Output format"
-              help="Tags and art are written after the re-encode. A lossless target cannot recover a lossy source. Matching files and Atmos are skipped."
+              label={tr("Output format")}
+              help={tr("Tags and art are written after the re-encode. A lossless target cannot recover a lossy source. Matching files and Atmos are skipped.")}
               options={CONVERSION_CODEC_OPTS}
               fallback="FLAC"
               w="w-40"
@@ -1228,7 +1229,7 @@ function GeneralTab({
             {['MP3', 'AAC', 'OPUS', 'VORBIS'].includes(
               (s.conversion_codec || 'FLAC').toUpperCase()
             ) && (
-              <Row label="Bitrate (kbps)">
+              <Row label={tr("Bitrate (kbps)")}>
                 <Input
                   type="number"
                   min={32}
@@ -1247,7 +1248,7 @@ function GeneralTab({
                 />
               </Row>
             )}
-            <Row label="Max sampling rate" help="Downsample above this.">
+            <Row label={tr("Max sampling rate")} help={tr("Downsample above this.")}>
               <Select
                 value={
                   s.conversion_sampling_rate != null
@@ -1259,10 +1260,10 @@ function GeneralTab({
                 }
               >
                 <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Original" />
+                  <SelectValue placeholder={tr("Original")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="original">Original</SelectItem>
+                  <SelectItem value="original">{tr("Original")}</SelectItem>
                   <SelectItem value="44100">44.1 kHz</SelectItem>
                   <SelectItem value="48000">48 kHz</SelectItem>
                   <SelectItem value="88200">88.2 kHz</SelectItem>
@@ -1272,7 +1273,7 @@ function GeneralTab({
                 </SelectContent>
               </Select>
             </Row>
-            <Row label="Max bit depth" help="Reduce above this.">
+            <Row label={tr("Max bit depth")} help={tr("Reduce above this.")}>
               <Select
                 value={s.conversion_bit_depth != null ? String(s.conversion_bit_depth) : 'original'}
                 onValueChange={(v) =>
@@ -1280,10 +1281,10 @@ function GeneralTab({
                 }
               >
                 <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Original" />
+                  <SelectValue placeholder={tr("Original")} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="original">Original</SelectItem>
+                  <SelectItem value="original">{tr("Original")}</SelectItem>
                   <SelectItem value="16">16-bit</SelectItem>
                   <SelectItem value="24">24-bit</SelectItem>
                 </SelectContent>
@@ -1353,29 +1354,29 @@ function CategoryMultiSelect({
 
 function SubtitlesSection() {
   return (
-    <Section title="Subtitles">
-      <Chk k="add_subtitle_to_file" label="Embed subtitles" />
-      <Txt k="sub_langs" label="Subtitle languages" placeholder="en.*,-live_chat" w="w-64" />
-      <Chk k="write_auto_subs" label="Include auto-generated captions" help="--write-auto-subs" />
-      <Chk k="convert_subs_srt" label="Convert subtitles to SRT" help="--convert-subs srt" />
+    <Section title={tr("Subtitles")}>
+      <Chk k="add_subtitle_to_file" label={tr("Embed subtitles")} />
+      <Txt k="sub_langs" label={tr("Subtitle languages")} placeholder={tr("en.*,-live_chat")} w="w-64" />
+      <Chk k="write_auto_subs" label={tr("Include auto-generated captions")} help="--write-auto-subs" />
+      <Chk k="convert_subs_srt" label={tr("Convert subtitles to SRT")} help={tr("--convert-subs srt")} />
     </Section>
   );
 }
 
 function SponsorBlockSection({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
   return (
-    <Section title="SponsorBlock">
-      <Chk k="no_sponsorblock" label="Disable SponsorBlock entirely" />
+    <Section title={tr("SponsorBlock")}>
+      <Chk k="no_sponsorblock" label={tr("Disable SponsorBlock entirely")} />
       {!s.no_sponsorblock && (
         <>
-          <Row label="Mark categories" help="Categories to mark as chapters.">
+          <Row label={tr("Mark categories")} help={tr("Categories to mark as chapters.")}>
             <CategoryMultiSelect
               id="sb-mark"
               value={s.sponsorblock_mark || 'all'}
               onChange={(v) => set('sponsorblock_mark', v)}
             />
           </Row>
-          <Row label="Remove categories" help="Categories to cut out of the file.">
+          <Row label={tr("Remove categories")} help={tr("Categories to cut out of the file.")}>
             <CategoryMultiSelect
               id="sb-remove"
               value={s.sponsorblock_remove || ''}
@@ -1384,10 +1385,10 @@ function SponsorBlockSection({ s, set }: { s: Partial<Settings>; set: SettingsSe
           </Row>
           <Txt
             k="sponsorblock_chapter_title"
-            label="Chapter title template"
+            label={tr("Chapter title template")}
             fallback="[SponsorBlock]: %(category_names)l"
           />
-          <Txt k="sponsorblock_api_url" label="API URL" fallback="https://sponsor.ajay.app" />
+          <Txt k="sponsorblock_api_url" label={tr("API URL")} fallback="https://sponsor.ajay.app" />
         </>
       )}
     </Section>
@@ -1396,35 +1397,35 @@ function SponsorBlockSection({ s, set }: { s: Partial<Settings>; set: SettingsSe
 
 function YouTubeExtractionSection({ s }: { s: Partial<Settings> }) {
   return (
-    <Section title="YouTube Extraction">
+    <Section title={tr("YouTube Extraction")}>
       <Txt
         k="player_client"
-        label="Player clients"
-        help="--extractor-args youtube:player_client= — leave empty to use yt-dlp's default (recommended). Avoid 'tv' (DRM-experiment) unless you have a PO-token provider."
-        placeholder="default (yt-dlp's choice)"
+        label={tr("Player clients")}
+        help={tr("--extractor-args youtube:player_client= — leave empty to use yt-dlp's default (recommended). Avoid 'tv' (DRM-experiment) unless you have a PO-token provider.")}
+        placeholder={tr("default (yt-dlp's choice)")}
         w="w-64"
       />
       <Txt
         k="ejs_remote_components"
-        label="JS challenge solver"
-        help="--remote-components — fetches yt-dlp's EJS n-sig solver so formats resolve (required for cookie-authenticated downloads). Clear to disable; 'ejs:npm' uses the runtime's package manager."
+        label={tr("JS challenge solver")}
+        help={tr("--remote-components — fetches yt-dlp's EJS n-sig solver so formats resolve (required for cookie-authenticated downloads). Clear to disable; 'ejs:npm' uses the runtime's package manager.")}
         placeholder="ejs:github"
         w="w-64"
       />
       <Chk
         k="pot_provider_enabled"
-        label="Enable PO-token provider"
-        help="Advanced — only for members-only / age-gated formats that require a PO token."
+        label={tr("Enable PO-token provider")}
+        help={tr("Advanced — only for members-only / age-gated formats that require a PO token.")}
       />
       {s.pot_provider_enabled && (
         <>
           <Txt
             k="po_token"
-            label="PO token"
-            help="Manual PO token forwarded to the extractor."
+            label={tr("PO token")}
+            help={tr("Manual PO token forwarded to the extractor.")}
             w="w-64"
           />
-          <Chk k="pot_trace" label="PO-token debug trace" help="pot_trace=true" />
+          <Chk k="pot_trace" label={tr("PO-token debug trace")} help={tr("pot_trace=true")} />
         </>
       )}
     </Section>
@@ -1442,53 +1443,53 @@ function YtDlpTab({
 }) {
   return (
     <>
-      <Section title="Output">
+      <Section title={tr("Output")}>
         <Txt
           k="download_output_template"
-          label="Output template"
-          help="yt-dlp filename template"
+          label={tr("Output template")}
+          help={tr("yt-dlp filename template")}
           fallback="%(title)s.%(ext)s"
         />
-        <Num k="max_downloads" label="Max downloads" help="0 = unlimited" w="w-28" />
-        <Num k="max_retries" label="Max retries" fallback={5} w="w-28" />
-        <Chk k="continue" label="Continue partially downloaded files" />
+        <Num k="max_downloads" label={tr("Max downloads")} help={tr("0 = unlimited")} w="w-28" />
+        <Num k="max_retries" label={tr("Max retries")} fallback={5} w="w-28" />
+        <Chk k="continue" label={tr("Continue partially downloaded files")} />
         <Chk
           k="no_overwrites"
-          label="Skip files that already exist"
-          help="Passes --no-overwrites; complements the dedup ledger."
+          label={tr("Skip files that already exist")}
+          help={tr("Passes --no-overwrites; complements the dedup ledger.")}
           dflt
         />
-        <Chk k="use_aria2" label="Use aria2c for downloading" />
+        <Chk k="use_aria2" label={tr("Use aria2c for downloading")} />
         {s.use_aria2 && (
           <Txt
             k="aria2c_args"
-            label="aria2c arguments"
-            help="--downloader-args aria2c:<...>"
+            label={tr("aria2c arguments")}
+            help={tr("--downloader-args aria2c:<...>")}
             fallback="-x16 -s16 -k1M"
             w="w-64"
           />
         )}
       </Section>
 
-      <Section title="Format & Quality">
+      <Section title={tr("Format & Quality")}>
         <Num
           k="concurrent_fragments"
-          label="Concurrent fragments"
-          help="-N parallel DASH/HLS fragments — biggest speed win."
+          label={tr("Concurrent fragments")}
+          help={tr("-N parallel DASH/HLS fragments — biggest speed win.")}
           fallback={4}
           min={1}
           w="w-28"
         />
-        <Row label="Remux container" help="--remux-video target; None = no remux.">
+        <Row label={tr("Remux container")} help={tr("--remux-video target; None = no remux.")}>
           <Select
             value={s.remux_format ? s.remux_format : 'none'}
             onValueChange={(v) => set('remux_format', v === 'none' ? '' : v)}
           >
             <SelectTrigger className="w-40">
-              <SelectValue placeholder="None" />
+              <SelectValue placeholder={tr("None")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="none">None</SelectItem>
+              <SelectItem value="none">{tr("None")}</SelectItem>
               <SelectItem value="mp4">mp4</SelectItem>
               <SelectItem value="mkv">mkv</SelectItem>
               <SelectItem value="webm">webm</SelectItem>
@@ -1500,47 +1501,47 @@ function YtDlpTab({
         </Row>
         <Chk
           k="convert_thumbnails_jpg"
-          label="Convert thumbnails to JPG"
-          help="--convert-thumbnails jpg when embedding (YouTube serves webp/avif)."
+          label={tr("Convert thumbnails to JPG")}
+          help={tr("--convert-thumbnails jpg when embedding (YouTube serves webp/avif).")}
           dflt
         />
         <Chk
           k="faststart_mp4"
-          label="Optimize mp4 for streaming"
-          help="Adds +faststart for seekable mp4 output."
+          label={tr("Optimize mp4 for streaming")}
+          help={tr("Adds +faststart for seekable mp4 output.")}
           dflt
         />
       </Section>
 
-      <Section title="Metadata">
-        <Chk k="add_metadata" label="Add metadata to files" />
-        <Chk k="embed_chapters" label="Embed chapters" />
+      <Section title={tr("Metadata")}>
+        <Chk k="add_metadata" label={tr("Add metadata to files")} />
+        <Chk k="embed_chapters" label={tr("Embed chapters")} />
       </Section>
 
-      <Section title="Network">
-        <Chk k="use_cookies" label="Use cookies from file" />
+      <Section title={tr("Network")}>
+        <Chk k="use_cookies" label={tr("Use cookies from file")} />
         {s.use_cookies && (
           <>
             <Pth
               k="cookies"
-              label="Cookies file path"
-              placeholder="Path to cookies.txt"
+              label={tr("Cookies file path")}
+              placeholder={tr("Path to cookies.txt")}
               on={browseFile}
             />
             <Pth
               k="ytdlp_cookies_path"
-              label="yt-dlp cookies override"
-              placeholder="Leave empty to use the shared cookies file"
+              label={tr("yt-dlp cookies override")}
+              placeholder={tr("Leave empty to use the shared cookies file")}
               on={browseFile}
             />
           </>
         )}
-        <Chk k="use_proxy" label="Use proxy" />
-        {s.use_proxy && <Txt k="proxy_url" label="Proxy URL" />}
+        <Chk k="use_proxy" label={tr("Use proxy")} />
+        {s.use_proxy && <Txt k="proxy_url" label={tr("Proxy URL")} />}
 
-        <Chk k="download_speed_limit" label="Limit download speed" />
+        <Chk k="download_speed_limit" label={tr("Limit download speed")} />
         {s.download_speed_limit && (
-          <Row label="Speed limit">
+          <Row label={tr("Speed limit")}>
             <div className="flex gap-2 items-center">
               <Input
                 type="number"
@@ -1566,112 +1567,112 @@ function YtDlpTab({
 
         <Num
           k="socket_timeout"
-          label="Socket timeout"
-          help="--socket-timeout seconds"
+          label={tr("Socket timeout")}
+          help={tr("--socket-timeout seconds")}
           fallback={15}
           min={1}
           w="w-28"
         />
-        <Txt k="throttled_rate" label="Throttled rate" placeholder="100K" w="w-32" />
+        <Txt k="throttled_rate" label={tr("Throttled rate")} placeholder={tr("100K")} w="w-32" />
       </Section>
 
-      <Section title="Resilience">
+      <Section title={tr("Resilience")}>
         <Txt
           k="fragment_retries"
-          label="Fragment retries"
-          help="--fragment-retries (number or 'infinite')."
+          label={tr("Fragment retries")}
+          help={tr("--fragment-retries (number or 'infinite').")}
           fallback="10"
           w="w-32"
         />
         <Txt
           k="extractor_retries"
-          label="Extractor retries"
+          label={tr("Extractor retries")}
           help="--extractor-retries"
           fallback="3"
           w="w-32"
         />
         <Txt
           k="file_access_retries"
-          label="File access retries"
-          help="--file-access-retries; resilience against Windows AV file locks."
+          label={tr("File access retries")}
+          help={tr("--file-access-retries; resilience against Windows AV file locks.")}
           fallback="3"
           w="w-32"
         />
         <Txt
           k="sleep_requests"
-          label="Sleep between requests"
-          help="--sleep-requests seconds (anti-throttle)."
+          label={tr("Sleep between requests")}
+          help={tr("--sleep-requests seconds (anti-throttle).")}
           w="w-32"
         />
         <Txt
           k="sleep_interval"
-          label="Sleep interval"
-          help="--sleep-interval seconds (anti-throttle)."
+          label={tr("Sleep interval")}
+          help={tr("--sleep-interval seconds (anti-throttle).")}
           w="w-32"
         />
         <Txt
           k="max_sleep_interval"
-          label="Max sleep interval"
-          help="--max-sleep-interval seconds (anti-throttle)."
+          label={tr("Max sleep interval")}
+          help={tr("--max-sleep-interval seconds (anti-throttle).")}
           w="w-32"
         />
       </Section>
 
-      <Section title="Network — general">
+      <Section title={tr("Network — general")}>
         <Txt
           k="cookies_from_browser"
-          label="Cookies from browser"
-          help="BROWSER[:PROFILE] — e.g. chrome, firefox:default. Fixes 'Sign in to confirm' errors."
+          label={tr("Cookies from browser")}
+          help={tr("BROWSER[:PROFILE] — e.g. chrome, firefox:default. Fixes 'Sign in to confirm' errors.")}
           placeholder="chrome"
           w="w-64"
         />
         <Txt
           k="geo_bypass_country"
-          label="Geo-bypass country"
-          help="--geo-bypass-country (2-letter code; optional)."
-          placeholder="US"
+          label={tr("Geo-bypass country")}
+          help={tr("--geo-bypass-country (2-letter code; optional).")}
+          placeholder={tr("US")}
           w="w-28"
         />
       </Section>
 
-      <Section title="Authentication">
-        <Chk k="use_authentication" label="Use username/password" />
+      <Section title={tr("Authentication")}>
+        <Chk k="use_authentication" label={tr("Use username/password")} />
         {s.use_authentication && (
           <>
-            <Txt k="username" label="Username" w="w-64" />
-            <Txt k="password" label="Password" type="password" w="w-64" />
+            <Txt k="username" label={tr("Username")} w="w-64" />
+            <Txt k="password" label={tr("Password")} type="password" w="w-64" />
           </>
         )}
       </Section>
 
-      <Section title="Advanced">
+      <Section title={tr("Advanced")}>
         <Txt
           k="postprocessor_args"
-          label="Postprocessor args"
-          help="Raw --postprocessor-args passthrough."
+          label={tr("Postprocessor args")}
+          help={tr("Raw --postprocessor-args passthrough.")}
         />
         <Txt
           k="extra_args"
-          label="Extra yt-dlp args"
-          help="Free-form arguments appended to every yt-dlp call."
+          label={tr("Extra yt-dlp args")}
+          help={tr("Free-form arguments appended to every yt-dlp call.")}
         />
         <Num
           k="trim_filenames"
-          label="Trim filenames"
-          help="--trim-filenames length; 0 = off (avoids ENAMETOOLONG)."
+          label={tr("Trim filenames")}
+          help={tr("--trim-filenames length; 0 = off (avoids ENAMETOOLONG).")}
           min={0}
           w="w-28"
         />
         <Chk
           k="restrict_filenames"
-          label="Restrict filenames to ASCII"
+          label={tr("Restrict filenames to ASCII")}
           help="--restrict-filenames"
         />
-        <Chk k="windows_filenames" label="Windows-safe filenames" help="--windows-filenames" />
+        <Chk k="windows_filenames" label={tr("Windows-safe filenames")} help="--windows-filenames" />
         <Chk
           k="set_mtime"
-          label="Set file modified time from source"
-          help="Off passes --no-mtime."
+          label={tr("Set file modified time from source")}
+          help={tr("Off passes --no-mtime.")}
         />
       </Section>
     </>
@@ -1689,22 +1690,22 @@ function YouTubeTab({
 }) {
   return (
     <>
-      <Section title="Cookies">
+      <Section title={tr("Cookies")}>
         <Pth
           k="youtube_cookies_path"
-          label="YouTube cookies override"
-          help="Leave empty to use the shared cookies file from the yt-dlp tab."
-          placeholder="Leave empty to use the shared cookies file"
+          label={tr("YouTube cookies override")}
+          help={tr("Leave empty to use the shared cookies file from the yt-dlp tab.")}
+          placeholder={tr("Leave empty to use the shared cookies file")}
           on={browseFile}
         />
       </Section>
 
       <YouTubeExtractionSection s={s} />
 
-      <Section title="Extensions">
-        <Chk k="yt_override_download_extension" label="Override YouTube video extension" />
+      <Section title={tr("Extensions")}>
+        <Chk k="yt_override_download_extension" label={tr("Override YouTube video extension")} />
         {s.yt_override_download_extension && (
-          <Txt k="youtubeVideoExtensions" label="Video extension" fallback="mp4" w="w-28" />
+          <Txt k="youtubeVideoExtensions" label={tr("Video extension")} fallback="mp4" w="w-28" />
         )}
       </Section>
 
@@ -1724,24 +1725,24 @@ function YtMusicTab({
 }) {
   return (
     <>
-      <Section title="Cookies">
+      <Section title={tr("Cookies")}>
         <Pth
           k="ytmusic_cookies_path"
-          label="YouTube Music cookies override"
-          help="Leave empty to use the shared cookies file from the yt-dlp tab."
-          placeholder="Leave empty to use the shared cookies file"
+          label={tr("YouTube Music cookies override")}
+          help={tr("Leave empty to use the shared cookies file from the yt-dlp tab.")}
+          placeholder={tr("Leave empty to use the shared cookies file")}
           on={browseFile}
         />
       </Section>
 
-      <Section title="Playback history">
-        <Chk k="ytmusic_sync_playback_history" label="Sync playback history to YouTube Music" />
+      <Section title={tr("Playback history")}>
+        <Chk k="ytmusic_sync_playback_history" label={tr("Sync playback history to YouTube Music")} />
       </Section>
 
-      <Section title="Extensions">
-        <Chk k="ytm_override_download_extension" label="Override YouTube Music extension" />
+      <Section title={tr("Extensions")}>
+        <Chk k="ytm_override_download_extension" label={tr("Override YouTube Music extension")} />
         {s.ytm_override_download_extension && (
-          <Txt k="youtubeAudioExtensions" label="Audio extension" fallback="mp3" w="w-28" />
+          <Txt k="youtubeAudioExtensions" label={tr("Audio extension")} fallback="mp3" w="w-28" />
         )}
       </Section>
     </>
@@ -1751,9 +1752,9 @@ function YtMusicTab({
 function DeezerTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
   return (
     <>
-      <Section title="Authentication">
+      <Section title={tr("Authentication")}>
         <div className="rounded-md bg-muted/50 border border-border p-3 text-sm text-muted-foreground space-y-1">
-          <p className="font-medium text-foreground">How to get your ARL token</p>
+          <p className="font-medium text-foreground">{tr("How to get your ARL token")}</p>
           <ol className="list-decimal list-inside space-y-0.5 text-xs">
             <li>
               Open <strong>deezer.com</strong> in your browser and log in
@@ -1771,13 +1772,13 @@ function DeezerTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         </div>
         <Txt
           k="deezer_arl"
-          label="ARL Token"
+          label={tr("ARL Token")}
           type="password"
-          placeholder="Paste your ARL cookie value here"
+          placeholder={tr("Paste your ARL cookie value here")}
         />
       </Section>
 
-      <Section title="Quality">
+      <Section title={tr("Quality")}>
         <DefaultQualityRow
           platform="deezer"
           value={deezerTierOf(s.deezer_quality)}
@@ -1785,9 +1786,9 @@ function DeezerTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         />
       </Section>
 
-      <Section title="Telemetry & playback history">
-        <Chk k="deezer_telemetry_enabled" label="Send anti-ban telemetry" />
-        <Chk k="deezer_sync_playback_history" label="Sync playback history to Deezer" />
+      <Section title={tr("Telemetry & playback history")}>
+        <Chk k="deezer_telemetry_enabled" label={tr("Send anti-ban telemetry")} />
+        <Chk k="deezer_sync_playback_history" label={tr("Sync playback history to Deezer")} />
       </Section>
     </>
   );
@@ -1815,7 +1816,7 @@ function QobuzTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
 
   return (
     <>
-      <Section title="Sign in">
+      <Section title={tr("Sign in")}>
         <p className="text-xs text-muted-foreground leading-relaxed">
           Qobuz disabled email/password API login in April 2026. Sign in below — a Qobuz login
           window will open, and your user ID + auth token are captured automatically once you log
@@ -1847,10 +1848,10 @@ function QobuzTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
               <code>user/login</code>, and copy both values from the response body. Tokens from the
               Qobuz desktop or mobile apps are also supported.
             </p>
-            <Txt k="qobuz_email_or_userid" label="User ID" placeholder="e.g. 12345678" />
+            <Txt k="qobuz_email_or_userid" label={tr("User ID")} placeholder={tr("e.g. 12345678")} />
             <Txt
               k="qobuz_password_or_token"
-              label="Auth Token"
+              label={tr("Auth Token")}
               type="password"
               placeholder="user_auth_token"
             />
@@ -1858,7 +1859,7 @@ function QobuzTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         )}
       </Section>
 
-      <Section title="Quality">
+      <Section title={tr("Quality")}>
         <DefaultQualityRow
           platform="qobuz"
           value={String(s.qobuz_quality ?? 27)}
@@ -1866,25 +1867,25 @@ function QobuzTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         />
       </Section>
 
-      <Section title="Options">
-        <Chk k="qobuz_download_booklets" label="Download booklets (PDFs)" />
+      <Section title={tr("Options")}>
+        <Chk k="qobuz_download_booklets" label={tr("Download booklets (PDFs)")} />
       </Section>
 
-      <Section title="Telemetry & playback history">
-        <Chk k="qobuz_telemetry_enabled" label="Send the client's session handshake" />
-        <Chk k="qobuz_sync_playback_history" label="Sync playback history to Qobuz" />
+      <Section title={tr("Telemetry & playback history")}>
+        <Chk k="qobuz_telemetry_enabled" label={tr("Send the client's session handshake")} />
+        <Chk k="qobuz_sync_playback_history" label={tr("Sync playback history to Qobuz")} />
       </Section>
 
-      <Section title="Download Filters">
-        <Chk k="qobuz_filters_extras" label="Exclude extras (bonus tracks, interludes)" />
-        <Chk k="qobuz_non_remaster" label="Exclude non-remastered versions" />
-        <Chk k="qobuz_non_studio_albums" label="Exclude non-studio albums (live, compilations)" />
-        <Chk k="qobuz_non_albums" label="Exclude non-album releases (singles, EPs)" />
-        <Chk k="qobuz_features" label="Exclude feature appearances" />
-        <Chk k="qobuz_repeats" label="Exclude repeated albums (duplicates)" />
+      <Section title={tr("Download Filters")}>
+        <Chk k="qobuz_filters_extras" label={tr("Exclude extras (bonus tracks, interludes)")} />
+        <Chk k="qobuz_non_remaster" label={tr("Exclude non-remastered versions")} />
+        <Chk k="qobuz_non_studio_albums" label={tr("Exclude non-studio albums (live, compilations)")} />
+        <Chk k="qobuz_non_albums" label={tr("Exclude non-album releases (singles, EPs)")} />
+        <Chk k="qobuz_features" label={tr("Exclude feature appearances")} />
+        <Chk k="qobuz_repeats" label={tr("Exclude repeated albums (duplicates)")} />
       </Section>
 
-      <Section title="Advanced — App credentials override">
+      <Section title={tr("Advanced — App credentials override")}>
         <p className="text-xs text-muted-foreground leading-relaxed">
           Normally these are worked out automatically: your token carries the date it was created,
           and MediaHarbor reads the app credentials out of the Qobuz web player build that was live
@@ -1892,15 +1893,15 @@ function QobuzTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         </p>
         <Txt
           k="qobuz_app_id"
-          label="App ID"
-          help="9-digit Qobuz client app_id"
-          placeholder="Auto-detected"
+          label={tr("App ID")}
+          help={tr("9-digit Qobuz client app_id")}
+          placeholder={tr("Auto-detected")}
         />
         <Txt
           k="qobuz_secrets"
-          label="App Secret"
-          help="32-char hex secret used to sign track URLs"
-          placeholder="Auto-detected"
+          label={tr("App Secret")}
+          help={tr("32-char hex secret used to sign track URLs")}
+          placeholder={tr("Auto-detected")}
         />
       </Section>
     </>
@@ -1973,12 +1974,12 @@ function TidalTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
 
   return (
     <>
-      <Section title="Sign in">
+      <Section title={tr("Sign in")}>
         {hasToken ? (
           <div className="flex items-center justify-between rounded-md bg-green-500/10 border border-green-500/30 px-3 py-2">
             <div className="flex items-center gap-2 text-sm text-green-500">
               <Check className="h-4 w-4" />
-              <span>Logged in to Tidal</span>
+              <span>{tr("Logged in to Tidal")}</span>
               {userId && (
                 <span className="text-green-500/70 text-xs">
                   · User {userId}
@@ -1998,7 +1999,7 @@ function TidalTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         ) : (
           <div className="flex items-center gap-2 rounded-md bg-amber-500/10 border border-amber-500/30 px-3 py-2 text-sm text-amber-500">
             <span className="h-2 w-2 rounded-full bg-amber-500 inline-block" />
-            <span>Not logged in — Tidal playback and downloads will not work</span>
+            <span>{tr("Not logged in — Tidal playback and downloads will not work")}</span>
           </div>
         )}
 
@@ -2050,7 +2051,7 @@ function TidalTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
         )}
       </Section>
 
-      <Section title="Quality">
+      <Section title={tr("Quality")}>
         <DefaultQualityRow
           platform="tidal"
           value={String(s.tidal_quality ?? 3)}
@@ -2059,52 +2060,52 @@ function TidalTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
       </Section>
 
       <ToggleSection
-        title="Videos"
+        title={tr("Videos")}
         enabled={s.tidal_download_videos ?? false}
         onToggle={(v) => set('tidal_download_videos', v)}
       >
         <Sel
           k="tidal_video_quality"
-          label="Max resolution"
-          help="The closest variant at or below this height is taken"
+          label={tr("Max resolution")}
+          help={tr("The closest variant at or below this height is taken")}
           options={TIDAL_VIDEO_QUALITY_OPTS}
           fallback="1080p"
           w="w-32"
         />
       </ToggleSection>
 
-      <Section title="Telemetry & playback history">
-        <Chk k="tidal_telemetry_enabled" label="Send anti-ban telemetry" />
-        <Chk k="tidal_sync_playback_history" label="Sync playback history to Tidal" />
+      <Section title={tr("Telemetry & playback history")}>
+        <Chk k="tidal_telemetry_enabled" label={tr("Send anti-ban telemetry")} />
+        <Chk k="tidal_sync_playback_history" label={tr("Sync playback history to Tidal")} />
         <Txt
           k="tidal_device_model"
-          label="Reported device model"
-          help="Every field below must describe the same real device. Defaults are a Galaxy A16 5G; the app version is fetched automatically."
-          placeholder="SM-A166B"
+          label={tr("Reported device model")}
+          help={tr("Every field below must describe the same real device. Defaults are a Galaxy A16 5G; the app version is fetched automatically.")}
+          placeholder={tr("SM-A166B")}
           w="w-64"
         />
         <Txt
           k="tidal_device_vendor"
-          label="Device vendor"
-          help="As Android reports it (samsung, Google, OnePlus). Must match the model."
+          label={tr("Device vendor")}
+          help={tr("As Android reports it (samsung, Google, OnePlus). Must match the model.")}
           placeholder="samsung"
           w="w-64"
         />
         <Sel
           k="tidal_device_type"
-          label="Device type"
-          help="Must match the model's form factor."
+          label={tr("Device type")}
+          help={tr("Must match the model's form factor.")}
           options={TIDAL_DEVICE_TYPE_OPTS}
           fallback="phone"
         />
         <Txt
           k="tidal_os_version"
-          label="Android OS version"
-          help="Android major version, e.g. 14."
+          label={tr("Android OS version")}
+          help={tr("Android major version, e.g. 14.")}
           placeholder="14"
           w="w-64"
         />
-        <Row label="Screen resolution" help="Width × height in pixels, portrait.">
+        <Row label={tr("Screen resolution")} help={tr("Width × height in pixels, portrait.")}>
           <div className="flex items-center gap-2">
             <Input
               type="number"
@@ -2191,24 +2192,24 @@ function SpotifyTab({
 
   return (
     <>
-      <Section title="Downloader">
+      <Section title={tr("Downloader")}>
         <Row
-          label="Backend"
-          help="Native needs no setup. Votify needs Python but adds podcasts, music videos, and FLAC."
+          label={tr("Backend")}
+          help={tr("Native needs no setup. Votify needs Python but adds podcasts, music videos, and FLAC.")}
         >
           <Select value={backend} onValueChange={(v) => set('spotify_downloader_backend', v)}>
             <SelectTrigger className="w-44">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="native">Native (recommended)</SelectItem>
-              <SelectItem value="votify">Votify (legacy CLI)</SelectItem>
+              <SelectItem value="native">{tr("Native (recommended)")}</SelectItem>
+              <SelectItem value="votify">{tr("Votify (legacy CLI)")}</SelectItem>
             </SelectContent>
           </Select>
         </Row>
       </Section>
 
-      <Section title="Spotify Account">
+      <Section title={tr("Spotify Account")}>
         <div className="rounded-md border border-blue-500/30 bg-blue-500/5 px-4 py-3 text-xs text-blue-600 dark:text-blue-400 mb-2">
           Connect your Spotify account for personalized search. Uses your cookies file from the
           Authentication section below — no extra setup needed.
@@ -2240,19 +2241,19 @@ function SpotifyTab({
         </div>
       </Section>
 
-      <Section title="Authentication">
+      <Section title={tr("Authentication")}>
         <Pth
           k="spotify_cookies_path"
-          label="Cookies Path"
-          help="Netscape format cookies file from spotify.com. Used by both backends."
-          placeholder="Path to spotify.com cookies.txt"
+          label={tr("Cookies Path")}
+          help={tr("Netscape format cookies file from spotify.com. Used by both backends.")}
+          placeholder={tr("Path to spotify.com cookies.txt")}
           on={browseFile}
         />
         <Pth
           k="spotify_wvd_path"
-          label="WVD Path"
-          help=".wvd file for DRM decryption (required for native Spotify AAC downloads)"
-          placeholder="Path to .wvd file"
+          label={tr("WVD Path")}
+          help={tr(".wvd file for DRM decryption (required for native Spotify AAC downloads)")}
+          placeholder={tr("Path to .wvd file")}
           on={browseFile}
         />
         <fieldset
@@ -2261,8 +2262,8 @@ function SpotifyTab({
         >
           <Sel
             k="spotify_session_type"
-            label="Session Type"
-            help="How votify authenticates with Spotify"
+            label={tr("Session Type")}
+            help={tr("How votify authenticates with Spotify")}
             options={SPOTIFY_SESSION_TYPE_OPTS}
             fallback="librespot"
             w="w-36"
@@ -2270,20 +2271,20 @@ function SpotifyTab({
           {(s.spotify_session_type || 'librespot') === 'desktop' && (
             <Pth
               k="spotify_dll_path"
-              label="Spotify DLL Path"
-              help="Spotify DLL file for desktop session decryption"
-              placeholder="Path to Spotify DLL"
+              label={tr("Spotify DLL Path")}
+              help={tr("Spotify DLL file for desktop session decryption")}
+              placeholder={tr("Path to Spotify DLL")}
               on={browseFile}
             />
           )}
-          <Chk k="spotify_no_drm" label="No DRM (only download non-DRM content)" />
+          <Chk k="spotify_no_drm" label={tr("No DRM (only download non-DRM content)")} />
         </fieldset>
       </Section>
 
-      <Section title="Audio">
+      <Section title={tr("Audio")}>
         <Sel
           k="spotify_audio_download_mode"
-          label="Download mode"
+          label={tr("Download mode")}
           help={
             isVotify
               ? 'Which tool Votify uses to fetch the audio'
@@ -2295,7 +2296,7 @@ function SpotifyTab({
         />
         <Sel
           k="spotify_audio_remux_mode"
-          label="Audio remux mode"
+          label={tr("Audio remux mode")}
           help={!isVotify ? 'The native backend always remuxes with FFmpeg' : undefined}
           options={SPOTIFY_AUDIO_REMUX_MODE_OPTS}
           fallback="ffmpeg"
@@ -2304,94 +2305,94 @@ function SpotifyTab({
         />
         <Sel
           k="spotify_cover_size"
-          label="Cover size"
+          label={tr("Cover size")}
           options={SPOTIFY_COVER_SIZE_OPTS}
           fallback="large"
           w="w-32"
         />
       </Section>
 
-      <Section title="Files & Metadata">
+      <Section title={tr("Files & Metadata")}>
         <Chk
           k="spotify_overwrite"
-          label="Overwrite existing files"
-          help="When off, a track already on disk is left alone and counted as skipped"
+          label={tr("Overwrite existing files")}
+          help={tr("When off, a track already on disk is left alone and counted as skipped")}
         />
         <Chk
           k="spotify_save_cover_file"
-          label="Save cover file"
-          help="The native downloader follows General → Artwork & Metadata."
+          label={tr("Save cover file")}
+          help={tr("The native downloader follows General → Artwork & Metadata.")}
           disabled={!isVotify}
         />
         <Chk
           k="spotify_save_playlist_file"
-          label="Save playlist file"
-          help="The native downloader follows General → File Naming."
+          label={tr("Save playlist file")}
+          help={tr("The native downloader follows General → File Naming.")}
           disabled={!isVotify}
         />
         <Chk
           k="spotify_no_synced_lyrics_file"
-          label="Don't create synced lyrics file"
-          help="Suppresses the sidecar for Spotify only; embedded lyrics are unaffected."
+          label={tr("Don't create synced lyrics file")}
+          help={tr("Suppresses the sidecar for Spotify only; embedded lyrics are unaffected.")}
         />
-        <Chk k="spotify_synced_lyrics_only" label="Download synced lyrics only (no audio)" />
+        <Chk k="spotify_synced_lyrics_only" label={tr("Download synced lyrics only (no audio)")} />
       </Section>
 
-      <Section title="Output Templates" disabled={!isVotify}>
+      <Section title={tr("Output Templates")} disabled={!isVotify}>
         <Txt
           k="spotify_album_folder_template"
-          label="Album folder"
-          help="{album_artist}, {album}"
+          label={tr("Album folder")}
+          help={tr("{album_artist}, {album}")}
           fallback="{album_artist}/{album}"
         />
         <Txt
           k="spotify_single_disc_file_template"
-          label="Single disc file"
-          help="{track}, {title}"
+          label={tr("Single disc file")}
+          help={tr("{track}, {title}")}
           fallback="{track:02d} {title}"
         />
         <Txt
           k="spotify_multi_disc_file_template"
-          label="Multi disc file"
-          help="{disc}, {track}, {title}"
+          label={tr("Multi disc file")}
+          help={tr("{disc}, {track}, {title}")}
           fallback="{disc}-{track:02d} {title}"
         />
         <Txt
           k="spotify_playlist_file_template"
-          label="Playlist file"
-          help="{playlist_title}, {track}, {title}"
+          label={tr("Playlist file")}
+          help={tr("{playlist_title}, {track}, {title}")}
           fallback="Playlists/{playlist_title}/{track:02d} {title}"
         />
         <Num
           k="spotify_truncate"
-          label="Truncate"
-          help="Max length for file/folder names"
+          label={tr("Truncate")}
+          help={tr("Max length for file/folder names")}
           fallback={40}
           w="w-28"
         />
       </Section>
 
-      <Section title="Advanced" disabled={!isVotify}>
+      <Section title={tr("Advanced")} disabled={!isVotify}>
         <Num
           k="spotify_wait_interval"
-          label="Wait interval (seconds)"
-          help="Delay between downloads"
+          label={tr("Wait interval (seconds)")}
+          help={tr("Delay between downloads")}
           fallback={10}
           w="w-28"
         />
         <Sel
           k="spotify_log_level"
-          label="Log level"
+          label={tr("Log level")}
           options={SPOTIFY_LOG_LEVEL_OPTS}
           fallback="INFO"
           w="w-32"
         />
-        <Chk k="spotify_no_exceptions" label="Don't print exceptions" />
+        <Chk k="spotify_no_exceptions" label={tr("Don't print exceptions")} />
       </Section>
 
-      <Section title="Telemetry & playback history">
-        <Chk k="spotify_sync_playback_history" label="Sync playback history to Spotify" />
-        <Chk k="spotify_telemetry_enabled" label="Send Spotify client telemetry" />
+      <Section title={tr("Telemetry & playback history")}>
+        <Chk k="spotify_sync_playback_history" label={tr("Sync playback history to Spotify")} />
+        <Chk k="spotify_telemetry_enabled" label={tr("Send Spotify client telemetry")} />
       </Section>
     </>
   );
@@ -2411,9 +2412,9 @@ function AppleMusicTab({
   const isGamdl = backend === 'gamdl';
   return (
     <>
-      <Section title="Downloader">
+      <Section title={tr("Downloader")}>
         <Row
-          label="Backend"
+          label={tr("Backend")}
           help="Native needs no setup. Gamdl needs Python but adds music videos, ALAC, Atmos, and spatial audio.
 "
         >
@@ -2422,87 +2423,87 @@ function AppleMusicTab({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="native">Native (recommended)</SelectItem>
-              <SelectItem value="gamdl">Gamdl (legacy CLI)</SelectItem>
+              <SelectItem value="native">{tr("Native (recommended)")}</SelectItem>
+              <SelectItem value="gamdl">{tr("Gamdl (legacy CLI)")}</SelectItem>
             </SelectContent>
           </Select>
         </Row>
       </Section>
 
-      <Section title="Authentication">
+      <Section title={tr("Authentication")}>
         <Pth
           k="apple_cookies_path"
-          label="Cookies path"
-          help="music.apple.com cookies (Netscape format). Used by both backends."
+          label={tr("Cookies path")}
+          help={tr("music.apple.com cookies (Netscape format). Used by both backends.")}
           on={browseFile}
         />
         <Pth
           k="apple_wvd_path"
-          label=".wvd path"
-          help="Widevine device file — both backends need it to decrypt Apple Music's protected HLS audio."
-          placeholder="Path to .wvd file"
+          label={tr(".wvd path")}
+          help={tr("Widevine device file — both backends need it to decrypt Apple Music's protected HLS audio.")}
+          placeholder={tr("Path to .wvd file")}
           on={browseFile}
         />
       </Section>
 
-      <Section title="Output" disabled={!isGamdl}>
+      <Section title={tr("Output")} disabled={!isGamdl}>
         <Row
-          label="Output path"
-          help="Derived from General → Downloads on every save, so editing it here has no effect."
+          label={tr("Output path")}
+          help={tr("Derived from General → Downloads on every save, so editing it here has no effect.")}
         >
           <Input value={s.apple_output_path || ''} readOnly className="opacity-70" />
         </Row>
         <Txt
           k="apple_temp_path"
-          label="Temp path"
-          help="Must be an absolute path; a relative one is reset on load."
+          label={tr("Temp path")}
+          help={tr("Must be an absolute path; a relative one is reset on load.")}
         />
         <Sel
           k="apple_download_mode"
-          label="Download mode"
+          label={tr("Download mode")}
           options={APPLE_DOWNLOAD_MODE_OPTS}
           fallback="ytdlp"
           w="w-40"
         />
-        <Num k="apple_truncate" label="Max filename length" fallback={40} w="w-28" />
+        <Num k="apple_truncate" label={tr("Max filename length")} fallback={40} w="w-28" />
       </Section>
 
-      <Section title="Cover Art">
+      <Section title={tr("Cover Art")}>
         <Sel
           k="apple_cover_format"
-          label="Format"
+          label={tr("Format")}
           options={APPLE_COVER_FORMAT_OPTS}
           fallback="jpg"
           w="w-28"
         />
-        <Num k="apple_cover_size" label="Max size (px)" fallback={1200} w="w-28" />
+        <Num k="apple_cover_size" label={tr("Max size (px)")} fallback={1200} w="w-28" />
         <Chk
           k="apple_save_cover"
-          label="Save cover art file"
-          help="The native downloader follows General → Artwork & Metadata."
+          label={tr("Save cover art file")}
+          help={tr("The native downloader follows General → Artwork & Metadata.")}
           disabled={!isGamdl}
         />
       </Section>
 
-      <Section title="Files (native downloader)">
-        <Chk k="apple_overwrite" label="Overwrite existing files" />
-        <Chk k="apple_synced_lyrics_only" label="Download synced lyrics only (no audio)" />
+      <Section title={tr("Files (native downloader)")}>
+        <Chk k="apple_overwrite" label={tr("Overwrite existing files")} />
+        <Chk k="apple_synced_lyrics_only" label={tr("Download synced lyrics only (no audio)")} />
         <Txt
           k="apple_language"
-          label="Metadata language"
-          help="e.g. en-US, ja-JP"
+          label={tr("Metadata language")}
+          help={tr("e.g. en-US, ja-JP")}
           fallback="en-US"
           w="w-28"
         />
       </Section>
 
       <ToggleSection
-        title="Lyrics"
+        title={tr("Lyrics")}
         enabled={!s.apple_no_synced_lyrics}
         onToggle={(v) => set('apple_no_synced_lyrics', !v)}
         disabled={!isGamdl}
       >
-        <Row label="Synced lyrics format">
+        <Row label={tr("Synced lyrics format")}>
           <Select
             value={s.apple_synced_lyrics_format || 'lrc'}
             onValueChange={(v) => set('apple_synced_lyrics_format', v)}
@@ -2511,103 +2512,103 @@ function AppleMusicTab({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="lrc">LRC</SelectItem>
-              <SelectItem value="ttml">TTML (word-synced)</SelectItem>
-              <SelectItem value="both">Both</SelectItem>
-              {isGamdl && <SelectItem value="srt">SRT</SelectItem>}
+              <SelectItem value="lrc">{tr("LRC")}</SelectItem>
+              <SelectItem value="ttml">{tr("TTML (word-synced)")}</SelectItem>
+              <SelectItem value="both">{tr("Both")}</SelectItem>
+              {isGamdl && <SelectItem value="srt">{tr("SRT")}</SelectItem>}
             </SelectContent>
           </Select>
         </Row>
       </ToggleSection>
 
-      <Section title="Playback history">
-        <Chk k="apple_sync_playback_history" label="Sync playback history to Apple Music" />
+      <Section title={tr("Playback history")}>
+        <Chk k="apple_sync_playback_history" label={tr("Sync playback history to Apple Music")} />
       </Section>
 
-      <Section title="Extra Tags" disabled={!isGamdl}>
-        <Chk k="apple_use_album_date" label="Use album release date for songs" />
+      <Section title={tr("Extra Tags")} disabled={!isGamdl}>
+        <Chk k="apple_use_album_date" label={tr("Use album release date for songs")} />
         <Txt
           k="apple_date_tag_template"
-          label="Date tag template"
-          help="strftime format"
+          label={tr("Date tag template")}
+          help={tr("strftime format")}
           fallback="%Y-%m-%dT%H:%M:%SZ"
         />
         <Txt
           k="apple_exclude_tags"
-          label="Exclude tags"
-          help="Comma-separated"
-          placeholder="e.g. lyrics,comment"
+          label={tr("Exclude tags")}
+          help={tr("Comma-separated")}
+          placeholder={tr("e.g. lyrics,comment")}
         />
       </Section>
 
-      <Section title="File Templates" disabled={!isGamdl}>
+      <Section title={tr("File Templates")} disabled={!isGamdl}>
         <Txt
           k="apple_template_folder_album"
-          label="Album folder"
-          help="{album_artist}, {album}"
+          label={tr("Album folder")}
+          help={tr("{album_artist}, {album}")}
           fallback="{album_artist}/{album}"
         />
         <Txt
           k="apple_template_folder_compilation"
-          label="Compilation folder"
+          label={tr("Compilation folder")}
           fallback="Compilations/{album}"
         />
         <Txt
           k="apple_template_folder_no_album"
-          label="No-album folder"
+          label={tr("No-album folder")}
           fallback="{album_artist}/Unknown Album"
         />
         <Txt
           k="apple_playlist_folder_template"
-          label="Playlist folder"
-          help="{playlist_name}"
+          label={tr("Playlist folder")}
+          help={tr("{playlist_name}")}
           fallback="Playlists/{playlist_name}"
         />
         <Txt
           k="apple_template_file_single_disc"
-          label="Single-disc file"
-          help="{track}, {title}"
+          label={tr("Single-disc file")}
+          help={tr("{track}, {title}")}
           fallback="{track:02d} {title}"
         />
         <Txt
           k="apple_template_file_multi_disc"
-          label="Multi-disc file"
-          help="{disc}, {track}, {title}"
+          label={tr("Multi-disc file")}
+          help={tr("{disc}, {track}, {title}")}
           fallback="{disc}-{track:02d} {title}"
         />
-        <Txt k="apple_template_file_no_album" label="No-album file" fallback="{title}" />
+        <Txt k="apple_template_file_no_album" label={tr("No-album file")} fallback="{title}" />
         <Txt
           k="apple_template_file_playlist"
-          label="Playlist file"
+          label={tr("Playlist file")}
           fallback="Playlists/{playlist_title}/{track:02d} {title}"
         />
       </Section>
 
-      <Section title="Music Video">
+      <Section title={tr("Music Video")}>
         <Sel
           k="apple_mv_codec_priority"
-          label="Codec priority"
+          label={tr("Codec priority")}
           options={APPLE_MV_CODEC_PRIORITY_OPTS}
           fallback="h264"
           w="w-28"
         />
         <Sel
           k="apple_mv_remux_format"
-          label="Remux format"
+          label={tr("Remux format")}
           options={APPLE_MV_REMUX_FORMAT_OPTS}
           fallback="m4v"
           w="w-28"
         />
         <Sel
           k="apple_mv_resolution"
-          label="Max resolution"
+          label={tr("Max resolution")}
           options={APPLE_MV_RESOLUTION_OPTS}
           fallback="1080p"
           w="w-28"
         />
         <Sel
           k="apple_uploaded_video_quality"
-          label="Uploaded video quality"
+          label={tr("Uploaded video quality")}
           help={
             !isGamdl
               ? 'Applies to Apple Music post videos, which the native backend does not download'
@@ -2620,7 +2621,7 @@ function AppleMusicTab({
         />
       </Section>
 
-      <Section title="Custom Tool Paths" disabled={!isGamdl}>
+      <Section title={tr("Custom Tool Paths")} disabled={!isGamdl}>
         {[
           ['apple_ffmpeg_path', 'FFmpeg', 'ffmpeg'],
           ['apple_nm3u8dlre_path', 'N_m3u8DL-RE', 'N_m3u8DL-RE'],
@@ -2633,7 +2634,7 @@ function AppleMusicTab({
                 placeholder={placeholder as string}
               />
               <Button variant="outline" size="sm" onClick={() => browseFile(key as keyof Settings)}>
-                Browse
+                {tr("Browse")}
               </Button>
             </div>
           </Row>
@@ -2641,7 +2642,7 @@ function AppleMusicTab({
       </Section>
 
       <ToggleSection
-        title="Wrapper (ALAC / lossless)"
+        title={tr("Wrapper (ALAC / lossless)")}
         enabled={s.apple_use_wrapper ?? false}
         onToggle={(v) => set('apple_use_wrapper', v)}
       >
@@ -2653,13 +2654,13 @@ function AppleMusicTab({
         </p>
         <Txt
           k="apple_wrapper_email"
-          label="Apple ID / username"
-          help="Your Apple Music sign-in. MediaHarbor signs the daemon in when it is running but logged out."
-          placeholder="you@example.com"
+          label={tr("Apple ID / username")}
+          help={tr("Your Apple Music sign-in. MediaHarbor signs the daemon in when it is running but logged out.")}
+          placeholder={tr("you@example.com")}
         />
         <Row
-          label="Password"
-          help="Apple ID or app-specific password. MediaHarbor prompts for the two-factor code when a download starts."
+          label={tr("Password")}
+          help={tr("Apple ID or app-specific password. MediaHarbor prompts for the two-factor code when a download starts.")}
         >
           <SecretInput
             value={s.apple_wrapper_password || ''}
@@ -2669,24 +2670,24 @@ function AppleMusicTab({
         </Row>
         <Txt
           k="apple_wrapper_url"
-          label="Wrapper URL"
-          help="Account, playback and status endpoint."
+          label={tr("Wrapper URL")}
+          help={tr("Account, playback and status endpoint.")}
           placeholder="http://127.0.0.1"
         />
         <Txt
           k="apple_wrapper_decrypt_host"
-          label="Decrypt host"
-          help="Host of the batch-decrypt socket."
+          label={tr("Decrypt host")}
+          help={tr("Host of the batch-decrypt socket.")}
           placeholder="127.0.0.1"
         />
-        <Txt k="apple_wrapper_decrypt_port" label="Decrypt port" placeholder="10020" w="w-28" />
+        <Txt k="apple_wrapper_decrypt_port" label={tr("Decrypt port")} placeholder="10020" w="w-28" />
         <WrapperConnectionTest enabled={s.apple_use_wrapper ?? false} />
       </ToggleSection>
 
-      <Section title="Misc" disabled={!isGamdl}>
+      <Section title={tr("Misc")} disabled={!isGamdl}>
         <Row
-          label="Artist auto-select"
-          help="Auto-select content type when downloading an artist URL"
+          label={tr("Artist auto-select")}
+          help={tr("Auto-select content type when downloading an artist URL")}
         >
           <Select
             value={s.apple_artist_auto_select || 'ask'}
@@ -2696,26 +2697,26 @@ function AppleMusicTab({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="ask">Ask interactively</SelectItem>
-              <SelectItem value="main-albums">Main Albums</SelectItem>
-              <SelectItem value="compilation-albums">Compilations</SelectItem>
-              <SelectItem value="live-albums">Live Albums</SelectItem>
-              <SelectItem value="singles-eps">Singles & EPs</SelectItem>
-              <SelectItem value="all-albums">All Albums</SelectItem>
-              <SelectItem value="top-songs">Top Songs</SelectItem>
-              <SelectItem value="music-videos">Music Videos</SelectItem>
+              <SelectItem value="ask">{tr("Ask interactively")}</SelectItem>
+              <SelectItem value="main-albums">{tr("Main Albums")}</SelectItem>
+              <SelectItem value="compilation-albums">{tr("Compilations")}</SelectItem>
+              <SelectItem value="live-albums">{tr("Live Albums")}</SelectItem>
+              <SelectItem value="singles-eps">{tr("Singles & EPs")}</SelectItem>
+              <SelectItem value="all-albums">{tr("All Albums")}</SelectItem>
+              <SelectItem value="top-songs">{tr("Top Songs")}</SelectItem>
+              <SelectItem value="music-videos">{tr("Music Videos")}</SelectItem>
             </SelectContent>
           </Select>
         </Row>
         <Chk
           k="apple_save_playlist"
-          label="Save playlist file"
-          help="The native downloader follows General → File Naming."
+          label={tr("Save playlist file")}
+          help={tr("The native downloader follows General → File Naming.")}
         />
-        <Chk k="apple_no_exceptions" label="Don't print exceptions" />
+        <Chk k="apple_no_exceptions" label={tr("Don't print exceptions")} />
         <Sel
           k="apple_log_level"
-          label="Log level"
+          label={tr("Log level")}
           options={APPLE_LOG_LEVEL_OPTS}
           fallback="INFO"
           w="w-32"
@@ -2776,10 +2777,10 @@ function WrapperConnectionTest({ enabled }: { enabled: boolean }) {
           </Button>
         ) : (
           <Button variant="secondary" size="sm" disabled={busy} onClick={() => run(true)}>
-            Sign in
+            {tr("Sign in")}
           </Button>
         )}
-        {busy && <span className="text-xs text-muted-foreground">Contacting daemon…</span>}
+        {busy && <span className="text-xs text-muted-foreground">{tr("Contacting daemon…")}</span>}
       </div>
 
       {result && (
@@ -2812,7 +2813,7 @@ function WrapperConnectionTest({ enabled }: { enabled: boolean }) {
           <Input
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            placeholder="Verification code"
+            placeholder={tr("Verification code")}
             className="w-44"
             onKeyDown={(e) => e.key === 'Enter' && code.trim() && run(true, code)}
           />
@@ -3071,7 +3072,7 @@ function OrpheusConfigEditor() {
     }
   };
 
-  if (loading) return <p className="text-xs text-muted-foreground py-1">Loading settings.json…</p>;
+  if (loading) return <p className="text-xs text-muted-foreground py-1">{tr("Loading settings.json…")}</p>;
   if (notFound)
     return (
       <p className="text-xs text-muted-foreground py-1">
@@ -3132,7 +3133,7 @@ function OrpheusConfigEditor() {
 function OrpheusDLTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
   return (
     <ToggleSection
-      title="OrpheusDL"
+      title={tr("OrpheusDL")}
       enabled={s.orpheusDL ?? false}
       onToggle={(v) => set('orpheusDL', v)}
     >
@@ -3160,45 +3161,45 @@ function ApiKeysTab({ s, set }: { s: Partial<Settings>; set: SettingsSetter }) {
             fields are only needed as a fallback when you are not logged in.
           </p>
         )}
-        <Row label="Client ID" help="Optional when signed in with cookies">
+        <Row label={tr("Client ID")} help={tr("Optional when signed in with cookies")}>
           <SecretInput
             value={s.spotify_client_id || ''}
             onChange={(v) => set('spotify_client_id', v)}
-            placeholder="Your Spotify client ID"
+            placeholder={tr("Your Spotify client ID")}
           />
         </Row>
-        <Row label="Client Secret" help="Keep this private">
+        <Row label={tr("Client Secret")} help={tr("Keep this private")}>
           <SecretInput
             value={s.spotify_client_secret || ''}
             onChange={(v) => set('spotify_client_secret', v)}
-            placeholder="Your Spotify client secret"
+            placeholder={tr("Your Spotify client secret")}
           />
         </Row>
       </Section>
 
-      <Section title="Tidal Search API">
-        <Row label="Client ID" help="From your Tidal Developer Portal app">
+      <Section title={tr("Tidal Search API")}>
+        <Row label={tr("Client ID")} help={tr("From your Tidal Developer Portal app")}>
           <SecretInput
             value={s.tidal_client_id || ''}
             onChange={(v) => set('tidal_client_id', v)}
-            placeholder="Your Tidal client ID"
+            placeholder={tr("Your Tidal client ID")}
           />
         </Row>
-        <Row label="Client Secret" help="Keep this private">
+        <Row label={tr("Client Secret")} help={tr("Keep this private")}>
           <SecretInput
             value={s.tidal_client_secret || ''}
             onChange={(v) => set('tidal_client_secret', v)}
-            placeholder="Your Tidal client secret"
+            placeholder={tr("Your Tidal client secret")}
           />
         </Row>
       </Section>
 
-      <Section title="YouTube Data API v3">
-        <Row label="API Key" help="From your Google Cloud Console project">
+      <Section title={tr("YouTube Data API v3")}>
+        <Row label={tr("API Key")} help={tr("From your Google Cloud Console project")}>
           <SecretInput
             value={s.youtube_api_key || ''}
             onChange={(v) => set('youtube_api_key', v)}
-            placeholder="Your YouTube Data API v3 key"
+            placeholder={tr("Your YouTube Data API v3 key")}
           />
         </Row>
       </Section>

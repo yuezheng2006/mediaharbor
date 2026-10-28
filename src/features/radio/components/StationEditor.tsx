@@ -34,6 +34,7 @@ import {
   toForm,
   type FormState,
 } from '@/features/radio/stationForm';
+import { tr } from '@/i18n';
 import {
   tauriAPI,
   type RadioStation,
@@ -196,7 +197,7 @@ export function StationEditor({ station, unsaved = false, onClose, onSaved }: Pr
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 className="group relative block h-28 w-28 overflow-hidden rounded-lg border border-border/50 bg-muted/30"
-                title="Choose a cover image"
+                title={tr("Choose a cover image")}
               >
                 <StationIcon src={coverUrl} className="h-full w-full" iconClassName="h-8 w-8" />
                 <span className="absolute inset-0 flex items-center justify-center bg-background/70 opacity-0 transition-opacity group-hover:opacity-100">
@@ -230,14 +231,14 @@ export function StationEditor({ station, unsaved = false, onClose, onSaved }: Pr
 
             <div className="min-w-0 flex-1 space-y-3">
               <Field
-                label="Name"
+                label={tr("Name")}
                 overridden={overridden.has('name')}
                 onRevert={() => revert('name')}
               >
                 <Input value={form.name} onChange={(e) => set('name', e.target.value)} />
               </Field>
               <Field
-                label="Stream URL"
+                label={tr("Stream URL")}
                 overridden={overridden.has('streamUrl')}
                 onRevert={() => revert('streamUrl')}
               >
@@ -259,7 +260,7 @@ export function StationEditor({ station, unsaved = false, onClose, onSaved }: Pr
               </Field>
               {probe && <ProbeResult probe={probe} />}
               <Field
-                label="Stream type"
+                label={tr("Stream type")}
                 overridden={overridden.has('streamKind')}
                 onRevert={() => revert('streamKind')}
               >
@@ -296,7 +297,7 @@ export function StationEditor({ station, unsaved = false, onClose, onSaved }: Pr
           />
 
           <details className="rounded-lg border border-border/40 p-3">
-            <summary className="cursor-pointer text-sm font-medium">Details</summary>
+            <summary className="cursor-pointer text-sm font-medium">{tr("Details")}</summary>
             <div className="mt-3 grid grid-cols-2 gap-3">
               {DETAIL_FIELDS.map(([field, label, placeholder]) => (
                 <Field

@@ -7,6 +7,7 @@ import { useGridMetrics } from '@/features/radio/grid';
 import { RadioEmpty, RadioError } from '@/features/radio/components/RadioStates';
 import { useRadioFavorites, useRadioRecent } from '@/features/radio/hooks/useRadioQueries';
 import type { StationChrome } from '@/features/radio/RadioActions';
+import { tr } from '@/i18n';
 
 /**
  * Saved stations and what was on recently.
@@ -45,7 +46,7 @@ export function FavoritesView(chrome: StationChrome) {
         ) : favorites.data.length === 0 ? (
           <RadioEmpty
             icon={Heart}
-            title="No saved stations"
+            title={tr("No saved stations")}
             hint="Hover a station anywhere on this page and press the heart. Favourites keep working even when the directory is down."
           />
         ) : (

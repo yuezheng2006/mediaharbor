@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useDeleteServicePlaylist } from '@/features/library/hooks/useLibraryMutations';
+import { tr } from '@/i18n';
 
 interface Props {
   open: boolean;
@@ -33,7 +34,7 @@ export function DeletePlaylistConfirm({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Delete playlist?</DialogTitle>
+          <DialogTitle>{tr("Delete playlist?")}</DialogTitle>
           <DialogDescription>
             &ldquo;{playlistName}&rdquo; will be removed from your library. Other users who follow
             it keep their copy.

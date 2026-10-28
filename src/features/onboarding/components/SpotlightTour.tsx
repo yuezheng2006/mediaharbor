@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTourStore } from '../stores/useTourStore';
 import { TOUR_STEPS, type TourStep } from '../tour/steps';
+import { tr } from '@/i18n';
 
 interface Rect {
   top: number;
@@ -187,35 +188,38 @@ export function SpotlightTour() {
           <div className="flex items-start justify-between gap-2">
             <div className="space-y-1 flex-1">
               <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-                Step {currentStep + 1} of {totalSteps}
+                {tr('Step {current} of {total}', {
+                  current: currentStep + 1,
+                  total: totalSteps,
+                })}
               </p>
-              <h3 className="text-sm font-semibold leading-tight">{step.title}</h3>
+              <h3 className="text-sm font-semibold leading-tight">{tr(step.title)}</h3>
             </div>
             <button
               onClick={() => void end()}
               className="text-muted-foreground hover:text-foreground transition-colors p-0.5 -m-0.5"
-              aria-label="Skip tour"
+              aria-label={tr('Skip tour')}
             >
               <X className="w-4 h-4" />
             </button>
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">{step.body}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">{tr(step.body)}</p>
           <div className="flex items-center justify-between pt-1">
             <button
               onClick={() => void end()}
               className="text-[11px] text-muted-foreground hover:text-foreground transition-colors"
             >
-              Skip tour
+              {tr('Skip tour')}
             </button>
             <div className="flex items-center gap-1.5">
               {!isFirst && (
                 <Button variant="ghost" size="sm" className="h-7 px-2 gap-1" onClick={prev}>
                   <ChevronLeft className="w-3.5 h-3.5" />
-                  Back
+                  {tr('Back')}
                 </Button>
               )}
               <Button size="sm" className="h-7 px-3 gap-1" onClick={next}>
-                {isLast ? 'Finish' : 'Next'}
+                {isLast ? tr('Finish') : tr('Next')}
                 {!isLast && <ChevronRight className="w-3.5 h-3.5" />}
               </Button>
             </div>

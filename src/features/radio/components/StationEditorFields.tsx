@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/utils/cn';
 import type { RadioStreamProbe } from '@/tauri-bridge';
+import { tr } from '@/i18n';
 
 export function Field({
   label,
@@ -25,7 +26,7 @@ export function Field({
           <button
             type="button"
             onClick={onRevert}
-            title="Back to the directory's value"
+            title={tr("Back to the directory's value")}
             className="inline-flex items-center gap-1 text-[10px] text-[var(--service-accent)] hover:underline"
           >
             <RotateCcw className="h-2.5 w-2.5" /> changed
@@ -77,7 +78,7 @@ export function UrlList({
   onChange: (urls: string[]) => void;
 }) {
   return (
-    <Field label="Backup streams" overridden={overridden} onRevert={onRevert}>
+    <Field label={tr("Backup streams")} overridden={overridden} onRevert={onRevert}>
       <div className="space-y-1.5">
         {urls.map((url, i) => (
           <div key={i} className="flex gap-2">
@@ -89,7 +90,7 @@ export function UrlList({
             <Button
               variant="ghost"
               size="icon"
-              aria-label="Remove this backup stream"
+              aria-label={tr("Remove this backup stream")}
               onClick={() => onChange(urls.filter((_, j) => j !== i))}
             >
               <Trash2 className="h-3.5 w-3.5" />
@@ -117,9 +118,9 @@ export function HeaderTable({
     <div className="space-y-2 rounded-lg border border-border/40 p-3">
       <div className="flex items-center justify-between gap-2">
         <div>
-          <p className="text-sm font-medium">Request headers</p>
+          <p className="text-sm font-medium">{tr("Request headers")}</p>
           <p className="text-xs text-muted-foreground/70">
-            Some broadcasters check <code>Referer</code> or <code>Origin</code> and refuse without
+            Some broadcasters check <code>{tr("Referer")}</code> or <code>{tr("Origin")}</code> and refuse without
             them.
           </p>
         </div>
@@ -131,7 +132,7 @@ export function HeaderTable({
         <div key={i} className="flex gap-2">
           <Input
             value={name}
-            placeholder="Referer"
+            placeholder={tr("Referer")}
             className="w-44 font-mono text-xs"
             onChange={(e) =>
               onChange(headers.map((h, j) => (j === i ? [e.target.value, h[1]] : h)))
@@ -148,7 +149,7 @@ export function HeaderTable({
           <Button
             variant="ghost"
             size="icon"
-            aria-label="Remove this header"
+            aria-label={tr("Remove this header")}
             onClick={() => onChange(headers.filter((_, j) => j !== i))}
           >
             <Trash2 className="h-3.5 w-3.5" />

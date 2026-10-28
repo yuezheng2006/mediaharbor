@@ -2,6 +2,7 @@ import { Check, Loader2 } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { errorMessage } from '@/utils/errors';
 import type { RadioDirectorySource } from '@/features/radio/api';
+import { tr } from '@/i18n';
 
 /**
  * The directory toggles, inline.
@@ -32,21 +33,25 @@ export function SourceChips({
     if (error) {
       return (
         <span className="text-xs text-destructive/80" title={errorMessage(error)}>
-          Sources unavailable
+          {tr('Sources unavailable')}
         </span>
       );
     }
     if (loading) {
       return (
         <div className="flex items-center gap-2 text-xs text-muted-foreground/50">
-          <Loader2 className="h-3 w-3 animate-spin" /> Loading sources…
+          <Loader2 className="h-3 w-3 animate-spin" /> {tr('Loading sources…')}
         </div>
       );
     }
     return null;
   }
   return (
-    <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Station sources">
+    <div
+      className="flex flex-wrap items-center gap-1.5"
+      role="group"
+      aria-label={tr('Station sources')}
+    >
       {sources.map((source) =>
         source.toggleable ? (
           <button
@@ -54,7 +59,7 @@ export function SourceChips({
             type="button"
             aria-pressed={source.enabled}
             disabled={pending}
-            title={source.status === 'loading' ? 'Building its station list…' : undefined}
+            title={source.status === 'loading' ? tr('Building its station list…') : undefined}
             onClick={() => onToggle(source.id, !source.enabled)}
             className={cn(
               'inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[11px] transition-colors',
@@ -75,7 +80,7 @@ export function SourceChips({
           <span
             key={source.id}
             className="rounded-full border border-border/30 px-2.5 py-1 text-[11px] text-muted-foreground/60"
-            title="Your own stations are always shown"
+            title={tr('Your own stations are always shown')}
           >
             {source.label}
           </span>

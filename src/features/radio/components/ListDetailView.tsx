@@ -16,6 +16,7 @@ import { NameDialog } from '@/features/radio/components/NameDialog';
 import { coverOf } from '@/features/radio/hooks/useStationCover';
 import type { StationChrome } from '@/features/radio/RadioActions';
 import type { RadioStation } from '@/features/radio/api';
+import { tr } from '@/i18n';
 
 /** Stable identity while the list is loading, so the covers hook does not churn. */
 const NO_STATIONS: RadioStation[] = [];
@@ -68,7 +69,7 @@ export function ListDetailView({ id, onBack, onPlayAll, ...chrome }: Props) {
           <Button
             size="icon"
             variant="ghost"
-            aria-label="Rename playlist"
+            aria-label={tr("Rename playlist")}
             onClick={() => setRenaming(true)}
           >
             <Pencil className="h-3.5 w-3.5" />
@@ -76,7 +77,7 @@ export function ListDetailView({ id, onBack, onPlayAll, ...chrome }: Props) {
           <Button
             size="icon"
             variant="ghost"
-            aria-label="Delete playlist"
+            aria-label={tr("Delete playlist")}
             className="text-muted-foreground hover:text-destructive"
             onClick={() => {
               remove.mutate(id);
@@ -98,7 +99,7 @@ export function ListDetailView({ id, onBack, onPlayAll, ...chrome }: Props) {
         ) : stations.length === 0 ? (
           <RadioEmpty
             icon={Radio}
-            title="This playlist is empty"
+            title={tr("This playlist is empty")}
             hint="Right-click a station anywhere on this page and add it here."
           />
         ) : (
@@ -113,7 +114,7 @@ export function ListDetailView({ id, onBack, onPlayAll, ...chrome }: Props) {
 
       <NameDialog
         open={renaming}
-        title="Rename playlist"
+        title={tr("Rename playlist")}
         confirm="Rename"
         initial={detail.data?.name ?? ''}
         onClose={() => setRenaming(false)}

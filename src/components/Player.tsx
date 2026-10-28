@@ -41,6 +41,7 @@ import { tauriAPI } from '@/tauri-bridge';
 import { errorDetail, errorMessage } from '@/utils/errors';
 import { copyText } from '@/utils/clipboard';
 import { buildUndecodableReport } from '@/features/player/undecodableReport';
+import { tr } from '@/i18n';
 
 const PREFETCH_LEAD_SECS = 30;
 
@@ -870,7 +871,7 @@ export function Player() {
               <button
                 onClick={handleFullscreen}
                 className="absolute inset-0 flex items-center justify-center bg-black/50 transition-opacity"
-                title="Fullscreen"
+                title={tr("Fullscreen")}
               >
                 <Maximize2 className="h-5 w-5 text-white drop-shadow" />
               </button>
@@ -896,7 +897,7 @@ export function Player() {
             size="icon"
             className="h-8 w-8"
             onClick={toggleShuffle}
-            title="Shuffle"
+            title={tr("Shuffle")}
             style={
               shuffle ? { color: activeColor, backgroundColor: activeColor + '20' } : undefined
             }
@@ -910,7 +911,7 @@ export function Player() {
             className="h-8 w-8"
             onClick={playPrev}
             disabled={!canPrev}
-            title="Previous"
+            title={tr("Previous")}
           >
             <SkipBack className="h-4 w-4" />
           </Button>
@@ -934,7 +935,7 @@ export function Player() {
             className="h-8 w-8"
             onClick={playNext}
             disabled={!canNext}
-            title="Next"
+            title={tr("Next")}
           >
             <SkipForward className="h-4 w-4" />
           </Button>
@@ -977,7 +978,7 @@ export function Player() {
           size="icon"
           className="h-8 w-8 shrink-0 text-muted-foreground hover:text-foreground"
           onClick={toggleNowPlaying}
-          title="Now Playing"
+          title={tr("Now Playing")}
           style={nowPlayingOpen ? { color: activeColor } : undefined}
         >
           <ListMusic className="h-4 w-4" />

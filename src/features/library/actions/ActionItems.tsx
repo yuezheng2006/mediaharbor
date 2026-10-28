@@ -17,6 +17,7 @@ import {
   ContextMenuSubContent,
 } from '@/components/ui/context-menu';
 import { cn } from '@/utils/cn';
+import { tr } from '@/i18n';
 import type { ActionItem } from './types';
 
 export type MenuType = 'dropdown' | 'context';
@@ -57,7 +58,7 @@ function RenderedItem({ item, menuType }: { item: ActionItem; menuType: MenuType
       >
         <span className="flex items-center gap-2">
           {item.icon}
-          {item.label}
+          {tr(item.label)}
         </span>
       </Check>
     );
@@ -70,7 +71,7 @@ function RenderedItem({ item, menuType }: { item: ActionItem; menuType: MenuType
       className={cn(item.destructive && 'text-destructive focus:text-destructive')}
     >
       {item.icon}
-      <span>{item.label}</span>
+      <span>{tr(item.label)}</span>
     </Item>
   );
 }
@@ -82,7 +83,7 @@ function SubMenu({ item, menuType }: { item: ActionItem; menuType: MenuType }) {
         <DropdownMenuSubTrigger disabled={item.disabled}>
           <span className="flex items-center gap-2">
             {item.icon}
-            {item.label}
+            {tr(item.label)}
           </span>
         </DropdownMenuSubTrigger>
         <DropdownMenuSubContent>
@@ -96,7 +97,7 @@ function SubMenu({ item, menuType }: { item: ActionItem; menuType: MenuType }) {
       <ContextMenuSubTrigger disabled={item.disabled}>
         <span className="flex items-center gap-2">
           {item.icon}
-          {item.label}
+          {tr(item.label)}
         </span>
       </ContextMenuSubTrigger>
       <ContextMenuSubContent>
