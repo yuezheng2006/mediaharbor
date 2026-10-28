@@ -212,7 +212,7 @@ export function LibraryHeader({
             <SelectContent>
               {sortOptions.map((o) => (
                 <SelectItem key={o.value} value={o.value}>
-                  {o.label}
+                  {tr(o.label)}
                 </SelectItem>
               ))}
             </SelectContent>

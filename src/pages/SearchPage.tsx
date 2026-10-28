@@ -453,7 +453,7 @@ export default function SearchPage() {
                     <Icon className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                     <span className="truncate">{s.text}</span>
                     <span className="ml-auto text-[10px] text-muted-foreground capitalize shrink-0">
-                      {s.type}
+                      {tr(s.type)}
                     </span>
                   </button>
                 );
@@ -507,7 +507,7 @@ export default function SearchPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                {SEARCH_TYPE_LABELS[t]}
+                {tr(SEARCH_TYPE_LABELS[t])}
               </button>
             ))}
           </div>

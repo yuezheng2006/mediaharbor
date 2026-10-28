@@ -880,5 +880,9 @@
   "Lossless. Requires Tidal HiFi, Qobuz, or Deezer HQ subscription.": "无损音质，需要 Tidal HiFi、Qobuz 或 Deezer HQ 订阅。",
   "High quality lossy from Apple Music.": "Apple Music 提供的高质量有损音频。",
   "Standard lossy. Widely compatible.": "标准有损音频，兼容性广。",
-  "Spotify streams are delivered as OGG.": "Spotify 串流以 OGG 格式提供。"
+  "Spotify streams are delivered as OGG.": "Spotify 串流以 OGG 格式提供。",
+  "Podcasts": "播客",
+  "Shows": "节目",
+  "Episodes": "单集",
+  "Audiobooks": "有声书"
 }
