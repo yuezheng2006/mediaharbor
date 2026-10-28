@@ -45,17 +45,11 @@ import { useQualityOptions } from '@/hooks/useQualityOptions';
 import { isBackendAvailable, tauriAPI } from '@/tauri-bridge';
 import { copyText } from '@/utils/clipboard';
 import { tr } from '@/i18n';
+import { splitDownloadLinks } from '@/utils/download-links';
 
 export default function DownloadPage() {
   const [url, setUrl] = useState('');
-  const urls = useMemo(
-    () =>
-      url
-        .split(/[\s,]+/)
-        .map((value) => value.trim())
-        .filter(Boolean),
-    [url]
-  );
+  const urls = useMemo(() => splitDownloadLinks(url), [url]);
   const platform = useMemo(
     () => (urls.length === 1 ? detectPlatform(urls[0]) : urls.length ? 'generic' : null),
     [urls]
