@@ -113,14 +113,14 @@ function AppUpdateSection() {
 
   return (
     <div className="p-6 space-y-3">
-      <SectionTitle>{tr("MediaHarbor")}</SectionTitle>
+      <SectionTitle>{tr('MediaHarbor')}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card p-4 flex items-center gap-4">
         <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted shrink-0">
           <PackageCheck className="h-4 w-4 text-muted-foreground" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium">{tr("MediaHarbor")}</p>
+          <p className="text-sm font-medium">{tr('MediaHarbor')}</p>
           <p className="text-xs text-muted-foreground">
             Version: <span className="font-mono">{currentVersion || '…'}</span>
           </p>
@@ -137,7 +137,7 @@ function AppUpdateSection() {
           ) : (
             <RefreshCw className="h-3.5 w-3.5" />
           )}
-          {status === 'checking' ? 'Checking…' : 'Check for updates'}
+          {status === 'checking' ? tr('Checking…') : tr('Check for updates')}
         </Button>
       </div>
 
@@ -145,8 +145,10 @@ function AppUpdateSection() {
         <div className="flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3">
           <CircleCheckBig className="h-4 w-4 text-emerald-500 shrink-0" />
           <div>
-            <p className="text-sm font-medium">{tr("You&apos;re up to date")}</p>
-            <p className="text-xs text-muted-foreground">{currentVersion} is the latest release.</p>
+            <p className="text-sm font-medium">{tr('You&apos;re up to date')}</p>
+            <p className="text-xs text-muted-foreground">
+              {tr('{version} is the latest release.', { version: currentVersion ?? '' })}
+            </p>
           </div>
         </div>
       )}
@@ -165,10 +167,12 @@ function AppUpdateSection() {
               <CircleArrowUp className="h-4 w-4 text-primary shrink-0" />
               <div>
                 <p className="text-sm font-semibold">
-                  Update available — <span className="text-primary">{info.version}</span>
+                  {tr('Update available')} — <span className="text-primary">{info.version}</span>
                 </p>
                 {publishedDate && (
-                  <p className="text-xs text-muted-foreground">Released {publishedDate}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {tr('Released {date}', { date: publishedDate })}
+                  </p>
                 )}
               </div>
             </div>
@@ -176,7 +180,7 @@ function AppUpdateSection() {
             {info.supported ? (
               apply === 'ready' ? (
                 <Button size="sm" onClick={handleApply} className="gap-1.5 shrink-0">
-                  <RefreshCw className="h-3.5 w-3.5" /> Restart now
+                  <RefreshCw className="h-3.5 w-3.5" /> {tr('Restart now')}
                 </Button>
               ) : (
                 <Button
@@ -190,7 +194,7 @@ function AppUpdateSection() {
                   ) : (
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
                   )}
-                  {apply === 'idle' ? 'Download & install' : 'Installing…'}
+                  {apply === 'idle' ? tr('Download & install') : tr('Installing…')}
                 </Button>
               )
             ) : (
@@ -200,21 +204,24 @@ function AppUpdateSection() {
                 disabled={!info.releaseUrl}
                 className="gap-1.5 shrink-0"
               >
-                <ExternalLink className="h-3.5 w-3.5" /> Download
+                <ExternalLink className="h-3.5 w-3.5" /> {tr('Download')}
               </Button>
             )}
           </div>
 
           {apply === 'downloading' && (
             <div className="px-4 pt-3">
-              <InstallProgress percent={percent} text={`Downloading ${info.version}…`} />
+              <InstallProgress
+                percent={percent}
+                text={tr('Downloading {version}…', { version: info.version ?? '' })}
+              />
             </div>
           )}
 
           {apply === 'ready' && (
             <div className="px-4 pt-3">
               <p className="text-xs text-muted-foreground">
-                Downloaded and verified. MediaHarbor will close while it installs.
+                {tr('Downloaded and verified. MediaHarbor will close while it installs.')}
               </p>
             </div>
           )}
@@ -228,7 +235,7 @@ function AppUpdateSection() {
           {info.notes && (
             <div className="px-4 py-4">
               <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-2">
-                Release Notes
+                {tr('Release Notes')}
               </p>
               <pre className="text-sm text-foreground/80 whitespace-pre-wrap leading-relaxed font-sans">
                 {info.notes}
@@ -432,7 +439,8 @@ function SystemDepsSection() {
         </>
       );
     else if (dep.id === 'python') btnLabel = installed ? tr('Recreate') : tr('Setup');
-    else if (installed) btnLabel = 'pinned' in dep && dep.pinned === true ? tr('Reinstall') : tr('Update');
+    else if (installed)
+      btnLabel = 'pinned' in dep && dep.pinned === true ? tr('Reinstall') : tr('Update');
     else btnLabel = tr('Install');
 
     return (
@@ -455,7 +463,7 @@ function SystemDepsSection() {
             <p className="text-sm font-medium">{dep.label}</p>
             {ver && <span className="text-[11px] font-mono text-muted-foreground">{ver}</span>}
           </div>
-          <p className="text-xs text-muted-foreground">{dep.desc}</p>
+          <p className="text-xs text-muted-foreground">{tr(dep.desc)}</p>
           {inst === 'installing' && <InstallProgress percent={progress} text={statusTxt} />}
         </div>
         <Button
@@ -474,31 +482,31 @@ function SystemDepsSection() {
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <SectionTitle>{tr("Dependencies")}</SectionTitle>
+        <SectionTitle>{tr('Dependencies')}</SectionTitle>
         <button
           onClick={fetchStatus}
           disabled={checking || !!installing}
           className="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1 disabled:opacity-40 transition-colors"
         >
-          <RefreshCw className={`h-3 w-3 ${checking ? 'animate-spin' : ''}`} /> Refresh
+          <RefreshCw className={`h-3 w-3 ${checking ? 'animate-spin' : ''}`} /> {tr('Refresh')}
         </button>
       </div>
 
       {checking ? (
         <div className="flex items-center gap-2 px-4 py-6 text-sm text-muted-foreground">
-          <Loader2 className="h-4 w-4 animate-spin" /> Checking installed dependencies…
+          <Loader2 className="h-4 w-4 animate-spin" /> {tr('Checking installed dependencies…')}
         </div>
       ) : (
         <div className="rounded-xl border border-border bg-card overflow-hidden">
           <div className="px-4 py-2 border-b border-border bg-muted/30">
             <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-              Required
+              {tr('Required')}
             </p>
           </div>
           <div className="divide-y divide-border">{REQUIRED_DEPS.map(renderDep)}</div>
           <div className="px-4 py-2 border-t border-border border-b border-border bg-muted/30">
             <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">
-              Optional
+              {tr('Optional')}
             </p>
           </div>
           <div className="divide-y divide-border">{OPTIONAL_DEPS.map(renderDep)}</div>
@@ -630,7 +638,7 @@ function OrpheusDLSection() {
 
   return (
     <div className="space-y-3">
-      <SectionTitle>{tr("OrpheusDL")}</SectionTitle>
+      <SectionTitle>{tr('OrpheusDL')}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="flex items-center gap-3 px-4 py-3">
@@ -640,7 +648,7 @@ function OrpheusDLSection() {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium">{tr("OrpheusDL")}</p>
+            <p className="text-sm font-medium">{tr('OrpheusDL')}</p>
             <p className="text-xs text-muted-foreground">
               {tr('Alternative download backend supporting multiple services')}
             </p>
@@ -669,7 +677,7 @@ function OrpheusDLSection() {
         </div>
       </div>
 
-      <SectionTitle>{tr("Modules")}</SectionTitle>
+      <SectionTitle>{tr('Modules')}</SectionTitle>
 
       <div className="rounded-xl border border-border bg-card overflow-hidden">
         <div className="divide-y divide-border">
@@ -729,7 +737,7 @@ function OrpheusDLSection() {
               <Input
                 value={customLabel}
                 onChange={(e) => setCustomLabel(e.target.value)}
-                placeholder={tr("Service name (e.g. Napster)")}
+                placeholder={tr('Service name (e.g. Napster)')}
                 className="flex-1 text-sm"
               />
               <Button
@@ -766,9 +774,9 @@ export default function UpdatesPage() {
   return (
     <div className="flex flex-col h-full">
       <div className="px-8 pt-8 pb-6 border-b border-border shrink-0">
-        <h1 className="text-lg font-semibold">{tr("Updates & Dependencies")}</h1>
+        <h1 className="text-lg font-semibold">{tr('Updates & Dependencies')}</h1>
         <p className="text-sm text-muted-foreground mt-0.5">
-          Install and update all MediaHarbor components
+          {tr('Install and update all MediaHarbor components')}
         </p>
       </div>
 

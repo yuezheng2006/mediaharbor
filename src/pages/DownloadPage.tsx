@@ -48,7 +48,18 @@ import { tr } from '@/i18n';
 
 export default function DownloadPage() {
   const [url, setUrl] = useState('');
-  const platform = useMemo(() => detectPlatform(url), [url]);
+  const urls = useMemo(
+    () =>
+      url
+        .split(/[\s,]+/)
+        .map((value) => value.trim())
+        .filter(Boolean),
+    [url]
+  );
+  const platform = useMemo(
+    () => (urls.length === 1 ? detectPlatform(urls[0]) : urls.length ? 'generic' : null),
+    [urls]
+  );
   const [quality, setQuality] = useState('');
   const [ytMusicQuality, setYtMusicQuality] = useState(10);
   const [mediaKind, setMediaKind] = useState<'audio' | 'video'>('audio');
@@ -73,11 +84,7 @@ export default function DownloadPage() {
   }, [options, defaultQuality]);
 
   const handleDownload = async () => {
-    if (!url.trim()) {
-      addNotification({ type: 'error', title: 'Error', message: 'Please enter a URL' });
-      return;
-    }
-    if (!platform) {
+    if (urls.length === 0) {
       addNotification({ type: 'error', title: 'Error', message: 'Please enter a URL' });
       return;
     }
@@ -89,30 +96,40 @@ export default function DownloadPage() {
     setIsLoading(true);
     try {
       const ytMusicQualityStr = ytMusicSliderQuality(ytMusicQuality);
-      if (platform === 'generic') {
-        if (mediaKind === 'audio') {
-          tauriAPI.downloads.startYouTubeMusic({ url, quality: '' });
+      for (const link of urls) {
+        const linkPlatform = detectPlatform(link);
+        if (!linkPlatform) continue;
+        if (linkPlatform === 'generic') {
+          if (mediaKind === 'audio') {
+            tauriAPI.downloads.startYouTubeMusic({ url: link, quality: '' });
+          } else {
+            tauriAPI.downloads.startGenericVideo({
+              url: link,
+              quality: quality || 'bestvideo+bestaudio/best',
+            });
+          }
+        } else if (linkPlatform === 'youtube' && mediaKind === 'audio') {
+          tauriAPI.downloads.startYouTubeMusic({ url: link, quality: ytMusicQualityStr });
         } else {
-          tauriAPI.downloads.startGenericVideo({
-            url,
-            quality: quality || 'bestvideo+bestaudio/best',
+          const effectiveQuality =
+            linkPlatform === 'youtubemusic'
+              ? ytMusicQualityStr
+              : urls.length === 1
+                ? quality
+                : undefined;
+          await downloadService.startDownload({
+            platform: linkPlatform,
+            url: link,
+            quality: effectiveQuality,
+            forceRedownload: forceReDownload,
           });
         }
-      } else if (platform === 'youtube' && mediaKind === 'audio') {
-        tauriAPI.downloads.startYouTubeMusic({ url, quality: ytMusicQualityStr });
-      } else {
-        const effectiveQuality = platform === 'youtubemusic' ? ytMusicQualityStr : quality;
-        await downloadService.startDownload({
-          platform,
-          url,
-          quality: effectiveQuality,
-          forceRedownload: forceReDownload,
-        });
       }
       addNotification({
         type: 'success',
         title: 'Download Started',
-        message: `Downloading from ${platform}...`,
+        message:
+          urls.length > 1 ? `Queued ${urls.length} links` : `Downloading from ${platform}...`,
       });
       setUrl('');
       setForceReDownload(false);
@@ -131,7 +148,10 @@ export default function DownloadPage() {
     <div className="p-6 space-y-6">
       <div className="flex gap-3">
         <Input
-          placeholder={tr("Paste URL — YouTube, Spotify, Qobuz, Tidal, Deezer, Apple Music...")}
+          placeholder={tr(
+            'Paste one or more URLs — YouTube, Bilibili, Douyin, Twitter/X, WeChat Channels...'
+          )}
+          aria-label={tr('Download URL')}
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleDownload()}
@@ -147,7 +167,7 @@ export default function DownloadPage() {
               : undefined
           }
         >
-          {isLoading ? 'Starting...' : 'Download'}
+          {isLoading ? tr('Starting...') : tr('Download')}
         </Button>
       </div>
 
@@ -170,9 +190,11 @@ export default function DownloadPage() {
                 <PlatformIcon platform={platform} size={15} />
               </span>
             )}
-            Detected:{' '}
+            {urls.length > 1 ? tr('Multiple links') : `${tr('Detected')}: `}
             <span className="font-semibold text-foreground">
-              {PLATFORM_LABELS[platform] ?? platform}
+              {urls.length > 1
+                ? tr('yt-dlp supported sites')
+                : (PLATFORM_LABELS[platform] ?? platform)}
             </span>
           </span>
           {supportsKindToggle && (
@@ -187,7 +209,7 @@ export default function DownloadPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                {tr("Audio")}
+                {tr('Audio')}
               </button>
               <button
                 type="button"
@@ -199,17 +221,17 @@ export default function DownloadPage() {
                     : 'text-muted-foreground hover:text-foreground'
                 )}
               >
-                {tr("Video")}
+                {tr('Video')}
               </button>
             </div>
           )}
           {supportsKindToggle && mediaKind === 'audio' ? (
             <span className="text-xs text-muted-foreground">
-              Extracts audio (uses your yt-dlp audio format)
+              {tr('Extracts audio (uses your yt-dlp audio format)')}
             </span>
           ) : platform === 'youtubemusic' ? (
             <div className="flex items-center gap-3 min-w-[260px]">
-              <span className="text-xs text-muted-foreground shrink-0">{tr("Worst")}</span>
+              <span className="text-xs text-muted-foreground shrink-0">{tr('Worst')}</span>
               <Slider
                 min={0}
                 max={10}
@@ -218,14 +240,14 @@ export default function DownloadPage() {
                 onValueChange={([v]) => setYtMusicQuality(v)}
                 className="flex-1"
               />
-              <span className="text-xs text-muted-foreground shrink-0">{tr("Best")}</span>
+              <span className="text-xs text-muted-foreground shrink-0">{tr('Best')}</span>
               <span className="text-xs font-medium w-4 text-center">{ytMusicQuality}</span>
             </div>
           ) : (
             options.length > 0 && (
               <Select value={quality} onValueChange={setQuality}>
                 <SelectTrigger className="w-[240px]">
-                  <SelectValue placeholder={tr("Select quality")} />
+                  <SelectValue placeholder={tr('Select quality')} />
                 </SelectTrigger>
                 <SelectContent>
                   {options.map((o) => (
@@ -244,7 +266,7 @@ export default function DownloadPage() {
                 checked={forceReDownload}
                 onCheckedChange={(v) => setForceReDownload(!!v)}
               />
-              <Label htmlFor="force-redownload">{tr("Force re-download")}</Label>
+              <Label htmlFor="force-redownload">{tr('Force re-download')}</Label>
             </div>
           )}
         </div>
@@ -253,9 +275,11 @@ export default function DownloadPage() {
       {items.length > 0 && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold text-lg">Queue ({items.length})</h2>
+            <h2 className="font-semibold text-lg">
+              {tr('Queue')} ({items.length})
+            </h2>
             <Button variant="ghost" size="sm" onClick={clear}>
-              Clear all
+              {tr('Clear all')}
             </Button>
           </div>
 
@@ -344,14 +368,16 @@ export default function DownloadPage() {
                         {item.status === 'cancelled' && (
                           <div className="flex items-center gap-2 text-muted-foreground">
                             <Square className="h-4 w-4 shrink-0" />
-                            <span className="text-sm font-medium">{tr("Cancelled")}</span>
+                            <span className="text-sm font-medium">{tr('Cancelled')}</span>
                           </div>
                         )}
 
                         {item.status === 'complete' && (
                           <div className="flex items-center gap-2">
                             <CircleCheck className="h-4 w-4 text-green-500" />
-                            <span className="text-sm font-medium text-green-500">{tr("Complete")}</span>
+                            <span className="text-sm font-medium text-green-500">
+                              {tr('Complete')}
+                            </span>
                             {item.location && (
                               <Button
                                 variant="ghost"
@@ -360,7 +386,7 @@ export default function DownloadPage() {
                                 onClick={() => tauriAPI.downloads.showItemInFolder(item.location!)}
                               >
                                 <FolderOpen className="h-3 w-3 mr-1" />
-                                {tr("Show in folder")}
+                                {tr('Show in folder')}
                               </Button>
                             )}
                           </div>
@@ -380,7 +406,9 @@ export default function DownloadPage() {
                                   </li>
                                 ))}
                                 {item.failures.length > 4 && (
-                                  <li>+{item.failures.length - 4} more — see logs</li>
+                                  <li>
+                                    +{item.failures.length - 4} {tr('more — see logs')}
+                                  </li>
                                 )}
                               </ul>
                             )}
@@ -395,7 +423,7 @@ export default function DownloadPage() {
                                   }
                                 >
                                   <FolderOpen className="h-3 w-3 mr-1" />
-                                  {tr("Show in folder")}
+                                  {tr('Show in folder')}
                                 </Button>
                               )}
                               <Button
@@ -409,7 +437,7 @@ export default function DownloadPage() {
                                 }}
                               >
                                 <ScrollText className="h-3 w-3 mr-1" />
-                                View Logs
+                                {tr('View Logs')}
                               </Button>
                             </div>
                           </div>
@@ -432,7 +460,7 @@ export default function DownloadPage() {
                               }}
                             >
                               <ScrollText className="h-3 w-3 mr-1" />
-                              View Logs
+                              {tr('View Logs')}
                             </Button>
                           </div>
                         )}
@@ -443,7 +471,7 @@ export default function DownloadPage() {
                           variant="ghost"
                           size="icon"
                           className="shrink-0 text-muted-foreground hover:text-destructive"
-                          title={tr("Cancel download")}
+                          title={tr('Cancel download')}
                           onClick={() => cancel(item.order)}
                         >
                           <Square className="h-4 w-4" />
@@ -467,7 +495,7 @@ export default function DownloadPage() {
                       <ContextMenuItem
                         onSelect={() => tauriAPI.downloads.showItemInFolder(item.location!)}
                       >
-                        <FolderOpen className="h-4 w-4 mr-2" /> Show in folder
+                        <FolderOpen className="h-4 w-4 mr-2" /> {tr('Show in folder')}
                       </ContextMenuItem>
                     )}
                     {item.status === 'error' && (
@@ -483,7 +511,7 @@ export default function DownloadPage() {
                     )}
                     {item.status === 'downloading' && (
                       <ContextMenuItem onSelect={() => cancel(item.order)}>
-                        <Square className="h-4 w-4 mr-2" /> Cancel download
+                        <Square className="h-4 w-4 mr-2" /> {tr('Cancel download')}
                       </ContextMenuItem>
                     )}
                     <ContextMenuItem
@@ -491,11 +519,11 @@ export default function DownloadPage() {
                         void copyText(item.title);
                       }}
                     >
-                      <Copy className="h-4 w-4 mr-2" /> Copy title
+                      <Copy className="h-4 w-4 mr-2" /> {tr('Copy title')}
                     </ContextMenuItem>
                     <ContextMenuSeparator />
                     <ContextMenuItem onSelect={() => remove(item.order)}>
-                      <Trash2 className="h-4 w-4 mr-2" /> Remove from list
+                      <Trash2 className="h-4 w-4 mr-2" /> {tr('Remove from list')}
                     </ContextMenuItem>
                   </ContextMenuContent>
                 </ContextMenu>
