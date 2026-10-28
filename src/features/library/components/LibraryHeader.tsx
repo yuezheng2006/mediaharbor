@@ -99,9 +99,9 @@ export function LibraryHeader({
   };
 
   const statsText = [
-    albumCount > 0 && `${albumCount} album${albumCount !== 1 ? 's' : ''}`,
-    trackCount > 0 && `${trackCount} track${trackCount !== 1 ? 's' : ''}`,
-    videoCount > 0 && `${videoCount} video${videoCount !== 1 ? 's' : ''}`,
+    albumCount > 0 && tr('{count} album(s)', { count: albumCount }),
+    trackCount > 0 && tr('{count} track(s)', { count: trackCount }),
+    videoCount > 0 && tr('{count} video(s)', { count: videoCount }),
   ]
     .filter(Boolean)
     .join(', ');

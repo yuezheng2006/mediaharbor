@@ -562,7 +562,7 @@ export default function SearchPage() {
                   disabled={isFetchingNextPage}
                   className="px-4 py-2 rounded-md text-sm text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-colors duration-100 disabled:opacity-50"
                 >
-                  {isFetchingNextPage ? 'Loading…' : 'Load more'}
+                  {isFetchingNextPage ? tr('Loading…') : tr('Load more')}
                 </button>
               </div>
             )}

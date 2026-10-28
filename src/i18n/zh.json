@@ -989,5 +989,22 @@
   "Check here first if something looks off. Errors and backend output land in this view.": "遇到问题时先查看这里。错误和后端输出会显示在此页面。",
   "Service credentials, audio quality, file paths, and everything else you can configure.": "服务凭据、音质、文件路径以及其他可配置项。",
   "You're ready": "准备就绪",
-  "Head to Search to find your first track. You can revisit any of this from the sidebar.": "前往搜索页面寻找你的第一首歌曲。你也可以从侧栏再次打开这些功能。"
+  "Head to Search to find your first track. You can revisit any of this from the sidebar.": "前往搜索页面寻找你的第一首歌曲。你也可以从侧栏再次打开这些功能。",
+  "{count} album(s)": "{count} 张专辑",
+  "{count} track(s)": "{count} 首歌曲",
+  "{count} video(s)": "{count} 个视频",
+  "Following · {count}": "正在关注 · {count}",
+  "Followers · {count}": "关注者 · {count}",
+  "expired": "已过期",
+  "{count} days": "{count} 天",
+  "{count} h": "{count} 小时",
+  "{count} min": "{count} 分钟",
+  "Not connected": "未连接",
+  "Connected · expires in {time}": "已连接 · {time} 后过期",
+  "Connected": "已连接",
+  "Expires in {time}": "{time} 后过期",
+  "Needs re-auth": "需要重新认证",
+  "Last check failed": "上次检查失败",
+  "Re-check": "重新检查",
+  "Load more": "加载更多"
 }

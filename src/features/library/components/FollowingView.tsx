@@ -90,7 +90,7 @@ export function FollowingView({ source }: FollowingViewProps) {
     <div className="h-full overflow-y-auto flex flex-col gap-8">
       <section className="flex flex-col gap-3">
         <h2 className="text-[12px] font-semibold tracking-wide uppercase text-muted-foreground/60">
-          Following · {followingList.length}
+          {tr('Following · {count}', { count: followingList.length })}
         </h2>
         {followingList.length > 0 ? (
           <UserGrid users={followingList} covers={covers} />
@@ -101,7 +101,7 @@ export function FollowingView({ source }: FollowingViewProps) {
 
       <section className="flex flex-col gap-3">
         <h2 className="text-[12px] font-semibold tracking-wide uppercase text-muted-foreground/60">
-          Followers · {followerList.length}
+          {tr('Followers · {count}', { count: followerList.length })}
         </h2>
         {followerList.length > 0 ? (
           <UserGrid users={followerList} covers={covers} />

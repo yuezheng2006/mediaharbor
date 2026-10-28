@@ -44,4 +44,12 @@ describe('ui locale', () => {
 
     expect(onboardingCopy.every((copy) => tr(copy) !== copy)).toBe(true);
   });
+
+  it('covers remaining library and credential status labels in Chinese', () => {
+    setLocale('zh');
+    expect(tr('{count} album(s)', { count: 2 })).toBe('2 张专辑');
+    expect(tr('Following · {count}', { count: 3 })).toBe('正在关注 · 3');
+    expect(tr('Connected · expires in {time}', { time: '2 天' })).toBe('已连接 · 2 天 后过期');
+    expect(tr('Load more')).toBe('加载更多');
+  });
 });
