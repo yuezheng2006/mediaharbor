@@ -33,7 +33,7 @@ export function StepChooseServices() {
       className="space-y-6"
     >
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">{tr("How will you use MediaHarbor?")}</h2>
+        <h2 className="text-lg font-semibold">{tr('How will you use MediaHarbor?')}</h2>
         <p className="text-sm text-muted-foreground">
           {tr(
             'You can start with no setup at all — just paste a URL and download. Add streaming services only if you want to browse and download from your accounts.'
@@ -47,7 +47,7 @@ export function StepChooseServices() {
             <Download className="w-5 h-5" />
           </div>
           <div className="space-y-0.5">
-            <p className="text-sm font-semibold">{tr("Just paste URLs")}</p>
+            <p className="text-sm font-semibold">{tr('Just paste URLs')}</p>
             <p className="text-xs text-muted-foreground">
               {tr(
                 'Works out of the box with yt-dlp — YouTube, SoundCloud and hundreds of sites. No accounts needed. This is always available.'
@@ -59,8 +59,8 @@ export function StepChooseServices() {
 
       <div className="space-y-2">
         <p className="text-sm font-medium">
-          Add streaming services{' '}
-          <span className="text-muted-foreground font-normal">(optional)</span>
+          {tr('Add streaming services')}{' '}
+          <span className="text-muted-foreground font-normal">({tr('optional')})</span>
         </p>
         <div className="grid grid-cols-2 gap-2">
           {SERVICES.map(({ platform, label, description }) => {
@@ -89,7 +89,7 @@ export function StepChooseServices() {
           })}
         </div>
         <p className="text-xs text-muted-foreground">
-          You can add or remove services any time in Settings.
+          {tr('You can add or remove services any time in Settings.')}
         </p>
       </div>
     </motion.div>

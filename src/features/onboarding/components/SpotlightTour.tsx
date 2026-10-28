@@ -198,7 +198,7 @@ export function SpotlightTour() {
             <button
               onClick={() => void end()}
               className="text-muted-foreground hover:text-foreground transition-colors p-0.5 -m-0.5"
-              aria-label={tr("Skip tour")}
+              aria-label={tr('Skip tour')}
             >
               <X className="w-4 h-4" />
             </button>
@@ -209,17 +209,17 @@ export function SpotlightTour() {
               onClick={() => void end()}
               className="text-[11px] text-muted-foreground hover:text-foreground transition-colors"
             >
-              {tr("Skip tour")}
+              {tr('Skip tour')}
             </button>
             <div className="flex items-center gap-1.5">
               {!isFirst && (
                 <Button variant="ghost" size="sm" className="h-7 px-2 gap-1" onClick={prev}>
                   <ChevronLeft className="w-3.5 h-3.5" />
-                  Back
+                  {tr('Back')}
                 </Button>
               )}
               <Button size="sm" className="h-7 px-3 gap-1" onClick={next}>
-                {isLast ? 'Finish' : 'Next'}
+                {isLast ? tr('Finish') : tr('Next')}
                 {!isLast && <ChevronRight className="w-3.5 h-3.5" />}
               </Button>
             </div>

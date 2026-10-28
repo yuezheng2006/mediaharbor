@@ -171,9 +171,9 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
           <CircleCheckBig className="w-8 h-8 text-green-500" />
         </div>
         <div className="space-y-1">
-          <h2 className="text-lg font-semibold">{tr("All set")}</h2>
+          <h2 className="text-lg font-semibold">{tr('All set')}</h2>
           <p className="text-sm text-muted-foreground max-w-xs">
-            Your tools are ready. We can move on to a couple of basic preferences.
+            {tr('Your tools are ready. We can move on to a couple of basic preferences.')}
           </p>
         </div>
         <Summary statusMap={statusMap} installed={installed} />
@@ -195,7 +195,7 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
             {tr(isOptional ? 'Optional tools' : 'Required tools')} ·{' '}
             {tr('{current} of {total}', { current: activeIndex + 1, total: totalInPhase })}
           </p>
-          <h2 className="text-base font-semibold">{current.label}</h2>
+          <h2 className="text-base font-semibold">{tr(current.label)}</h2>
         </div>
         <PhaseProgress current={activeIndex} total={totalInPhase} />
       </div>
@@ -209,16 +209,18 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
           transition={{ duration: 0.2 }}
           className="rounded-xl border border-border bg-card/60 p-5 space-y-4 min-h-[180px]"
         >
-          <p className="text-sm text-muted-foreground leading-relaxed">{current.why}</p>
+          <p className="text-sm text-muted-foreground leading-relaxed">{tr(current.why)}</p>
 
           <div className="flex items-center gap-3">
             <StatusIcon status={status} isInstalled={isInstalled} />
             <p className="text-xs text-muted-foreground flex-1">
-              {status === 'installing' && (progress?.status ?? 'Starting…')}
-              {status === 'done' && (isInstalled ? 'Installed.' : 'Done.')}
-              {status === 'error' && 'Install failed. You can retry or skip and install it later.'}
-              {status === 'skipped' && 'Skipped.'}
-              {status === 'idle' && (isInstalled ? 'Already installed.' : 'Not installed yet.')}
+              {status === 'installing' && (progress?.status ?? tr('Starting…'))}
+              {status === 'done' && (isInstalled ? tr('Installed.') : tr('Done.'))}
+              {status === 'error' &&
+                tr('Install failed. You can retry or skip and install it later.')}
+              {status === 'skipped' && tr('Skipped.')}
+              {status === 'idle' &&
+                (isInstalled ? tr('Already installed.') : tr('Not installed yet.'))}
             </p>
           </div>
 
@@ -253,7 +255,7 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
                   className="text-[11px] text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
                 >
                   <ExternalLink className="w-3 h-3" />
-                  Manual install
+                  {tr('Manual install')}
                 </button>
               )}
             </div>
@@ -261,7 +263,7 @@ export function StepInstallSequence({ onInstallingChange, onAllDone }: StepInsta
               {(status === 'idle' || status === 'error') && !isInstalled && (
                 <Button variant="ghost" size="sm" className="h-7 px-2 gap-1" onClick={handleSkip}>
                   <SkipForward className="w-3.5 h-3.5" />
-                  {isOptional ? 'No thanks' : 'Skip'}
+                  {isOptional ? tr('No thanks') : tr('Skip')}
                 </Button>
               )}
               {!isInstalled && status !== 'done' && status !== 'skipped' && (
@@ -352,7 +354,7 @@ function Summary({
             ) : (
               <CircleX className="w-3 h-3 text-muted-foreground/60 shrink-0" />
             )}
-            <span className="text-[11px] text-muted-foreground truncate">{d.label}</span>
+            <span className="text-[11px] text-muted-foreground truncate">{tr(d.label)}</span>
           </div>
         );
       })}

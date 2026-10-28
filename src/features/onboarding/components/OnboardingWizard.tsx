@@ -11,6 +11,7 @@ import { StepInstallSequence } from './StepInstallSequence';
 import { StepBasicSetup } from './StepBasicSetup';
 import { StepChooseServices } from './StepChooseServices';
 import { StepReadyForTour } from './StepReadyForTour';
+import { tr } from '@/i18n';
 
 const slideVariants = {
   enter: (dir: number) => ({ x: dir > 0 ? 60 : -60, opacity: 0 }),
@@ -81,20 +82,20 @@ export function OnboardingWizard() {
             {currentStep > 0 && !isInstalling && !isInstallSequenceStep && (
               <Button variant="ghost" size="sm" onClick={prevStep} className="gap-1">
                 <ChevronLeft className="w-4 h-4" />
-                Back
+                {tr('Back')}
               </Button>
             )}
           </div>
           <div className="flex items-center gap-2">
             {!isFinalStep && !isInstalling && (
               <Button variant="ghost" size="sm" onClick={handleSkip}>
-                Skip setup
+                {tr('Skip setup')}
               </Button>
             )}
             {isFinalStep ? (
               <Button size="sm" onClick={handleStartTour} className="gap-1">
                 <Compass className="w-4 h-4" />
-                Start tour
+                {tr('Start tour')}
               </Button>
             ) : (
               <Button
@@ -103,7 +104,7 @@ export function OnboardingWizard() {
                 disabled={isInstalling || installSequenceBlocked || isBasicSetupBlocked}
                 className="gap-1"
               >
-                {currentStep === 0 ? 'Get Started' : 'Next'}
+                {currentStep === 0 ? tr('Get Started') : tr('Next')}
                 <ChevronRight className="w-4 h-4" />
               </Button>
             )}
